@@ -2,10 +2,21 @@
 title: Liu TzuCheng's Doc Site
 ---
 
+<!-- 引入 Playwrite PL 字体 - 优化版本 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
+
 {{< blocks/cover title="Code & Thoughts" image_anchor="top" height="full" >}}
-<p class="lead">Technical sharing and experience recording — in the cloud!</p>
-<div style="margin-top: 40vh;"></div>
-{{< blocks/link-down color="info" >}}
+<a class="btn btn-lg btn-transparent me-3 mb-4" href="/docs/">
+  Learn More <i class="fas fa-arrow-alt-circle-right ms-2"></i>
+</a>
+<a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/pinyinjj">
+  GitHub <i class="fab fa-github ms-2 "></i>
+</a>
+
+<p class="lead">Technical sharing and experience recording.</p>
+
 {{< /blocks/cover >}}
 
 <!-- 调试信息显示区域 -->
@@ -13,6 +24,61 @@ title: Liu TzuCheng's Doc Site
     <div>调试信息:</div>
     <div id="debug-content">正在加载...</div>
 </div>
+
+<!-- 透明按钮样式 -->
+<style>
+/* Playwrite PL 字体样式 */
+.td-cover-block h1,
+.td-cover-block .display-1,
+.td-cover-block .display-2,
+.td-cover-block .display-3,
+.td-cover-block .display-4 {
+    font-family: 'Playwrite PL', cursive !important;
+    font-weight: 300 !important; /* 使用较细的权重，因为字体范围是100-400 */
+    letter-spacing: 0.02em !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+    line-height: 1.2 !important;
+    font-feature-settings: "liga" 1, "kern" 1 !important; /* 启用连字和字距调整 */
+}
+
+/* 透明按钮样式 */
+.btn-transparent {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    color: white !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.btn-transparent:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    color: white !important;
+    text-decoration: none;
+}
+
+.btn-transparent:focus {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+    color: white !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+/* 确保图标也是白色 */
+.btn-transparent i {
+    color: white !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .btn-transparent {
+        margin: 5px !important;
+        width: auto;
+    }
+}
+</style>
 
 <script>
 // 智能随机背景图片功能
@@ -39,7 +105,8 @@ title: Liu TzuCheng's Doc Site
     const config = {
         username: 'pinyinjj',
         collectionId: '1954116',
-        corsProxy: 'https://cors.bridged.cc/'
+        corsProxy: 'https://api.allorigins.win/raw?url='
+        // corsProxy: 'https://your-site-name.netlify.app/.netlify/functions/cors-proxy?url='
     };
     
     // 从收藏夹获取图片并随机选择一张
@@ -131,17 +198,3 @@ title: Liu TzuCheng's Doc Site
 })();
 </script>
 
-{{% blocks/section type="row" %}}
-{{% blocks/feature icon="fab fa-weixin" title="WeChat Contact" url="https://your-wechat-link" %}}
-Contact me via WeChat to share technical experiences and insights
-{{% /blocks/feature %}}
-
-{{% blocks/feature icon="fab fa-qq" title="QQ Contact" url="https://your-qq-link" %}}
-Contact me via QQ to discuss technical issues and project collaboration
-{{% /blocks/feature %}}
-
-{{% blocks/feature icon="fab fa-github" title="Other Projects" url="https://github.com/pinyinjj" %}}
-
-{{% /blocks/feature %}}
-
-{{% /blocks/section %}}

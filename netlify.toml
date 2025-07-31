@@ -4,9 +4,17 @@
 [build]
 command = "npm run build:preview"
 publish = "public"
+functions = "netlify/functions"
 
 [build.environment]
 GO_VERSION = "1.22.2"
 
 [context.production]
 command = "npm run build:production"
+
+# 函数配置
+[functions]
+  # 设置函数超时时间（秒）
+  timeout = 10
+  # 设置函数内存限制（MB）
+  memory = 1024
