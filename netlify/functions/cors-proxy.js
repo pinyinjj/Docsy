@@ -1,7 +1,7 @@
 exports.handler = async function(event, context) {
   // 允许的 HTTP 方法
   const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'];
-  
+  console.log("进入netlify");
   // 处理预检请求 (OPTIONS)
   if (event.httpMethod === 'OPTIONS') {
     return {

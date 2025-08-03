@@ -34,7 +34,7 @@ pygmentsStyle: tango
 
 # Configure how URLs look like per section.
 permalinks:
-  blog: /:section/:year/:month/:day/:slug/
+  blog: /:section/:month/:day/:year/:slug/
 
 # Image processing configuration.
 imaging:
@@ -46,25 +46,17 @@ imaging:
 languages:
   en:
     languageName: English
-    title: Goldydocs
+    title: Liu TzuCheng
     params:
-      description: A Docsy example site
+      description: Technical sharing and experience recording.
   # cSpell:disable
-  'no':
-    languageName: Norsk
-    contentDir: content/no
-    title: Gulldoks
-    params:
-      description: Docsy er operativsystem for skyen
-      time_format_default: 02.01.2006
-      time_format_blog: 02.01.2006
-  fa:
+  cn:
     languageDirection: rtl
-    languageName: "فارسی (Persian)"
-    contentDir: content/fa
-    title: "اسناد گلدی"
+    languageName: "中文(Chinese)"
+    contentDir: content/cn
+    title: "刘子正"
     params:
-      description: "یک نمونه برای پوسته داکسی"
+      description: "思索与记录"
       time_format_default: 2006.01.02
       time_format_blog: 2006.01.02
   # cSpell:enable
@@ -153,7 +145,7 @@ params:
     # Set to true to disable breadcrumb navigation.
     breadcrumb_disable: false
     # Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top navbar
-    navbar_logo: true
+    navbar_logo: false
     # Set to true if you don't want the top navbar to be translucent when over a `block/cover`, like on the homepage.
     navbar_translucent_over_cover_disable: false
     # Enable to show the side bar menu in its compact state.
@@ -182,32 +174,33 @@ params:
   links:
     # End user relevant links. These will show up on left side of footer and in the community page if you have one.
     user:
-      - name: User mailing list
-        url: https://example.org/mail
+      - name: Mail
+        url: /about/
         icon: fa fa-envelope
-        desc: Discussion and help from your fellow users
-      - name: Twitter
-        url: https://example.org/twitter
-        icon: fab fa-twitter
-        desc: Follow us on Twitter to get the latest news!
-      - name: Stack Overflow
-        url: https://example.org/stack
-        icon: fab fa-stack-overflow
-        desc: Practical questions and curated answers
+        desc: To about
+      - name: Wechat
+        url: /about/
+        icon: fab fa-weixin
+        desc: To about
+      # - name: Stack Overflow
+      #   url: https://example.org/stack
+      #   icon: fab fa-stack-overflow
+      #   desc: Practical questions and curated answers
+      - name: QQ
+        url: /about/
+        icon: fab fa-qq
+        desc: To about
+      - name: Wallhaven
+        url: https://wallhaven.cc/user/pinyinjj/favorites/1954116
+        icon: fa fa-image
+        desc: My wallpaper collection
     # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
     developer:
-      - name: GitHub
+      - name: Docsy & Template
         url: https://github.com/google/docsy
         icon: fab fa-github
         desc: Development takes place here!
-      - name: Slack
-        url: https://example.org/slack
-        icon: fab fa-slack
-        desc: Chat with other project developers
-      - name: Developer mailing list
-        url: https://example.org/mail
-        icon: fa fa-envelope
-        desc: Discuss development issues around the project
+      
 
 module:
   # Uncomment the next line to build and serve using local docsy clone declared in the named Hugo workspace:
