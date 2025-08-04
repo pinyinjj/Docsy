@@ -3,6 +3,32 @@
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+/* 确保about页面的背景图片显示与主页一致 */
+.td-cover-block--height-full {
+  min-height: 100vh !important;
+  height: 100vh !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  overflow: hidden !important;
+}
+
+/* 确保所有cover块的高度一致 */
+.td-cover-block {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* 确保背景图片在所有页面都有一致的显示效果 */
+.td-cover-block .td-overlay {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
 }
 
 /* Playwrite PL 字体样式 */
@@ -134,7 +160,7 @@
     margin: 0 auto;
     max-width: 1200px;
     padding: 0 1rem;
-    min-height: 100vh;
+    min-height: 60vh; /* 减少高度，为link-down留出空间 */
     align-items: flex-start;
     padding-top: 15vh;
 }
@@ -205,7 +231,7 @@
 
 .contact-value {
     font-family: 'Playwrite PL', cursive;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: 400;
     color: white;
     margin: 0;
@@ -221,6 +247,86 @@
     color: #f8f9fa;
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
     transform: scale(1.05);
+}
+
+
+.td-cover-block .btn.btn-link.text-light,
+.td-cover-block a.btn.btn-link.text-light {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(8px) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
+    margin: 2rem auto 0 !important;
+    text-decoration: none !important;
+    z-index: 10 !important; /* 确保在最上层 */
+}
+
+.td-cover-block .btn.btn-link.text-light::before,
+.td-cover-block a.btn.btn-link.text-light::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 1), transparent);
+    transition: top 0.8s ease;
+}
+
+.td-cover-block .btn.btn-link.text-light:hover::before,
+.td-cover-block a.btn.btn-link.text-light:hover::before {
+    top: 100%;
+}
+
+
+
+.td-cover-block .btn.btn-link.text-light:hover,
+.td-cover-block a.btn.btn-link.text-light:hover {
+    transform: translateY(-4px) scale(1.1) !important;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+    border: none !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.td-cover-block .btn.btn-link.text-light i,
+.td-cover-block a.btn.btn-link.text-light i {
+    color: rgba(255, 255, 255, 0.1) !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)) !important;
+    font-size: 2rem !important;
+}
+
+.td-cover-block .btn.btn-link.text-light:hover i,
+.td-cover-block a.btn.btn-link.text-light:hover i {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transform: scale(1.15) !important;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)) !important;
+}
+
+
+
+/* 确保about页面的link-down按钮正确显示 */
+.td-cover-block .btn-link-down,
+.td-cover-block a.btn-link-down {
+    position: relative !important;
+    z-index: 10 !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
 }
 
 /* 响应式设计 */

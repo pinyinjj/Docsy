@@ -20,6 +20,10 @@
         defaultImage: '/static/images/default_img.png' // 默认图片路径
     };
     
+    // 全局变量存储预加载的图片
+    let preloadedImages = [];
+    let isPreloading = false;
+    
     // 隐藏页面内容
     function hidePage() {
         const body = document.body;
@@ -62,8 +66,8 @@
         });
     }
     
-    // 从收藏夹获取图片并随机选择一张
-    async function getRandomBackgroundImage() {
+    // 从收藏夹获取图片并随机选择多张
+    async function getRandomBackgroundImages(count = 2) {
         try {
             const apiUrl = `${config.corsProxy}https://wallhaven.cc/api/v1/collections/${config.username}/${config.collectionId}`;
             console.log('获取收藏夹图片:', apiUrl);
@@ -96,14 +100,19 @@
                 const allPaths = responseData.data.map(item => item.path);
                 console.log(`获取到 ${allPaths.length} 张图片`);
                 
-                const randomIndex = Math.floor(Math.random() * allPaths.length);
-                const selectedImage = allPaths[randomIndex];
+                // 随机选择指定数量的图片
+                const selectedImages = [];
+                const shuffled = [...allPaths].sort(() => 0.5 - Math.random());
                 
-                console.log('随机选择图片:', selectedImage);
-                return selectedImage;
+                for (let i = 0; i < Math.min(count, shuffled.length); i++) {
+                    selectedImages.push(shuffled[i]);
+                }
+                
+                console.log(`随机选择 ${selectedImages.length} 张图片:`, selectedImages);
+                return selectedImages;
             } else {
                 console.log('收藏夹中没有图片');
-                return null;
+                return [];
             }
             
         } catch (error) {
@@ -112,7 +121,43 @@
             } else {
                 console.error('获取图片失败:', error.message);
             }
-            return null;
+            return [];
+        }
+    }
+    
+    // 预加载多张图片
+    async function preloadMultipleImages() {
+        if (isPreloading) {
+            console.log('正在预加载中，跳过重复请求');
+            return;
+        }
+        
+        isPreloading = true;
+        
+        try {
+            const images = await getRandomBackgroundImages(2);
+            if (images.length > 0) {
+                // 预加载所有图片
+                const preloadPromises = images.map(img => preloadImage(img));
+                const preloadedUrls = await Promise.allSettled(preloadPromises);
+                
+                // 过滤出成功加载的图片
+                preloadedImages = preloadedUrls
+                    .filter(result => result.status === 'fulfilled')
+                    .map(result => result.value);
+                
+                console.log(`成功预加载 ${preloadedImages.length} 张图片`);
+                
+                // 将预加载的图片存储到sessionStorage中，供about页面使用
+                if (preloadedImages.length > 1) {
+                    sessionStorage.setItem('preloadedAboutImage', preloadedImages[1]);
+                    console.log('已为about页面预加载图片:', preloadedImages[1]);
+                }
+            }
+        } catch (error) {
+            console.error('预加载图片失败:', error);
+        } finally {
+            isPreloading = false;
         }
     }
     
@@ -120,24 +165,29 @@
     async function setRandomBackground() {
         const coverBlock = document.querySelector('.td-cover-block');
         if (coverBlock) {
-            const randomImage = await getRandomBackgroundImage();
+            let imageToUse = null;
             
-            if (randomImage) {
+            // 检查是否有预加载的图片
+            if (preloadedImages.length > 0) {
+                imageToUse = preloadedImages[0];
+                preloadedImages.shift(); // 移除已使用的图片
+                console.log('使用预加载的图片:', imageToUse);
+            } else {
+                // 如果没有预加载的图片，获取新的图片
+                const images = await getRandomBackgroundImages(1);
+                if (images.length > 0) {
+                    imageToUse = images[0];
+                }
+            }
+            
+            if (imageToUse) {
                 try {
-                    await preloadImage(randomImage);
-                    coverBlock.style.backgroundImage = `url('${randomImage}')`;
-                    console.log('设置背景图片成功:', randomImage);
+                    coverBlock.style.backgroundImage = `url('${imageToUse}')`;
+                    console.log('设置背景图片成功:', imageToUse);
                     return true;
                 } catch (error) {
-                    console.error('背景图片加载失败，使用默认图片:', error.message);
-                    try {
-                        await preloadImage(config.defaultImage, 5000); // 默认图片给5秒加载时间
-                        coverBlock.style.backgroundImage = `url('${config.defaultImage}')`;
-                        return true;
-                    } catch (defaultError) {
-                        console.error('默认图片也加载失败:', defaultError.message);
-                        return false;
-                    }
+                    console.error('背景图片设置失败:', error.message);
+                    return false;
                 }
             } else {
                 console.log('没有可用的背景图片，使用默认图片');
@@ -157,11 +207,62 @@
         }
     }
     
+    // 为about页面设置背景图片
+    async function setAboutBackground() {
+        const coverBlock = document.querySelector('.td-cover-block');
+        if (coverBlock) {
+            // 首先检查sessionStorage中是否有预加载的图片
+            const preloadedImage = sessionStorage.getItem('preloadedAboutImage');
+            
+            if (preloadedImage) {
+                try {
+                    coverBlock.style.backgroundImage = `url('${preloadedImage}')`;
+                    console.log('使用预加载的about页面背景图片:', preloadedImage);
+                    sessionStorage.removeItem('preloadedAboutImage'); // 使用后清除
+                    return true;
+                } catch (error) {
+                    console.error('预加载的about页面背景图片设置失败:', error.message);
+                }
+            }
+            
+            // 如果没有预加载的图片，获取新的图片
+            const images = await getRandomBackgroundImages(1);
+            if (images.length > 0) {
+                try {
+                    await preloadImage(images[0]);
+                    coverBlock.style.backgroundImage = `url('${images[0]}')`;
+                    console.log('设置about页面背景图片成功:', images[0]);
+                    return true;
+                } catch (error) {
+                    console.error('about页面背景图片加载失败:', error.message);
+                }
+            }
+            
+            // 使用默认图片
+            try {
+                await preloadImage(config.defaultImage, 5000);
+                coverBlock.style.backgroundImage = `url('${config.defaultImage}')`;
+                console.log('设置about页面默认背景图片成功');
+                return true;
+            } catch (error) {
+                console.error('about页面默认图片加载失败:', error.message);
+                return false;
+            }
+        } else {
+            console.log('未找到 .td-cover-block 元素');
+            return false;
+        }
+    }
+    
     // 公开的配置接口
     window.RandomBackground = {
         refresh: function() {
             console.log('手动刷新背景图片');
             setRandomBackground();
+        },
+        refreshAbout: function() {
+            console.log('手动刷新about页面背景图片');
+            setAboutBackground();
         }
     };
     
@@ -176,14 +277,30 @@
         hidePage();
         
         try {
-            const success = await setRandomBackground();
+            // 检查当前页面是否为about页面
+            const isAboutPage = window.location.pathname.includes('/about/');
             
-            if (success) {
-                setTimeout(() => {
+            if (isAboutPage) {
+                const success = await setAboutBackground();
+                if (success) {
+                    setTimeout(() => {
+                        showPage();
+                    }, 100);
+                } else {
                     showPage();
-                }, 100);
+                }
             } else {
-                showPage();
+                // 主页或其他页面：预加载两张图片，使用第一张
+                await preloadMultipleImages();
+                const success = await setRandomBackground();
+                
+                if (success) {
+                    setTimeout(() => {
+                        showPage();
+                    }, 100);
+                } else {
+                    showPage();
+                }
             }
         } catch (error) {
             console.error('初始化过程中出错:', error);

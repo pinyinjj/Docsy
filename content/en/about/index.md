@@ -4,7 +4,7 @@ linkTitle: About
 menu: {main: {weight: 10}}
 ---
 
-{{% blocks/cover image_anchor="bottom" height="full" %}}
+{{< blocks/cover image_anchor="top" height="full" >}}
 
 <div class="contact-info-container">
   <div class="contact-card">
@@ -34,18 +34,18 @@ menu: {main: {weight: 10}}
     </div>
   </div>
 </div>
+{{< blocks/link-down color="light" >}}
 
 
+{{< /blocks/cover >}}
 
-{{% /blocks/cover %}}
-
-{{% blocks/lead color="primary" %}}
+{{% blocks/section color="primary" %}}
 
 ## About Me
 
 Welcome to my personal space where I share my journey in technology and development.
 
-{{% /blocks/lead %}}
+{{% /blocks/section %}}
 
 <script src="/js/random-background.js"></script>
 <script src="/js/time-display.js"></script>

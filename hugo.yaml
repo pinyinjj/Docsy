@@ -1,5 +1,5 @@
 baseURL: https://example.docsy.dev
-title: Liu TzuCheng
+title: Zed
 
 # cSpell:ignore goldmark github hugo readingtime docsy subdir lastmod pygments linenos catmullrom norsk gu
 
@@ -46,7 +46,7 @@ imaging:
 languages:
   en:
     languageName: English
-    title: Liu TzuCheng
+    title: Zed
     params:
       description: Technical sharing and experience recording.
   # cSpell:disable
@@ -54,7 +54,7 @@ languages:
     languageDirection: rtl
     languageName: "中文(Chinese)"
     contentDir: content/cn
-    title: "刘子正"
+    title: "Zed"
     params:
       description: "思索与记录"
       time_format_default: 2006.01.02

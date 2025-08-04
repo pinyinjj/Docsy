@@ -1,8 +1,7 @@
 ---
-title: Liu TzuCheng's Doc Site
+title: Zed's Doc Site
 ---
 
-<!-- 引入 Playwrite PL 字体 - 优化版本 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
