@@ -18,7 +18,14 @@ title: Zed's Doc Site
 
 {{< /blocks/cover >}}
 
-<script src="https://pinyinjj.github.io/Docsy/js/random-background.js"></script>
-
-<script src="https://pinyinjj.github.io/Docsy/js/time-display.js"></script>
+<script>
+// 传递环境变量到JavaScript
+window.HUGO_ENV = {
+    environment: "{{ hugo.Environment }}",
+    baseURL: "{{ .Site.BaseURL }}",
+    isProduction: {{ if eq hugo.Environment "production" }}true{{ else }}false{{ end }}
+};
+</script>
+<script src="{{ .Site.BaseURL }}js/random-background.js"></script>
+<script src="{{ .Site.BaseURL }}js/time-display.js"></script>
 

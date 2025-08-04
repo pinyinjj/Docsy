@@ -17,7 +17,14 @@
         collectionId: '1954116',
         corsProxy: 'https://api.allorigins.win/raw?url=',
         timeout: 3000, // 3秒超时
-        defaultImage: '/static/images/default_img.png' // 默认图片路径
+        // 根据环境动态设置默认图片路径
+        defaultImage: (function() {
+            if (window.HUGO_ENV && window.HUGO_ENV.isProduction) {
+                return window.HUGO_ENV.baseURL + 'images/default_img.png';
+            } else {
+                return '/static/images/default_img.png';
+            }
+        })()
     };
     
     // 全局变量存储预加载的图片
@@ -198,8 +205,9 @@
             } else {
                 console.log('没有可用的背景图片，使用默认图片');
                 try {
-                    await preloadImage(config.defaultImage, 5000);
-                    coverBlock.style.backgroundImage = `url('${config.defaultImage}')`;
+                    const defaultImagePath = getImagePath('default_img.png');
+                    await preloadImage(defaultImagePath, 5000);
+                    coverBlock.style.backgroundImage = `url('${defaultImagePath}')`;
                     console.log('设置默认背景图片成功');
                     return true;
                 } catch (error) {
@@ -246,8 +254,9 @@
             
             // 使用默认图片
             try {
-                await preloadImage(config.defaultImage, 5000);
-                coverBlock.style.backgroundImage = `url('${config.defaultImage}')`;
+                const defaultImagePath = getImagePath('default_img.png');
+                await preloadImage(defaultImagePath, 5000);
+                coverBlock.style.backgroundImage = `url('${defaultImagePath}')`;
                 console.log('设置about页面默认背景图片成功');
                 return true;
             } catch (error) {
