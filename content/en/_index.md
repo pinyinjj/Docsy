@@ -18,6 +18,6 @@ title: Zed's Doc Site
 
 {{< /blocks/cover >}}
 
-<script src="{{< param baseURL >}}js/random-background.js"></script>
-<script src="{{< param baseURL >}}js/time-display.js"></script>
+<script src="{{ .Site.BaseURL }}js/random-background.js"></script>
+<script src="{{ .Site.BaseURL }}js/time-display.js"></script>
 
