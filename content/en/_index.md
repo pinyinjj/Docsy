@@ -18,7 +18,6 @@ title: Zed's Doc Site
 
 {{< /blocks/cover >}}
 
-<script src="{{ "js/random-background.js" | relURL }}"></script>
-<script src="{{ "js/time-display.js" | relURL }}"></script>
-
+<script src="/Docsy/js/random-background.js"></script>
+<script src="/Docsy/js/time-display.js"></script>
 
