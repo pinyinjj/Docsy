@@ -72,6 +72,12 @@
             const apiUrl = `${config.corsProxy}https://wallhaven.cc/api/v1/collections/${config.username}/${config.collectionId}`;
             console.log('获取收藏夹图片:', apiUrl);
             
+            // 添加错误处理，避免扩展拦截导致的错误
+            if (typeof fetch === 'undefined') {
+                console.warn('fetch API不可用，可能是被扩展拦截');
+                return [];
+            }
+            
             // 为API请求添加超时控制
             const controller = new AbortController();
             const timeoutId = setTimeout(() => {
@@ -316,6 +322,14 @@
     } else {
         initialize();
     }
+    
+    // 添加全局错误处理，避免扩展导致的错误
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('message port closed')) {
+            console.warn('检测到浏览器扩展错误，忽略此错误');
+            return false;
+        }
+    });
     
     window.addEventListener('load', function() {
         // 页面加载完成
