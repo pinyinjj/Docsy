@@ -18,6 +18,7 @@ title: Zed's Doc Site
 
 {{< /blocks/cover >}}
 
+{{< partial "image-list.html" >}}
 <script src="/Docsy/js/random-background.js"></script>
 <script src="/Docsy/js/time-display.js"></script>
 
