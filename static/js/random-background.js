@@ -73,36 +73,32 @@
         return imageFiles.map(filename => imageFolder + filename);
     }
     
-    // 随机选择本地图片
+    // 随机选择一张图片并加载
     async function getRandomLocalImage() {
         const imageList = getLocalImageList();
         console.log('本地图片列表:', imageList);
         
-        // 检查哪些图片存在
-        const availableImages = [];
-        
-        for (const imageUrl of imageList) {
-            try {
-                await preloadImage(imageUrl);
-                availableImages.push(imageUrl);
-                console.log('✅ 找到可用图片:', imageUrl);
-            } catch (error) {
-                console.log('❌ 图片不可用:', imageUrl);
-            }
-        }
-        
-        if (availableImages.length === 0) {
-            console.log('没有找到可用的本地图片');
+        if (imageList.length === 0) {
+            console.log('没有可用的图片列表');
             return null;
         }
         
         // 随机选择一张图片
-        const randomIndex = Math.floor(Math.random() * availableImages.length);
-        const selectedImage = availableImages[randomIndex];
+        const randomIndex = Math.floor(Math.random() * imageList.length);
+        const selectedImage = imageList[randomIndex];
         
-        console.log('🎲 随机选择的本地图片:', selectedImage);
-        console.log('📊 可用图片数量:', availableImages.length);
-        return selectedImage;
+        console.log('🎲 随机选择的图片:', selectedImage);
+        console.log('🎲 随机索引:', randomIndex, '总图片数:', imageList.length);
+        
+        // 尝试加载选中的图片
+        try {
+            await preloadImage(selectedImage);
+            console.log('✅ 图片加载成功:', selectedImage);
+            return selectedImage;
+        } catch (error) {
+            console.log('❌ 图片加载失败:', selectedImage);
+            return null;
+        }
     }
     
     // 设置背景图片
@@ -120,9 +116,6 @@
             const randomImage = await getRandomLocalImage();
             
             if (randomImage) {
-                // 预加载并设置背景
-                await preloadImage(randomImage);
-                
                 // 设置背景样式
                 targetElement.style.setProperty('background-image', `url('${randomImage}')`, 'important');
                 targetElement.style.setProperty('background-size', 'cover', 'important');
