@@ -8,28 +8,35 @@
     }
     window.RandomBackgroundInitialized = true;
     
-    // 配置参数
-    const config = {
-        timeout: 3000, // 3秒超时
-        defaultImage: '/Docsy/static/images/default_img.png' // 默认图片路径
-    };
+    // 隐藏页面内容
+    function hidePage() {
+        const body = document.body;
+        if (body) {
+            body.style.visibility = 'hidden';
+            body.style.opacity = '0';
+            body.style.transition = 'opacity 0.5s ease-in-out';
+        }
+    }
     
-    // 预加载图片（带超时）
-    function preloadImage(imageUrl, timeout = config.timeout) {
+    // 显示页面内容
+    function showPage() {
+        const body = document.body;
+        if (body) {
+            body.style.visibility = 'visible';
+            body.style.opacity = '1';
+        }
+    }
+    
+    // 预加载图片（无超时）
+    function preloadImage(imageUrl) {
         return new Promise((resolve, reject) => {
             const img = new Image();
-            const timer = setTimeout(() => {
-                console.log('图片加载超时:', imageUrl);
-                reject(new Error('图片加载超时'));
-            }, timeout);
             
             img.onload = () => {
-                clearTimeout(timer);
                 console.log('背景图片预加载成功:', imageUrl);
                 resolve(imageUrl);
             };
             img.onerror = () => {
-                clearTimeout(timer);
                 console.error('背景图片预加载失败:', imageUrl);
                 reject(new Error('图片加载失败'));
             };
@@ -39,16 +46,29 @@
     
     // 获取本地图片列表
     function getLocalImageList() {
-        const imageFolder = '/Docsy/static/images/';
+        // 使用 /Docsy/images/ 路径
+        const imageFolder = '/Docsy/images/';
+        
+        // 使用简单的数字格式，不要括号
         const imageFiles = [
-            'default_img.png',
-            'background1.jpg',
-            'background2.jpg',
-            'background3.jpg',
-            'background4.jpg',
-            'background5.jpg',
-            // 可以继续添加更多图片文件名
+            'bg_1.jpg',
+            'bg_1.png',
+            'bg_2.jpg',
+            'bg_2.png',
+            'bg_3.jpg',
+            'bg_3.png',
+            'bg_4.jpg',
+            'bg_4.png',
+            'bg_5.jpg',
+            'bg_5.png',
+            'bg_6.jpg',
+            'bg_6.png',
+            'bg_7.jpg',
+            'bg_8.jpg'
         ];
+        
+        console.log('本地图片文件列表:', imageFiles);
+        console.log('图片文件夹路径:', imageFolder);
         
         return imageFiles.map(filename => imageFolder + filename);
     }
@@ -63,7 +83,7 @@
         
         for (const imageUrl of imageList) {
             try {
-                await preloadImage(imageUrl, 2000); // 2秒超时检查
+                await preloadImage(imageUrl);
                 availableImages.push(imageUrl);
                 console.log('✅ 找到可用图片:', imageUrl);
             } catch (error) {
@@ -81,6 +101,7 @@
         const selectedImage = availableImages[randomIndex];
         
         console.log('🎲 随机选择的本地图片:', selectedImage);
+        console.log('📊 可用图片数量:', availableImages.length);
         return selectedImage;
     }
     
@@ -112,22 +133,8 @@
                 console.log('✅ 背景图片设置成功:', randomImage);
                 return true;
             } else {
-                // 使用默认图片
-                console.log('使用默认图片:', config.defaultImage);
-                try {
-                    await preloadImage(config.defaultImage, 5000);
-                    targetElement.style.setProperty('background-image', `url('${config.defaultImage}')`, 'important');
-                    targetElement.style.setProperty('background-size', 'cover', 'important');
-                    targetElement.style.setProperty('background-position', 'center', 'important');
-                    targetElement.style.setProperty('background-repeat', 'no-repeat', 'important');
-                    targetElement.style.setProperty('background-attachment', 'fixed', 'important');
-                    
-                    console.log('✅ 默认背景图片设置成功');
-                    return true;
-                } catch (error) {
-                    console.error('默认图片也加载失败:', error.message);
-                    return false;
-                }
+                console.log('❌ 没有找到可用的背景图片');
+                return false;
             }
         } catch (error) {
             console.error('设置背景图片时出错:', error);
@@ -135,28 +142,29 @@
         }
     }
     
-    // 公开的配置接口
-    window.RandomBackground = {
-        refresh: function() {
-            console.log('手动刷新背景图片');
-            setRandomBackground();
-        }
-    };
-    
     // 初始化函数
     async function initialize() {
         console.log('🎨 初始化随机背景功能...');
+        
+        // 立即隐藏页面
+        hidePage();
         
         try {
             const success = await setRandomBackground();
             
             if (success) {
                 console.log('✅ 随机背景功能初始化成功');
+                // 等待一小段时间确保背景图片完全加载
+                setTimeout(() => {
+                    showPage();
+                }, 100);
             } else {
                 console.log('❌ 随机背景功能初始化失败');
+                showPage();
             }
         } catch (error) {
             console.error('初始化过程中出错:', error);
+            showPage();
         }
     }
     
