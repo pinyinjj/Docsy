@@ -1,9 +1,20 @@
 // 随机背景功能
 function setRandomBackground() {
-    // 使用从Hugo模板生成的图片列表
-    const imagePaths = window.availableImages || [
-        '/Docsy/images/default_img.png',
-        // 备用图片路径
+    // 图片文件夹路径
+    const imageFolder = '/Docsy/static/images/';
+    
+    // 支持的图片格式
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    
+    // 预定义的图片文件名列表（可以根据实际文件添加）
+    const imageFiles = [
+        'default_img.png',
+        // 'background1.jpg',
+        // 'background2.jpg',
+        // 'background3.jpg',
+        // 'background4.jpg',
+        // 'background5.jpg',
+        // 可以继续添加更多图片文件名
     ];
     
     // 检查图片是否存在的函数
@@ -20,10 +31,28 @@ function setRandomBackground() {
     async function getAvailableImages() {
         const availableImages = [];
         
-        for (const path of imagePaths) {
-            const exists = await checkImageExists(path);
+        // 检查预定义的图片文件
+        for (const fileName of imageFiles) {
+            const imageUrl = imageFolder + fileName;
+            const exists = await checkImageExists(imageUrl);
             if (exists) {
-                availableImages.push(path);
+                availableImages.push(imageUrl);
+            }
+        }
+        
+        // 如果没有找到预定义的图片，尝试一些常见的文件名
+        if (availableImages.length === 0) {
+            const commonNames = [
+                'background.jpg', 'background.png', 'bg.jpg', 'bg.png',
+                'wallpaper.jpg', 'wallpaper.png', 'cover.jpg', 'cover.png'
+            ];
+            
+            for (const fileName of commonNames) {
+                const imageUrl = imageFolder + fileName;
+                const exists = await checkImageExists(imageUrl);
+                if (exists) {
+                    availableImages.push(imageUrl);
+                }
             }
         }
         

@@ -47,6 +47,6 @@ Welcome to my personal space where I share my journey in technology and developm
 
 {{% /blocks/section %}}
 
-{{< partial "image-list.html" >}}
+
 <script src="/js/random-background.js"></script>
 <script src="/js/time-display.js"></script>
