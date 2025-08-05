@@ -18,6 +18,6 @@ title: Zed's Doc Site
 
 {{< /blocks/cover >}}
 
-<script src="/js/random-background.js"></script>
-<script src="/js/time-display.js"></script>
+<script src="/Docsy/js/random-background.js"></script>
+<script src="/Docsy/js/time-display.js"></script>
 
