@@ -1,132 +1,170 @@
-// 随机背景功能
-function setRandomBackground() {
-    console.log('=== 开始随机背景功能 ===');
+// 智能随机背景图片功能
+(function() {
+    'use strict';
     
-    // 图片文件夹路径
-    const imageFolder = '/Docsy/static/images/';
-    console.log('📁 图片文件夹路径:', imageFolder);
+    // 防止重复执行
+    if (window.RandomBackgroundInitialized) {
+        return;
+    }
+    window.RandomBackgroundInitialized = true;
     
-    // 支持的图片格式
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-    console.log('🖼️ 支持的图片格式:', imageExtensions);
+    // 配置参数
+    const config = {
+        timeout: 3000, // 3秒超时
+        defaultImage: '/Docsy/static/images/default_img.png' // 默认图片路径
+    };
     
-    // 预定义的图片文件名列表（可以根据实际文件添加）
-    const imageFiles = [
-        'default_img.png',
-        // 'background1.jpg',
-        // 'background2.jpg',
-        // 'background3.jpg',
-        // 'background4.jpg',
-        // 'background5.jpg',
-        // 可以继续添加更多图片文件名
-    ];
-    console.log('📋 预定义的图片文件列表:', imageFiles);
-    
-    // 检查图片是否存在的函数
-    function checkImageExists(url) {
-        console.log('🔍 正在检查图片是否存在:', url);
-        return new Promise((resolve) => {
+    // 预加载图片（带超时）
+    function preloadImage(imageUrl, timeout = config.timeout) {
+        return new Promise((resolve, reject) => {
             const img = new Image();
+            const timer = setTimeout(() => {
+                console.log('图片加载超时:', imageUrl);
+                reject(new Error('图片加载超时'));
+            }, timeout);
+            
             img.onload = () => {
-                console.log('✅ 图片加载成功:', url);
-                resolve(true);
+                clearTimeout(timer);
+                console.log('背景图片预加载成功:', imageUrl);
+                resolve(imageUrl);
             };
             img.onerror = () => {
-                console.log('❌ 图片加载失败:', url);
-                resolve(false);
+                clearTimeout(timer);
+                console.error('背景图片预加载失败:', imageUrl);
+                reject(new Error('图片加载失败'));
             };
-            img.src = url;
+            img.src = imageUrl;
         });
     }
     
-    // 获取可用的图片列表
-    async function getAvailableImages() {
-        console.log(' 开始获取可用的图片列表...');
-        const availableImages = [];
+    // 获取本地图片列表
+    function getLocalImageList() {
+        const imageFolder = '/Docsy/static/images/';
+        const imageFiles = [
+            'default_img.png',
+            'background1.jpg',
+            'background2.jpg',
+            'background3.jpg',
+            'background4.jpg',
+            'background5.jpg',
+            // 可以继续添加更多图片文件名
+        ];
         
-        // 检查预定义的图片文件
-        console.log('📝 检查预定义的图片文件...');
-        for (const fileName of imageFiles) {
-            const imageUrl = imageFolder + fileName;
-            console.log('🔗 尝试访问图片地址:', imageUrl);
-            const exists = await checkImageExists(imageUrl);
-            if (exists) {
-                console.log('✅ 找到可用图片:', imageUrl);
-                availableImages.push(imageUrl);
-            } else {
-                console.log('❌ 图片不存在:', imageUrl);
-            }
-        }
-        
-        // 如果没有找到预定义的图片，尝试一些常见的文件名
-        if (availableImages.length === 0) {
-            console.log('⚠️ 预定义图片都不可用，尝试常见文件名...');
-            const commonNames = [
-                'background.jpg', 'background.png', 'bg.jpg', 'bg.png',
-                'wallpaper.jpg', 'wallpaper.png', 'cover.jpg', 'cover.png'
-            ];
-            
-            for (const fileName of commonNames) {
-                const imageUrl = imageFolder + fileName;
-                console.log(' 尝试常见文件名地址:', imageUrl);
-                const exists = await checkImageExists(imageUrl);
-                if (exists) {
-                    console.log('✅ 找到可用图片:', imageUrl);
-                    availableImages.push(imageUrl);
-                } else {
-                    console.log('❌ 图片不存在:', imageUrl);
-                }
-            }
-        }
-        
-        console.log('📊 最终可用的图片列表:', availableImages);
-        console.log('📊 可用图片数量:', availableImages.length);
-        return availableImages;
+        return imageFiles.map(filename => imageFolder + filename);
     }
     
-    // 设置背景图片
-    async function setBackground() {
-        console.log('🎨 开始设置背景图片...');
-        const availableImages = await getAvailableImages();
+    // 随机选择本地图片
+    async function getRandomLocalImage() {
+        const imageList = getLocalImageList();
+        console.log('本地图片列表:', imageList);
+        
+        // 检查哪些图片存在
+        const availableImages = [];
+        
+        for (const imageUrl of imageList) {
+            try {
+                await preloadImage(imageUrl, 2000); // 2秒超时检查
+                availableImages.push(imageUrl);
+                console.log('✅ 找到可用图片:', imageUrl);
+            } catch (error) {
+                console.log('❌ 图片不可用:', imageUrl);
+            }
+        }
         
         if (availableImages.length === 0) {
-            console.log('❌ 没有找到可用的背景图片');
-            console.log('💡 请检查以下路径是否存在图片文件:');
-            console.log('   - /Docsy/static/images/default_img.png');
-            console.log('   - /Docsy/static/images/background.jpg');
-            console.log('   - /Docsy/static/images/bg.png');
-            return;
+            console.log('没有找到可用的本地图片');
+            return null;
         }
         
         // 随机选择一张图片
         const randomIndex = Math.floor(Math.random() * availableImages.length);
         const selectedImage = availableImages[randomIndex];
         
-        console.log('🎲 随机选择的背景图片:', selectedImage);
-        console.log('🎲 随机索引:', randomIndex, '总图片数:', availableImages.length);
-        
-        // 设置背景图片
-        console.log('🎨 正在设置背景图片样式...');
-        console.log('🔗 最终使用的图片地址:', selectedImage);
-        
-        document.body.style.backgroundImage = `url('${selectedImage}')`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundPosition = 'center';
-        document.body.style.backgroundRepeat = 'no-repeat';
-        document.body.style.backgroundAttachment = 'fixed';
-        
-        // 添加一些样式以确保内容可读性
-        document.body.style.minHeight = '100vh';
-        
-        console.log('✅ 背景图片设置完成');
-        console.log('=== 随机背景功能结束 ===');
+        console.log('🎲 随机选择的本地图片:', selectedImage);
+        return selectedImage;
     }
     
-    setBackground();
-}
-
-// 页面加载完成后设置随机背景
-document.addEventListener('DOMContentLoaded', function() {
-    console.log(' 页面加载完成，开始设置随机背景...');
-    setRandomBackground();
-});
+    // 设置背景图片
+    async function setRandomBackground() {
+        console.log('=== 开始设置随机背景 ===');
+        
+        // 优先查找 .td-cover-block 元素
+        const coverBlock = document.querySelector('.td-cover-block');
+        const targetElement = coverBlock || document.body;
+        
+        console.log('目标元素:', targetElement);
+        
+        try {
+            // 获取随机图片
+            const randomImage = await getRandomLocalImage();
+            
+            if (randomImage) {
+                // 预加载并设置背景
+                await preloadImage(randomImage);
+                
+                // 设置背景样式
+                targetElement.style.setProperty('background-image', `url('${randomImage}')`, 'important');
+                targetElement.style.setProperty('background-size', 'cover', 'important');
+                targetElement.style.setProperty('background-position', 'center', 'important');
+                targetElement.style.setProperty('background-repeat', 'no-repeat', 'important');
+                targetElement.style.setProperty('background-attachment', 'fixed', 'important');
+                
+                console.log('✅ 背景图片设置成功:', randomImage);
+                return true;
+            } else {
+                // 使用默认图片
+                console.log('使用默认图片:', config.defaultImage);
+                try {
+                    await preloadImage(config.defaultImage, 5000);
+                    targetElement.style.setProperty('background-image', `url('${config.defaultImage}')`, 'important');
+                    targetElement.style.setProperty('background-size', 'cover', 'important');
+                    targetElement.style.setProperty('background-position', 'center', 'important');
+                    targetElement.style.setProperty('background-repeat', 'no-repeat', 'important');
+                    targetElement.style.setProperty('background-attachment', 'fixed', 'important');
+                    
+                    console.log('✅ 默认背景图片设置成功');
+                    return true;
+                } catch (error) {
+                    console.error('默认图片也加载失败:', error.message);
+                    return false;
+                }
+            }
+        } catch (error) {
+            console.error('设置背景图片时出错:', error);
+            return false;
+        }
+    }
+    
+    // 公开的配置接口
+    window.RandomBackground = {
+        refresh: function() {
+            console.log('手动刷新背景图片');
+            setRandomBackground();
+        }
+    };
+    
+    // 初始化函数
+    async function initialize() {
+        console.log('🎨 初始化随机背景功能...');
+        
+        try {
+            const success = await setRandomBackground();
+            
+            if (success) {
+                console.log('✅ 随机背景功能初始化成功');
+            } else {
+                console.log('❌ 随机背景功能初始化失败');
+            }
+        } catch (error) {
+            console.error('初始化过程中出错:', error);
+        }
+    }
+    
+    // 初始化逻辑
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+        initialize();
+    }
+    
+})();

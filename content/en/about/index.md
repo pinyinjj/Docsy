@@ -48,5 +48,5 @@ Welcome to my personal space where I share my journey in technology and developm
 {{% /blocks/section %}}
 
 
-<script src="/js/random-background.js"></script>
-<script src="/js/time-display.js"></script>
+<script src="/Docsy/js/random-background.js"></script>
+<script src="/Docsy/js/time-display.js"></script>
