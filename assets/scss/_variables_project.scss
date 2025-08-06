@@ -368,3 +368,39 @@
     }
 }
 
+/* Logo位置调整 - 只移动logo图标，不移动文字 */
+.td-navbar .navbar-brand {
+    transition: transform 0.3s ease !important;
+}
+
+/* 只针对logo图标进行移动 */
+.td-navbar .navbar-brand img,
+.td-navbar .navbar-brand svg {
+    transform: translateY(-5px) !important;
+    filter: brightness(0) invert(1) !important; /* 将logo变成白色 */
+    transition: transform 0.3s ease !important;
+}
+
+/* Logo颜色设置 - 白色 */
+.td-navbar .navbar-brand svg {
+    fill: white !important;
+    color: white !important;
+}
+
+.td-navbar .navbar-brand svg path {
+    fill: white !important;
+}
+
+/* 确保logo在移动端也能正确显示 */
+@media (max-width: 768px) {
+    .td-navbar .navbar-brand img,
+    .td-navbar .navbar-brand svg {
+        transform: translateY(-6px) !important;
+    }
+    
+    .td-navbar .navbar-brand:hover img,
+    .td-navbar .navbar-brand:hover svg {
+        transform: translateY(-8px) !important;
+    }
+}
+
