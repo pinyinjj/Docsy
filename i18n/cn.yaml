@@ -1,0 +1,138 @@
+# 中文翻译文件
+# 导航菜单
+- id: "nav_home"
+  translation: "首页"
+
+- id: "nav_docs"
+  translation: "文档"
+
+- id: "nav_blog"
+  translation: "博客"
+
+- id: "nav_about"
+  translation: "关于"
+
+- id: "nav_community"
+  translation: "社区"
+
+# 页面元素
+- id: "search_placeholder"
+  translation: "搜索文档..."
+
+- id: "search_results"
+  translation: "搜索结果"
+
+- id: "no_results"
+  translation: "没有找到结果"
+
+- id: "page_not_found"
+  translation: "页面未找到"
+
+- id: "back_to_home"
+  translation: "返回首页"
+
+# 文档相关
+- id: "on_this_page"
+  translation: "本页内容"
+
+- id: "last_updated"
+  translation: "最后更新"
+
+- id: "reading_time"
+  translation: "阅读时间"
+
+- id: "table_of_contents"
+  translation: "目录"
+
+# 反馈
+- id: "was_this_page_helpful"
+  translation: "此页面是否有帮助？"
+
+- id: "yes"
+  translation: "是"
+
+- id: "no"
+  translation: "否"
+
+# 页脚
+- id: "copyright"
+  translation: "版权所有"
+
+- id: "powered_by"
+  translation: "由 Hugo 和 Docsy 提供支持"
+
+# 根据警告添加的翻译
+- id: "ui_search"
+  translation: "搜索"
+
+- id: "footer_all_rights_reserved"
+  translation: "保留所有权利"
+
+- id: "ui_read_more"
+  translation: "阅读更多"
+
+- id: "post_view_this"
+  translation: "查看此页面"
+
+- id: "post_create_child_page"
+  translation: "创建子页面"
+
+- id: "footer_privacy_policy"
+  translation: "隐私政策"
+
+- id: "community_join"
+  translation: "加入社区"
+
+- id: "community_introduce"
+  translation: "介绍"
+
+- id: "post_edit_this"
+  translation: "编辑此页面"
+
+- id: "post_create_issue"
+  translation: "创建问题"
+
+- id: "community_learn"
+  translation: "学习"
+
+- id: "print_entire_section"
+  translation: "打印整个章节"
+
+- id: "community_using"
+  translation: "使用"
+
+- id: "feedback_title"
+  translation: "反馈"
+
+- id: "feedback_question"
+  translation: "此页面是否有帮助？"
+
+- id: "community_develop"
+  translation: "开发"
+
+- id: "feedback_positive"
+  translation: "有帮助"
+
+- id: "feedback_negative"
+  translation: "没有帮助"
+
+- id: "community_contribute"
+  translation: "贡献"
+
+- id: "community_how_to"
+  translation: "如何贡献"
+
+- id: "community_guideline"
+  translation: "贡献指南"
+
+- id: "post_last_mod"
+  translation: "最后修改"
+
+- id: "print_printable_section"
+  translation: "打印此章节"
+
+- id: "print_click_to_print"
+  translation: "点击打印"
+
+- id: "print_show_regular"
+  translation: "显示常规版本"

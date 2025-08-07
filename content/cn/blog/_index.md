@@ -1,8 +1,8 @@
 ---
-title: Blog
+title: 博客
 menu: {main: {weight: 30}}
 ---
 
-This is the **blog** section. It has two categories: News and Releases.
+这是**博客**部分。它有两个类别：新闻和发布。
 
-Files in these directories will be listed in reverse chronological order.
+这些目录中的文件将按时间倒序排列。

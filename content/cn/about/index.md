@@ -1,6 +1,6 @@
 ---
-title: About Me
-linkTitle: About
+title: 关于我
+linkTitle: 关于
 menu: {main: {weight: 10}}
 ---
 
@@ -41,12 +41,11 @@ menu: {main: {weight: 10}}
 
 {{% blocks/section color="primary" %}}
 
-## About Me
+## 关于我
 
-Welcome to my personal space where I share my journey in technology and development.
+欢迎来到我的个人空间，在这里我分享我在技术和开发方面的旅程。
 
 {{% /blocks/section %}}
-
 
 <script src="/Docsy/js/random-background.js"></script>
 <script src="/Docsy/js/time-display.js"></script>
