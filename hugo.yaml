@@ -51,15 +51,12 @@ languages:
     params:
       description: Technical sharing and experience recording.
   # cSpell:disable
-  cn:
-    languageDirection: rtl  
+  cn: 
     languageName: "中文(Chinese)"
     contentDir: content/cn
     title: "Zed"
     params:
-      description: "思索与记录"
-      time_format_default: 2006.01.02
-      time_format_blog: 2006.01.02
+      description: "思索与记录。"
   # cSpell:enable
 
 markup:
