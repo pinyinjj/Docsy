@@ -49,23 +49,14 @@
         // 使用 /Docsy/images/ 路径
         const imageFolder = '/Docsy/images/';
         
-        // 使用简单的数字格式，不要括号
-        const imageFiles = [
-            'bg_1.jpg',
-            'bg_1.png',
-            'bg_2.jpg',
-            'bg_2.png',
-            'bg_3.jpg',
-            'bg_3.png',
-            'bg_4.jpg',
-            'bg_4.png',
-            'bg_5.jpg',
-            'bg_5.png',
-            'bg_6.jpg',
-            'bg_6.png',
-            'bg_7.jpg',
-            'bg_8.jpg'
-        ];
+        // 图片总数配置 - 只需要修改这个数字
+        const totalImages = 15;
+        
+        // 动态生成图片文件列表
+        const imageFiles = [];
+        for (let i = 1; i <= totalImages; i++) {
+            imageFiles.push(`bg${i}.webp`);
+        }
         
         console.log('本地图片文件列表:', imageFiles);
         console.log('图片文件夹路径:', imageFolder);
