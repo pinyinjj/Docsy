@@ -368,6 +368,10 @@
     }
 }
 
+.td-blog-posts-list__body > p:last-child {
+    display: none;
+  }
+  
 /* Logo位置调整 - 只移动logo图标，不移动文字 */
 .td-navbar .navbar-brand {
     transition: transform 0.3s ease !important;

@@ -1,3 +1,7 @@
+---
+title: "【学习笔记】Airsim Agent 大模型驱动无人机"
+date: 2024-07-26
+---
 [**Airsim Agent**](https://github.com/maris205/airsim_agent)来源于微软开源项目[**PromptCraft-Robotics**](https://github.com/microsoft/PromptCraft-Robotics) ，提供了由大模型驱动机器人的解决方案。
 ## 1. Airsim安装、编译和使用尝试
 ### 1.1 开发环境与编译平台建议
@@ -8,7 +12,7 @@
 
 - Python 与工具
 
-  - 使用 conda 与 JupyterLab，IDE 推荐 PyCharm（社区版）。
+  - 使用 conda 与 JupyterLab，IDE 推荐 PyCharm
 
   - 创建/启用环境与安装：
 
