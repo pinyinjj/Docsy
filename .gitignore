@@ -3,3 +3,6 @@ resources/
 node_modules/
 
 .hugo_build.lock
+#
+# Ignore all Obsidian vault folders anywhere in the repo
+**/.obsidian/**
