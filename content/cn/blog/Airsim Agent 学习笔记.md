@@ -24,7 +24,7 @@ pip install jupyterlab
 
   - 任选兼容 OpenAI SDK 的平台（如火山方舟、阿里云、腾讯云等）。
 
-- 依赖冲突提示（重要）
+- 依赖冲突提示
 
   - AirSim 的 tornado 与 JupyterLab 可能冲突，不建议 `pip install airsim`。
 
@@ -67,7 +67,7 @@ import airsim
 
 ```python
 import sys
-sys.path.append('../external-libraries')
+sys.path.append'../external-libraries')
 import airsim
 
 client = airsim.MultirotorClient()  # ip 不写是本地
@@ -187,7 +187,7 @@ for i in range(3):
 - 
 
 ## 2. 指令封装和OpenAI SDK调用
-### 2.1 SDK封装设计与规则（`airsim_wrapper.py`）
+### 2.1 SDK封装设计与规则
 
 - **目标**：将底层 AirSim API 语义化、原子化，便于大模型/自然语言直接调用
 
@@ -243,7 +243,7 @@ class AirSimWrapper:
 
   - **顺序控制**：连续动作务必 `.join()`；复杂流程拆小步更稳健
 
-### 2.2 OpenAI 等 SDK 调用（`2-openai_sdk.ipynb`、`airsim_agent.py`）
+### 2.2 OpenAI 等 SDK 调用
 
 - **客户端初始化（OpenAI 协议兼容，含国产云）**
 
@@ -298,7 +298,7 @@ def extract_python_code(content: str) -> str|None:
 
   - 错误处理：区分 API 错误/限流并退避重试
 
-### 2.3 提示词工程与函数调用（`3-promotion_design.ipynb`）
+### 2.3 提示词工程与函数调用
 
 - **核心做法**
 
@@ -382,7 +382,7 @@ aw.takeoff()
 
   - **一致性**：与 `airsim_wrapper.py` 方法签名、`objects_dict` 保持一致
 
-### 2.4 基本飞行控制示例（`4-basic_control.ipynb`）
+### 2.4 基本飞行控制示例
 
 - **Agent 封装（`airsim_agent.py`）**
 
@@ -426,7 +426,7 @@ aw.fly_to(target)
 
   - 执行模式可切换：**调试（只生成）/实操（生成并执行）**
 
-### 2.5 复杂指令：风力发电机检查（`5-complex_control.ipynb`）
+### 2.5 复杂指令：风力发电机检查
 
 - **任务模式**
 
@@ -446,7 +446,7 @@ aw.fly_to(target)
 
   - 始终以 **NED** 为基准描述相对运动，确保高度/方向一致性
 
-### 2.6 完整任务：太阳能发电矩阵巡检（`6-solar_matrix.ipynb`）
+### 2.6 完整任务：太阳能发电矩阵巡检
 
 - **目标**：在阵列上方 **5m** 执行“**割草机**”航迹（蛇形扫掠），覆盖 **10 行**
 
@@ -840,7 +840,7 @@ if __name__ == "__main__":
     build_knowledge_base()
 ```
 
-### 6.3 示例输出（生成的 `KNOWLEDGE_BASE.md`）
+### 6.3 示例输出
 
 ```text
 ## 可用函数
@@ -955,7 +955,7 @@ if not duck_found:
     print("在当前位置附近未找到小鸭子。")
 ```
 
-### 7.4 示例2：分解复杂指令（“检查第一个风力发电机”）
+### 7.4 示例2：分解复杂指令
 
 - **用户指令**：“飞过去检查一下第一个风力发电机”
 
