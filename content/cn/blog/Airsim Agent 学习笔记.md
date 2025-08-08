@@ -12,15 +12,11 @@
 
   - 创建/启用环境与安装：
 
-    ```bash
-
-    conda create -n airsim_agent python=3.10
-
-    conda activate airsim_agent
-
-    pip install jupyterlab
-
-    ```
+```bash
+conda create -n airsim_agent python=3.10
+conda activate airsim_agent
+pip install jupyterlab
+```
 
   - 克隆本仓库后，用 PyCharm 打开项目根目录。
 
@@ -34,20 +30,15 @@
 
   - 采用本地包引入：
 
-    ```python
-
-    import sys
-
-    sys.path.append('../external-libraries')  # 或绝对路径
-
-    import airsim
-
-    ```
+```python
+import sys
+sys.path.append('../external-libraries')  # 或绝对路径
+import airsim
+```
 
 - 编译与平台建议
 
   - Windows：优先使用现成可执行场景（无需源码编译），上手最快。
-
   - Linux/macOS：按官方文档编译 AirSim 与 UE 插件，或参考 UE5 社区分支（如 Cosys-AirSim、Colosseum）以适配新平台。
 
   - 文档参考：`https://github.com/Microsoft/AirSim/blob/main/docs/`
@@ -74,45 +65,28 @@
 
 - 连接与初始化
 
-  ```python
+```python
+import sys
+sys.path.append('../external-libraries')
+import airsim
 
-  import sys
-
-  sys.path.append('../external-libraries')
-
-  import airsim
-
-  
-
-  client = airsim.MultirotorClient()  # ip 不写是本地
-
-  client.confirmConnection()
-
-  client.enableApiControl(True)
-
-  client.armDisarm(True)
-
-  ```
+client = airsim.MultirotorClient()  # ip 不写是本地
+client.confirmConnection()
+client.enableApiControl(True)
+client.armDisarm(True)
+```
 
 - 起降与轨迹
 
-  ```python
-
-  client.takeoffAsync().join()
-
-  client.moveToZAsync(-3, 1).join()                      # NED 坐标，Z 负向为上
-
-  client.moveToPositionAsync(5, 0, -3, 1).join()         # 航点飞行
-
-  client.moveOnPathAsync([airsim.Vector3r(5,0,-3), ...], 1).join()
-
-  client.landAsync().join()
-
-  client.armDisarm(False)
-
-  client.enableApiControl(False)
-
-  ```
+```python
+client.takeoffAsync().join()
+client.moveToZAsync(-3, 1).join()                      # NED 坐标，Z 负向为上
+client.moveToPositionAsync(5, 0, -3, 1).join()         # 航点飞行
+client.moveOnPathAsync([airsim.Vector3r(5,0,-3), ...], 1).join()
+client.landAsync().join()
+client.armDisarm(False)
+client.enableApiControl(False)
+```
 
 - 状态获取对比
 
@@ -130,49 +104,31 @@
 
 - 相机与类型
 
-  - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID `"0"~"4"`）。
+  - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID `"0"~"4"`)。
 
   - 类型：`Scene`、`DepthPlanar`、`DepthPerspective`、`DepthVis`、`Segmentation`、`SurfaceNormals`、`Infrared` 等。
 
 - 采集示例（OpenCV + Matplotlib）
 
-  ```python
+```python
+import cv2, time, numpy as np, matplotlib.pyplot as plt
+from airsim import ImageType
 
-  import cv2, time, numpy as np, matplotlib.pyplot as plt
+client = airsim.MultirotorClient(); client.confirmConnection()
+client.enableApiControl(True); client.armDisarm(True)
+client.takeoffAsync().join()
 
-  from airsim import ImageType
-
-  
-
-  client = airsim.MultirotorClient(); client.confirmConnection()
-
-  client.enableApiControl(True); client.armDisarm(True)
-
-  client.takeoffAsync().join()
-
-  
-
-  camera_name = '0'                 # 或 'front_center'
-
-  image_type = ImageType.Scene
-
-  resp = client.simGetImage(camera_name, image_type)
-
-  if resp:
-
+camera_name = '0'                 # 或 'front_center'
+image_type = ImageType.Scene
+resp = client.simGetImage(camera_name, image_type)
+if resp:
       img_bgr = cv2.imdecode(np.frombuffer(resp, np.uint8), cv2.IMREAD_UNCHANGED)
-
       img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-
       plt.imshow(img_rgb); plt.axis('off'); plt.show()
 
-  
-
-  client.landAsync().join()
-
-  client.armDisarm(False); client.enableApiControl(False)
-
-  ```
+client.landAsync().join()
+client.armDisarm(False); client.enableApiControl(False)
+```
 
 - 注意事项
 
@@ -196,29 +152,18 @@
 
   - 示例（并发起飞/定高）：
 
-    ```python
+```python
+client = airsim.MultirotorClient()
+for i in range(3):
+    name = f"UAV{i+1}"
+    client.enableApiControl(True, name)
+    client.armDisarm(True, name)
+    client.takeoffAsync(vehicle_name=name)
 
-    client = airsim.MultirotorClient()
-
-    for i in range(3):
-
-        name = f"UAV{i+1}"
-
-        client.enableApiControl(True, name)
-
-        client.armDisarm(True, name)
-
-        client.takeoffAsync(vehicle_name=name)
-
-  
-
-    for i in range(3):
-
-        name = f"UAV{i+1}"
-
-        client.moveToZAsync(-3, 1, vehicle_name=name)
-
-    ```
+for i in range(3):
+    name = f"UAV{i+1}"
+    client.moveToZAsync(-3, 1, vehicle_name=name)
+```
 
 - 注意事项
 
@@ -260,61 +205,37 @@
 
   - **单位一致性**：内部弧度/角度转换，对外一律角度（如 `get_yaw()` 返回“度”）
 
-  - **对象别名映射**：`objects_dict` 统一自然语言到 UE 对象名（如 `"car"->"StaticMeshActor_10"`）
+  - **对象别名映射**：`objects_dict` 统一自然语言到 UE 对象名（如 `"car"->"StaticMeshActor_10"`)
 
 - 对象映射`{"turbine1":"BP_Wind_Turbines_C_1","car":"StaticMeshActor_10","solarpanels":"StaticMeshActor_146",...}`
 
 - 典型方法（节选）
 
-  ```python
+```python
+class AirSimWrapper:
+    def __init__(self):
+        self.client = airsim.MultirotorClient()
+        self.client.confirmConnection()
+        self.client.enableApiControl(True)
+        self.client.armDisarm(True)
 
-  class AirSimWrapper:
+    def takeoff(self):
+        self.client.takeoffAsync().join()
 
-      def __init__(self):
+    def land(self):
+        self.client.landAsync().join()
 
-          self.client = airsim.MultirotorClient()
+    def fly_to(self, point: list[float]):
+        z = -point[2] if point[2] > 0 else point[2]
+        self.client.moveToPositionAsync(point[0], point[1], z, 5).join()
 
-          self.client.confirmConnection()
+    def get_drone_position(self) -> list[float]:
+        pose = self.client.simGetVehiclePose()
+        return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
 
-          self.client.enableApiControl(True)
-
-          self.client.armDisarm(True)
-
-  
-
-      def takeoff(self):
-
-          self.client.takeoffAsync().join()
-
-  
-
-      def land(self):
-
-          self.client.landAsync().join()
-
-  
-
-      def fly_to(self, point: list[float]):
-
-          z = -point[2] if point[2] > 0 else point[2]
-
-          self.client.moveToPositionAsync(point[0], point[1], z, 5).join()
-
-  
-
-      def get_drone_position(self) -> list[float]:
-
-          pose = self.client.simGetVehiclePose()
-
-          return [pose.position.x_val, pose.position.y_val, pose.position.z_val]
-
-  
-
-      def set_yaw(self, yaw_degree: float):
-
-          self.client.rotateToYawAsync(yaw_degree, 5).join()
-
-  ```
+    def set_yaw(self, yaw_degree: float):
+        self.client.rotateToYawAsync(yaw_degree, 5).join()
+```
 
 - **注意事项**
 
@@ -326,43 +247,27 @@
 
 - **客户端初始化（OpenAI 协议兼容，含国产云）**
 
-  ```python
+```python
+import os
+from openai import OpenAI
 
-  import os
-
-  from openai import OpenAI
-
-  
-
-  API_KEY = os.getenv("ARK_API_KEY")
-
-  client = OpenAI(
-
-      base_url="https://ark.cn-beijing.volces.com/api/v3",
-
-      api_key=API_KEY,
-
-  )
-
-  ```
+API_KEY = os.getenv("ARK_API_KEY")
+client = OpenAI(
+    base_url="https://ark.cn-beijing.volces.com/api/v3",
+    api_key=API_KEY,
+)
+```
 
 - 非流式调用示例
 
-  ```python
-
-  completion = client.chat.completions.create(
-
-      model="doubao-1-5-pro-32k-250115",
-
-      messages=[{"role":"user","content":"常见无人机仿真系统有哪些？"}],
-
-      temperature=0.1,
-
-  )
-
-  print(completion.choices[0].message.content)
-
-  ```
+```python
+completion = client.chat.completions.create(
+    model="doubao-1-5-pro-32k-250115",
+    messages=[{"role":"user","content":"常见无人机仿真系统有哪些？"}],
+    temperature=0.1,
+)
+print(completion.choices[0].message.content)
+```
 
 - **角色与多轮对话**
 
@@ -374,21 +279,14 @@
 
 - **代码片段抽取**
 
-  ```python
-
-  import re
-
-  def extract_python_code(content: str) -> str|None:
-
-      blocks = re.findall(r"```(.*?)```", content, flags=re.DOTALL)
-
-      if not blocks: return None
-
-      code = "\n".join(blocks)
-
-      return code[7:] if code.startswith("python") else code
-
-  ```
+```python
+import re
+def extract_python_code(content: str) -> str|None:
+    blocks = re.findall(r"```(.*?)```", content, flags=re.DOTALL)
+    if not blocks: return None
+    code = "\n".join(blocks)
+    return code[7:] if code.startswith("python") else code
+```
 
 - **参数建议与注意**
 
@@ -412,19 +310,13 @@
 
 - 函数描述模板（简版）
 
-  ```text
-
-  aw.takeoff() - 起飞无人机
-
-  aw.land() - 无人机着陆
-
-  aw.get_drone_position() -> [x,y,z]
-
-  aw.fly_to([x,y,z]) - 飞到目标点（NED 已封装）
-
-  aw.get_position(object_name) -> [x,y,z]
-
-  ```
+```text
+aw.takeoff() - 起飞无人机
+aw.land() - 无人机着陆
+aw.get_drone_position() -> [x,y,z]
+aw.fly_to([x,y,z]) - 飞到目标点（NED 已封装）
+aw.get_position(object_name) -> [x,y,z]
+```
 
 - 方式对比（要点）
 
@@ -458,35 +350,23 @@
 
 - **示例（节选，`prompts/aisim_lession24.txt`）**
 
-  ```text
+```text
+以下函数可用：
+aw.takeoff()；aw.land()；aw.get_drone_position()->[x,y,z]；
+aw.fly_to([x,y,z])；aw.get_position(object_name)->[x,y,z]；aw.set_yaw(yaw_deg)
 
-  以下函数可用：
+对象映射（中文→英文）：
+汽车→car；风力发电机1→turbine1；太阳能电池板→solarpanels；塔1→tower1 …
 
-  aw.takeoff()；aw.land()；aw.get_drone_position()->[x,y,z]；
+坐标/运动规则：
+使用 NED；向上飞 Z 减小；YZ 平面相对位移可用三角函数计算
 
-  aw.fly_to([x,y,z])；aw.get_position(object_name)->[x,y,z]；aw.set_yaw(yaw_deg)
+输出格式：
+```
 
-  
-
-  对象映射（中文→英文）：
-
-  汽车→car；风力发电机1→turbine1；太阳能电池板→solarpanels；塔1→tower1 …
-
-  
-
-  坐标/运动规则：
-
-  使用 NED；向上飞 Z 减小；YZ 平面相对位移可用三角函数计算
-
-  
-
-  输出格式：
-
-  ```python
-
-  aw.takeoff()
-
-  ```
+```python
+aw.takeoff()
+```
 
 - **加载方式**
 
@@ -506,67 +386,39 @@
 
 - **Agent 封装（`airsim_agent.py`）**
 
-  ```python
+```python
+from openai import OpenAI
 
-  from openai import OpenAI
+class AirSimAgent:
+    def __init__(self, system_prompts="system_prompts/airsim_basic_cn.txt",
+                   knowledge_prompt="prompts/aisim_basic_cn.txt", chat_history=None):
+        self.client = OpenAI(base_url="https://ark.cn-beijing.volces.com/api/v3", api_key=API_KEY)
+        self.chat_history = []
+        # 省略：载入 system 与知识库提示
 
-  
+    def ask(self, prompt: str) -> str:
+        # 省略：构造 messages 并调用 chat.completions.create
+        ...
 
-  class AirSimAgent:
+    def extract_python_code(self, content: str) -> str|None:
+        # 同上文
+        ...
 
-      def __init__(self, system_prompts="system_prompts/airsim_basic_cn.txt",
-
-                   knowledge_prompt="prompts/airsim_basic_cn.txt", chat_history=None):
-
-          self.client = OpenAI(base_url="https://ark.cn-beijing.volces.com/api/v3", api_key=API_KEY)
-
-          self.chat_history = []
-
-          # 省略：载入 system 与知识库提示
-
-  
-
-      def ask(self, prompt: str) -> str:
-
-          # 省略：构造 messages 并调用 chat.completions.create
-
-          ...
-
-  
-
-      def extract_python_code(self, content: str) -> str|None:
-
-          # 同上文
-
-          ...
-
-  
-
-      def process(self, command: str, run_python_code=False) -> str|None:
-
-          resp = self.ask(command)
-
-          code = self.extract_python_code(resp)
-
-          if run_python_code and code:
-
-              exec(code)
-
-          return code
-
-  ```
+    def process(self, command: str, run_python_code=False) -> str|None:
+        resp = self.ask(command)
+        code = self.extract_python_code(resp)
+        if run_python_code and code:
+            exec(code)
+        return code
+```
 
 - **飞到汽车上方（示例）**
 
-  ```python
-
-  car_pos = aw.get_position("car")
-
-  target = [car_pos[0], car_pos[1], car_pos[2] - 3]  # NED：上方 3m -> Z 减小
-
-  aw.fly_to(target)
-
-  ```
+```python
+car_pos = aw.get_position("car")
+target = [car_pos[0], car_pos[1], car_pos[2] - 3]  # NED：上方 3m -> Z 减小
+aw.fly_to(target)
+```
 
 - **注意事项**
 
@@ -675,39 +527,22 @@
 ### 4.2 对象/概念映射（静态范式）
 
 ```python
-
 # 静态映射（示例）
-
 OBJECTS = {
-
   "turbine1": "UE_Turbine_A",
-
   "turbine2": "UE_Turbine_B",
-
   "solarpanels": "UE_Solar_Array",
-
   "car": "UE_Car_A",
-
 }
 
-  
-
 def resolve_position(env, name: str) -> list[float]:
-
     """根据通用名称解析环境内部对象并返回位姿[x,y,z]"""
-
     query = OBJECTS[name] + ".*"
-
     cand = []
-
     while not cand:
-
         cand = env.list_objects(query)
-
     pose = env.get_pose(cand[0])
-
     return [pose.x, pose.y, pose.z]
-
 ```
 
 
@@ -717,29 +552,17 @@ def resolve_position(env, name: str) -> list[float]:
 
 这是最直接的多模态应用，将无人机摄像头捕获的图像交由视觉语言模型（VLM）进行理解，可以用于场景描述、目标清点等任务。
 ```python
-
 # 视觉：拍图→VLM
-
 img = camera.capture()  # bytes
-
 b64 = base64.b64encode(img).decode()
-
 resp = llm.chat.completions.create(
-
   model="vision-model",
-
   messages=[{"role":"user","content":[
-
     {"type":"text","text":"列出清晰可见目标"},
-
     {"type":"image_url","image_url":{"url":f"data:image/png;base64,{b64}"}}]}],
-
   temperature=0.01
-
 )
-
 print(resp.choices[0].message.content)  # 目标列表
-
 ```
 
 #### 视觉：深度相机定位
@@ -763,92 +586,51 @@ print(resp.choices[0].message.content)  # 目标列表
 
 5. 利用 `d_plane` 和 `d_cam`，通过三角关系计算出目标相对于相机中心线的偏航角。
 ```python
-
 # 视觉：单目深度估计 → 距离/角度
-
 scene, depth_planar, depth_persp = sensor.capture_multi()
-
 (xmin,ymin,xmax,ymax) = detect_bbox(scene)
-
 cx, cy = (xmin+xmax)//2, (ymin+ymax)//2
-
 d_plane = depth_planar[cy, cx]; d_cam = depth_persp[cy, cx]
-
 angle = math.degrees(math.acos(max(1e-6, min(1.0, d_plane/max(1e-6, d_cam)))))
-
 angle = -angle if cx < scene.shape[1]/2 else angle
-
 result = {"name": "target", "distance": float(d_cam), "angle_deg": float(angle)}
-
 ```
 
 **双目定位原理**
 尽管 AirSim 提供了捷径，了解传统的双目定位原理依然重要，因为它在真实世界的机器人中广泛应用。其核心是模拟人类双眼，通过两个有固定间距（**基线 Baseline**）的相机拍摄同一场景。同一物体在左右图像中的水平像素位置差称为**视差 (Disparity)**。物体越近，视差越大。根据相机**焦距 (Focal Length)**、基线和测得的视差，利用公式 `深度 = (焦距 * 基线) / 视差` 即可计算深度。
 
 ```python
-
 # 视觉：双目定位（Stereo Localization）
-
 # 假设双目相机参数已知（来自 settings.json 或标定）
-
 FOCAL_LENGTH = 320  # 焦距（像素单位）
-
 BASELINE = 0.25     # 基线，即双目相机间距（米）
 
-  
-
 # 1. 获取左右相机图像
-
 responses = client.simGetImages([
-
     airsim.ImageRequest("front_left", airsim.ImageType.Scene),
-
     airsim.ImageRequest("front_right", airsim.ImageType.Scene)
-
 ])
-
 img_left = cv2.imdecode(np.frombuffer(responses[0].image_data_uint8, np.uint8), 1)
-
 img_right = cv2.imdecode(np.frombuffer(responses[1].image_data_uint8, np.uint8), 1)
 
-  
-
 # 2. 在左图检测目标，获得其中心点 (cx_left, cy)
-
 (xmin, ymin, xmax, ymax) = detect_bbox(img_left)
-
 cx_left, cy = (xmin + xmax) // 2, (ymin + ymax) // 2
 
-  
-
 # 3. 在右图中找到对应点 (cx_right, cy)（需立体匹配算法）
-
 cx_right = find_corresponding_point(img_left, img_right, (cx_left, cy))
 
-  
-
 # 4. 计算视差和深度
-
 disparity = cx_left - cx_right
-
 if disparity > 0:
-
     depth = (FOCAL_LENGTH * BASELINE) / disparity
 
-  
-
     # 5. 反算三维坐标 (相对于左相机)
-
     X = (cx_left - img_left.shape[1] / 2) * depth / FOCAL_LENGTH
-
     Y = (cy - img_left.shape[0] / 2) * depth / FOCAL_LENGTH
-
     Z = depth
-
     result = {"name": "target", "position_relative": [X, Y, Z]}
-
 else:
-
     result = None
 ```
 
@@ -905,75 +687,42 @@ else:
 ### 5.5 最小实现示例
 
 ```python
-
 # 感知与实例化
-
 dets = detect("wind turbine, car, tower")            # [{cls,bbox,feat,pose?}, ...]
-
 tracks = tracker.update(dets)                        # [{cls,reid,pose}, ...]
 
-  
-
 # 在线绑定（首次见面分配实例ID）
-
 for t in tracks:
-
     if t.reid not in memory:
-
         num = sum(v["cls"] == t.cls for v in memory.values()) + 1
-
         memory[t.reid] = {"id": f"{t.cls}#{num}", "cls": t.cls, "pose": t.pose,
-
                           "aliases": [], "last_seen": now()}
 
-  
-
 # 指令解析为约束
-
 cons = parse_constraints("左边第二个风机，上方3米")   # {"cls":"wind_turbine","order":"left@2","offset":{"z":-3}}
 
-  
-
 # 实例选择或澄清
-
 cand = select(memory, cons)                          # 结合方位/距离/外观筛选
-
 if len(cand) != 1:
-
     ask_user_disambiguation(preview(cand))           # 附缩略图/距离/方位
-
 else:
-
     p = cand[0]["pose"]
-
     aw.fly_to([p.x, p.y, p.z - 3])                   # NED：上方3m
-
 ```
 
 ### 5.6 世界状态内存示例
 
 ```json
-
 {
-
   "id": "car#1",
-
   "class": "car",
-
   "name_aliases": ["汽车", "那辆红色车"],
-
   "pose_ned": [12.0, -3.5, -1.2],
-
   "bbox_2d": [100, 200, 240, 360],
-
   "reid": "2f91...c8",
-
   "last_seen": 1736390000,
-
   "relations": {"near": ["tower#1"], "left_of": ["turbine#1"]}
-
 }
-
 ```
 
 
@@ -999,183 +748,96 @@ else:
   - 使用 `@tool` 装饰器、类型提示和结构化文档字符串。
 
 ```python
-
 # smolagents 的 @tool 或自定义装饰器
-
 from smolagents import tool
-
 from typing import Tuple
 
-  
-
 # 对象映射字典
-
 objects_dict = {
-
     "可乐": "airsim_coca",
-
     "小鸭子": "airsim_duck",
-
 }
 
-  
-
 @tool
-
 def get_position(object_name: str) -> Tuple[float, float, float, float]:
-
     """
-
     获取指定对象的位置与偏航角。
 
-  
-
     Args:
-
         object_name (str): 需查询的对象名称（中文）。
 
-  
-
     Returns:
-
         Tuple[float, float, float, float]: 包含三维坐标（x,y,z）与偏航角（角度制）的元组。
-
     """
-
     # ... 实现代码 ...
-
     query_string = objects_dict[object_name] + ".*"
-
     # ...
-
     return [pose.position.x_val, pose.position.y_val, pose.position.z_val, yaw_degree]
 
-  
-
 @tool
-
 def fly_to(point: Tuple[float, float, float, float]) -> str:
-
     """
-
     控制无人机飞至目标点。
 
-  
-
     Args:
-
         point (Tuple[float, float, float, float]): 目标点，含三维坐标（x,y,z）与偏航角（角度制）。
 
-  
-
     Returns:
-
         str: 成功状态描述，如 "成功"。
-
     """
-
     # ... 实现代码，含 NED 坐标转换 ...
-
     return "成功"
-
 ```
 
 - **第二步：编写知识库生成脚本（`generate_kb.py`）**
 
   - 使用 `inspect` 解析模块，`docstring_parser` 解析文档。
-
 ```python
-
 import inspect
-
 import docstring_parser
-
 import airsim_smol_wrapper as tools_module # 导入功能模块
 
-  
-
 def build_knowledge_base():
-
     functions_info = []
-
     # 遍历模块成员
-
     for name, member in inspect.getmembers(tools_module):
-
         # 检查是否为被 @tool 装饰的函数
-
         if inspect.isfunction(member) and hasattr(member, '_is_tool'):
-
             # 解析函数签名与文档
-
             sig = inspect.signature(member)
-
             docstring = docstring_parser.parse(member.__doc__)
 
-  
-
             # 提取信息
-
             params = [f"{p.name}: {p.annotation}" for p in sig.parameters.values()]
-
             func_info = {
-
                 "name": name,
-
                 "params_str": ", ".join(params),
-
                 "return_type": sig.return_annotation,
-
                 "description": docstring.short_description,
-
                 "args": [{"name": p.arg_name, "desc": p.description} for p in docstring.params]
-
             }
-
             functions_info.append(func_info)
 
-  
-
     # 读取对象映射
-
     object_mapping = tools_module.objects_dict
 
-  
-
     # 使用模板生成 Markdown (此处用 f-string 简化)
-
     kb_md = "## 可用函数\n\n"
-
     for func in functions_info:
-
         kb_md += f"- **{func['name']}**(`{func['params_str']}`) -> `{func['return_type']}`\n"
-
         kb_md += f"  - **描述**: {func['description']}\n"
-
         for arg in func['args']:
-
             kb_md += f"  - **参数** `{arg['name']}`: {arg['desc']}\n"
-
     kb_md += "\n## 对象映射（中文→内部名）\n\n"
-
     for key, value in object_mapping.items():
-
         kb_md += f"- `{key}` → `{value}`\n"
 
-  
-
     # 写入文件
-
     with open("KNOWLEDGE_BASE.md", "w", encoding="utf-8") as f:
-
         f.write(kb_md)
 
-  
-
 if __name__ == "__main__":
-
     build_knowledge_base()
-
 ```
 
 ### 6.3 示例输出（生成的 `KNOWLEDGE_BASE.md`）
@@ -1187,18 +849,14 @@ if __name__ == "__main__":
   - **描述**: 获取指定对象的位置与偏航角。
 
   - **参数** `object_name`: 需查询的对象名称（中文）。
-
 - **fly_to**(`point: typing.Tuple[float, float, float, float]`) -> `<class 'str'>`
 
   - **描述**: 控制无人机飞至目标点。
 
   - **参数** `point`: 目标点，含三维坐标（x,y,z）与偏航角（角度制）。
-
 ## 对象映射（中文→内部名）
 - `可乐` → `airsim_coca`
-
 - `小鸭子` → `airsim_duck`
-
 ```
 
 ### 6.4 可能性
@@ -1281,35 +939,20 @@ if __name__ == "__main__":
   4. **代码生成**
 
 ```python
-
 # Agent 生成并执行的代码
-
 duck_found = False
-
 for _ in range(12): # 360/30 = 12 steps
-
     aw.turn_left(30) # 假设 aw.turn_left() 已封装
-
     time.sleep(1) # 等待姿态稳定
-
     # 调用视觉检测工具
-
     detected_objects, locations = aw.detect("duck")
-
     if "duck" in detected_objects:
-
         print(f"找到小鸭子，位置信息: {locations[0]}")
-
         duck_found = True
-
         break
 
-  
-
 if not duck_found:
-
     print("在当前位置附近未找到小鸭子。")
-
 ```
 
 ### 7.4 示例2：分解复杂指令（“检查第一个风力发电机”）
@@ -1339,51 +982,28 @@ if not duck_found:
   4. **代码生成**
 
 ```python
-
 # Agent 生成并执行的代码
-
 import math
 
-  
-
 # Step a: 获取目标位置
-
 target_pos = aw.get_position("turbine1")
-
 cx, cy, cz = target_pos[0], target_pos[1], target_pos[2]
 
-  
-
 # Step b & c: 生成环绕路径
-
 radius = 15.0
-
 height = cz - 20 # 假设在目标上方20米检查
-
 waypoints = []
-
 for i in range(8): # 8个航点
-
     angle = math.radians(i * 45) # 45度间隔
-
     x = cx + radius * math.cos(angle)
-
     y = cy + radius * math.sin(angle)
-
     waypoints.append(airsim.Vector3r(x, y, height))
 
-  
-
 # Step d & e: 执行飞行
-
 aw.fly_to(waypoints[0])
-
 aw.fly_path(waypoints + [waypoints[0]]) # 飞一圈并回到起点
 
-  
-
 print("已完成对风力发电机1的环绕检查。")
-
 ```
 
 ### 7.5 总结：代码智能体的价值
@@ -1424,7 +1044,6 @@ print("已完成对风力发电机1的环绕检查。")
 6.  **（可选）语音合成 (TTS - Text to Speech)**：将执行结果或需要澄清的问题，合成为语音，向用户播报，形成交互闭环。
 
 ```mermaid
-
 graph TD
     A[用户语音输入] -->|麦克风/UI| B(语音识别 ASR)
     B -->|文本指令| C{代码智能体 LLM Agent}
@@ -1438,97 +1057,52 @@ graph TD
     E -- 执行状态 --> C
     C -->|生成回复文本| H(语音合成 TTS)
     H -->|语音输出| I[用户]
-
 ```
 
 ### 8.4 案例
 
 ```python
-
 from fake.user_app.recognition_module import process_mp3
-
 from fake.five.user_app.voice_module import process_text2mp3
-
 from fake.four.agent_app.airsim_agent import AirSimAgent # 假设使用一个统一的Agent
 
-  
-
 # --- 初始化 ---
-
 # 1. 初始化代码智能体，加载最全的知识库
-
 #    该知识库应包含飞行控制、多模态视觉工具、对象映射等
-
 print("正在初始化智能体...")
-
 my_agent = AirSimAgent(knowledge_prompt="prompts/knowledge_base_full.txt")
 
-  
-
 # --- 模拟一次完整的语音交互 ---
-
 # 2. 语音输入 (在真实应用中，这会来自麦克风录音)
-
 #    这里我们使用一个预先录制好的音频文件
-
 audio_file_url = "https://your-online-storage/fly_to_car_and_look.mp3"
-
 print(f"接收到语音指令，正在识别...")
 
-  
-
 # 3. 语音识别 (ASR)
-
 command_text = process_mp3(audio_file_url)
-
 print(f"识别结果: '{command_text}'")
 
-  
-
 # 4. (可选) TTS 确认指令
-
 feedback_text = f"收到指令: {command_text}。正在规划..."
-
 process_text2mp3(feedback_text)
-
 # play_audio("feedback.mp3") # 播放确认语音
 
-  
-
 # 5. 代码智能体处理指令
-
 #    Agent会进行任务分解和代码生成
-
 print("智能体正在处理指令...")
-
 # 设置为 True 以直接执行生成的代码
-
 generated_code = my_agent.process(command_text, run_python_code=True)
 
-  
-
 print("\n--- 智能体生成的代码 ---")
-
 print(generated_code)
-
 print("------------------------\n")
 
-  
-
 # 6. (可选) TTS 报告任务结果
-
 #    真实的 Agent 会根据代码执行的返回结果来生成报告
-
 final_report_text = "任务已完成。已到达汽车上方并完成观察。"
-
 process_text2mp3(final_report_text)
-
 # play_audio("report.mp3") # 播放最终报告
 
-  
-
 print("语音指令流程结束。")
-
-  
 
 ```
