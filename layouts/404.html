@@ -1,7 +1,118 @@
 {{ define "main" -}}
-<div class="td-content">
-  <h1>Not found</h1>
-  <p>Oops! This page doesn't exist. Try going back to the <a href="{{ "" | relURL }}">home page</a>.</p>
-  <p>You can learn how to make a 404 page like this in <a href="https://gohugo.io/templates/404/">Custom 404 Pages</a>.</p>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
+
+<script>
+// 为404页面的导航栏添加透明效果
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.td-navbar');
+    if (navbar) {
+        navbar.classList.add('td-navbar-cover');
+    }
+});
+</script>
+
+<div class="td-cover-block td-cover-block--height-full position-relative overflow-hidden">
+  <div class="container-fluid td-overlay__inner">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-center">
+          <a class="btn btn-lg btn-transparent me-3 mb-4" href="{{ "" | relURL }}">
+            返回首页 <i class="fas fa-home ms-2"></i>
+          </a>
+          <a class="btn btn-lg btn-transparent me-3 mb-4" href="Docsy/docs/">
+            查看文档 <i class="fas fa-book ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<style>
+/* 404页面全屏背景样式 */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+.td-cover-block {
+  background-image: url('/Docsy/images/404/404.jpg') !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  width: 100vw !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: -1 !important;
+}
+
+.td-cover-block .td-overlay__inner {
+  height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* 确保main容器也占满全屏 */
+main {
+  min-height: 100vh !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* 消除所有可能的容器边距 */
+.container, .container-fluid {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.row {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.col-12 {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* 按钮居中显示 */
+.text-center {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 额外的全屏保证 */
+* {
+  box-sizing: border-box !important;
+}
+</style>
+
+<script src="/Docsy/js/time-display.js"></script>
 {{- end }}
