@@ -1,0 +1,80 @@
+{{ define "main" }}
+<div class="td-content">
+  <h1>{{ .Title }}</h1>
+  
+  {{ if .Content }}
+  <div class="blog-intro">
+    {{ .Content }}
+  </div>
+  {{ end }}
+
+  {{ if eq .Section "blog" }}
+    {{ $subsections := where .Site.Sections "Parent" . }}
+    {{ if $subsections }}
+      <div class="blog-collections mt-4">
+        <div class="row">
+          {{ range $subsections.ByWeight }}
+            <div class="col-md-6 col-lg-4 mb-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="{{ .RelPermalink }}" class="stretched-link">{{ .Title }}</a>
+                  </h5>
+                  <p class="card-text">
+                    {{ if .Params.description }}
+                      {{ .Params.description }}
+                    {{ else if .Summary }}
+                      {{ .Summary }}
+                    {{ else }}
+                      {{ .Content | truncate 100 }}
+                    {{ end }}
+                  </p>
+                  <small class="text-muted">
+                    {{ len .Pages }} {{ i18n "articles" | default "articles" }}
+                  </small>
+                </div>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  {{ end }}
+
+  <div class="blog-posts mt-4">
+    {{ $paginator := .Paginate .Pages }}
+    {{ if gt (len $paginator.Pages) 0 }}
+      {{ range $paginator.Pages }}
+        <article class="blog-post-item mb-4">
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <div class="blog-post-meta text-muted mb-2">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+            {{ if .Params.categories }}
+              {{ range .Params.categories }}
+                <span class="badge bg-primary ms-2">{{ . }}</span>
+              {{ end }}
+            {{ end }}
+            {{ if .Params.tags }}
+              {{ range first 3 .Params.tags }}
+                <span class="badge bg-secondary ms-1">{{ . }}</span>
+              {{ end }}
+            {{ end }}
+          </div>
+          <p>
+            {{ if .Params.summary }}
+              {{ .Params.summary }}
+            {{ else if .Params.description }}
+              {{ .Params.description }}
+            {{ else }}
+              {{ .Summary }}
+            {{ end }}
+          </p>
+          
+        </article>
+      {{ end }}
+
+      {{ template "_internal/pagination.html" . }}
+    {{ end }}
+  </div>
+</div>
+{{ end }}

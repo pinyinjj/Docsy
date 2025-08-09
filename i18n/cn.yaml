@@ -142,3 +142,9 @@
 
 - id: "ui_in"
   translation: "at"
+
+- id: "ui_pager_prev"
+  translation: "上一页"
+
+- id: "ui_pager_next"
+  translation: "下一页"
