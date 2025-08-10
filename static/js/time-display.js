@@ -1,21 +1,32 @@
 // 时间显示功能
 function createTimeDisplay() {
+    // 检查是否已经存在时间显示元素
+    if (document.getElementById('time-display')) {
+        return; // 如果已存在，不重复创建
+    }
+
     // 创建时间显示元素
     const timeDisplay = document.createElement('div');
     timeDisplay.id = 'time-display';
-    timeDisplay.style.cssText = `
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        color: rgba(255, 255, 255, 0.2);
-        padding: 10px 15px;
-        font-family: 'Playwrite PL', sans-serif;
-        font-size: 14px;
-        font-weight: 300;
-        z-index: 1000;
-        text-align: right;
-        line-height: 1.8;
-    `;
+    
+    // 使用简单的样式设置
+    timeDisplay.style.position = 'absolute';
+    timeDisplay.style.bottom = '20px';
+    timeDisplay.style.right = '20px';
+    timeDisplay.style.color = 'rgba(255, 255, 255, 0.2)';
+    timeDisplay.style.padding = '10px 15px';
+    timeDisplay.style.fontFamily = "'Playwrite PL', sans-serif";
+    timeDisplay.style.fontSize = '14px';
+    timeDisplay.style.fontWeight = '300';
+    timeDisplay.style.zIndex = '9999';
+    timeDisplay.style.textAlign = 'right';
+    timeDisplay.style.lineHeight = '1.8';
+    timeDisplay.style.pointerEvents = 'none';
+    timeDisplay.style.transition = 'opacity 0.3s ease';
+    timeDisplay.style.backgroundColor = 'transparent';
+    timeDisplay.style.border = 'none';
+    timeDisplay.style.outline = 'none';
+    timeDisplay.style.boxShadow = 'none';
 
     // 更新时间函数
     function updateTime() {
@@ -28,7 +39,7 @@ function createTimeDisplay() {
         const seconds = now.getSeconds().toString().padStart(2, '0');
         
         // 使用数字格式显示日期，时间和日期分两行显示
-        timeDisplay.innerHTML = `${hours}:${minutes}<div style="font-size: 12px;">${month}/${day}/${year}</div>`;
+        timeDisplay.innerHTML = `${hours}:${minutes}<div style="font-size: 12px; margin-top: 2px;">${month}/${day}/${year}</div>`;
     }
 
     // 初始更新时间
@@ -37,12 +48,11 @@ function createTimeDisplay() {
     // 每秒更新时间
     setInterval(updateTime, 1000);
     
-    // 添加到 cover 区块
+    // 添加到页面
     const coverBlock = document.querySelector('.td-cover-block');
     if (coverBlock) {
         coverBlock.appendChild(timeDisplay);
     } else {
-        // 如果找不到 cover 区块，则添加到 body
         document.body.appendChild(timeDisplay);
     }
 }

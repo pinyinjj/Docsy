@@ -49,4 +49,3 @@ Welcome to my personal space where I share my journey in technology and developm
 
 
 <script src="/Docsy/js/random-background.js"></script>
-<script src="/Docsy/js/time-display.js"></script>

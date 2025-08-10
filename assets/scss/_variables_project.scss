@@ -325,6 +325,102 @@
     margin-bottom: 2rem !important;
 }
 
+/* 时间显示样式 */
+#time-display {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    font-family: 'Playwrite PL', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    z-index: 9999;
+    text-align: right;
+    line-height: 1.8;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/* 页脚样式调整 - 白色主题 */
+.td-footer {
+    padding-top: 1rem !important;
+    padding-bottom: 0.8rem !important;
+    min-height: auto !important;
+    height: auto !important;
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    border-top: 1px solid #e9ecef !important;
+}
+
+.td-footer .container-fluid {
+    padding-top: 0.05rem !important;
+    padding-bottom: 0.05rem !important;
+}
+
+.td-footer .row {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.td-footer .row.mx-md-2 {
+    padding-top: 0.01rem !important;
+    padding-bottom: 0.01rem !important;
+}
+
+.td-footer__left,
+.td-footer__right,
+.td-footer__center {
+    padding-top: 0.01rem !important;
+    padding-bottom: 0.01rem !important;
+}
+
+.td-footer__links-list {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.td-footer__links-item {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.td-footer__links-item a {
+    color: #666666 !important;
+    transition: color 0.3s ease !important;
+}
+
+.td-footer__links-item a:hover {
+    color: #333333 !important;
+}
+
+.td-footer__copyright {
+    font-size: 0.75rem !important;
+    line-height: 1 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    color: #666666 !important;
+}
+
+.td-footer__copyright a {
+    color: #666666 !important;
+    text-decoration: none !important;
+}
+
+.td-footer__copyright a:hover {
+    color: #333333 !important;
+    text-decoration: underline !important;
+}
+
+
+
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .contact-info-container {

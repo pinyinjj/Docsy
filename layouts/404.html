@@ -2,6 +2,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
 
 <script>
 // 为404页面的导航栏添加透明效果
@@ -14,18 +15,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <div class="td-cover-block td-cover-block--height-full position-relative overflow-hidden">
-  <div class="container-fluid td-overlay__inner">
-    <div class="row">
-      <div class="col-12">
-        <div class="text-center">
-          <a class="btn btn-lg btn-transparent me-3 mb-4" href="{{ "" | relURL }}">
-            返回首页 <i class="fas fa-home ms-2"></i>
-          </a>
-          <a class="btn btn-lg btn-transparent me-3 mb-4" href="Docsy/docs/">
-            查看文档 <i class="fas fa-book ms-2"></i>
-          </a>
-        </div>
-      </div>
+  <!-- 404内容容器，包含404文字和按钮 -->
+  <div class="not-found-container">
+    <div class="not-found-text">
+      <h1>404</h1>
+      <p>Not Found</p>
+    </div>
+    
+    <div class="not-found-buttons">
+      <a class="btn btn-lg btn-transparent me-3 mb-4" href="{{ "" | relURL }}">
+        Home <i class="fas fa-home ms-2"></i>
+      </a>
+      <a class="btn btn-lg btn-transparent me-3 mb-4" href="Docsy/docs/">
+        Docs <i class="fas fa-book ms-2"></i>
+      </a>
     </div>
   </div>
 </div>
@@ -39,32 +42,112 @@ html, body {
   overflow-x: hidden !important;
 }
 
+/* 覆盖页面左右两侧的边框 */
+.td-main {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.td-content {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.container-fluid {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
 .td-cover-block {
   background-image: url('/Docsy/images/404/404.jpg') !important;
   background-size: cover !important;
   background-position: center top !important;
   background-repeat: no-repeat !important;
-  background-attachment: fixed !important;
+  background-attachment: scroll !important;
   min-height: 100vh !important;
   height: 100vh !important;
-  width: 100vw !important;
-  position: fixed !important;
+  width: 100% !important;
+  position: relative !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  bottom: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
-  z-index: -1 !important;
 }
 
-.td-cover-block .td-overlay__inner {
-  height: 100vh !important;
+/* 404内容容器样式 */
+.not-found-container {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  text-align: center !important;
+  background: transparent !important;
+  padding: 1rem 2.5rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(15px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
+  transition: all 0.3s ease !important;
+}
+
+
+/* 404 not found 文字样式 */
+.not-found-text {
+  margin-bottom: 3rem !important;
+}
+
+.not-found-text h1 {
+  font-size: 6rem !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  color: #fff !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.not-found-text p {
+  font-size: 2rem !important;
+  font-weight: 400 !important;
+  margin: 0 !important;
+  color: #fff !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 按钮容器样式 */
+.not-found-buttons {
   display: flex !important;
-  align-items: center !important;
   justify-content: center !important;
-  position: relative !important;
-  z-index: 1 !important;
+  gap: 1rem !important;
+  flex-wrap: wrap !important;
+}
+
+/* 按钮样式 - 移除外框和背景 */
+.not-found-buttons .btn {
+  background: transparent !important;
+  border: none !important;
+  color: #fff !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.not-found-buttons .btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* 确保main容器也占满全屏 */
@@ -76,41 +159,25 @@ main {
   width: 100% !important;
 }
 
-/* 消除所有可能的容器边距 */
-.container, .container-fluid {
+/* 只针对404页面的容器，不影响页脚 */
+.td-cover-block .container, 
+.td-cover-block .container-fluid {
   margin: 0 !important;
   padding: 0 !important;
   max-width: none !important;
   width: 100% !important;
 }
 
-.row {
+.td-cover-block .row {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
 }
 
-.col-12 {
+.td-cover-block .col-12 {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
-}
-
-/* 按钮居中显示 */
-.text-center {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  z-index: 10 !important;
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* 额外的全屏保证 */
-* {
-  box-sizing: border-box !important;
 }
 </style>
 

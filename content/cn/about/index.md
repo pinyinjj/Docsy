@@ -48,4 +48,3 @@ menu: {main: {weight: 10}}
 {{% /blocks/section %}}
 
 <script src="/Docsy/js/random-background.js"></script>
-<script src="/Docsy/js/time-display.js"></script>
