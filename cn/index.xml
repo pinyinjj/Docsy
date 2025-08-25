@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zed的文档网站 on Zed</title><link>https://pinyinjj.github.io/Docsy/cn/</link><description>Recent content in Zed的文档网站 on Zed</description><generator>Hugo</generator><language>cn</language><atom:link href="https://pinyinjj.github.io/Docsy/cn/index.xml" rel="self" type="application/rss+xml"/><item><title>自定义NiceGUI中Leaflet的marker样式和旋转</title><link>https://pinyinjj.github.io/Docsy/cn/blog/08/25/2025/%E8%87%AA%E5%AE%9A%E4%B9%89nicegui%E4%B8%ADleaflet%E7%9A%84marker%E6%A0%B7%E5%BC%8F%E5%92%8C%E6%97%8B%E8%BD%AC/</link><pubDate>Mon, 25 Aug 2025 00:00:00 +0000</pubDate><guid>https://pinyinjj.github.io/Docsy/cn/blog/08/25/2025/%E8%87%AA%E5%AE%9A%E4%B9%89nicegui%E4%B8%ADleaflet%E7%9A%84marker%E6%A0%B7%E5%BC%8F%E5%92%8C%E6%97%8B%E8%BD%AC/</guid><description>在 NiceGUI 框架中实现 JavaScript Bridge 架构，通过 Python 封装 JavaScript 代码，实现对 Leaflet 地图插件的样式定制和功能扩展。涵盖架构设计、核心实现、使用示例、扩展性设计等完整技术方案。</description></item><item><title>Airsim Agent 大模型驱动无人机</title><link>https://pinyinjj.github.io/Docsy/cn/blog/08/08/2025/airsim-agent-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A9%B1%E5%8A%A8%E6%97%A0%E4%BA%BA%E6%9C%BA/</link><pubDate>Fri, 08 Aug 2025 00:00:00 +0000</pubDate><guid>https://pinyinjj.github.io/Docsy/cn/blog/08/08/2025/airsim-agent-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A9%B1%E5%8A%A8%E6%97%A0%E4%BA%BA%E6%9C%BA/</guid><description>AirSim 仿真环境搭建 → API 封装设计 → 大模型集成 → 知识库构建 → 智能体开发 → 语音控制，完整的无人机智能控制系统开发实战。涵盖环境配置、Python SDK、OpenAI 调用、提示工程、多模态感知等核心技术栈。</description></item><item><title>关于我</title><link>https://pinyinjj.github.io/Docsy/cn/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://pinyinjj.github.io/Docsy/cn/about/</guid><description>&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
+ &lt;div class="col-12">
+ &lt;div class="container td-overlay__inner">
+ &lt;div class="text-center">
+ 
+ 
+ &lt;div class="pt-3 lead">
+ 
+ &lt;div class="contact-info-container">
+ &lt;div class="contact-card">
+ &lt;div class="contact-icon">
+ &lt;i class="fab fa-qq">&lt;/i>
+ &lt;/div>
+ &lt;div class="contact-details">
+ &lt;p class="contact-value">914640123&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="contact-card">
+ &lt;div class="contact-icon">
+ &lt;i class="fab fa-weixin">&lt;/i>
+ &lt;/div>
+ &lt;div class="contact-details">
+ &lt;p class="contact-value">miao23333QAQ&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="contact-card">
+ &lt;div class="contact-icon">
+ &lt;i class="fas fa-envelope">&lt;/i>
+ &lt;/div>
+ &lt;div class="contact-details">
+ &lt;p class="contact-value">workworkzed@gmail.com&lt;/p>
+ &lt;/div>
+ &lt;/div>
+&lt;/div>
+&lt;p>&lt;a class="btn btn-link text-light" href="#td-block-1" aria-label="阅读">&lt;i class="fa-solid fa-circle-chevron-down" style="font-size: 400%">&lt;/i>&lt;/a>&lt;/p>
+ 
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ 
+&lt;/section>
+
+&lt;div>&lt;a id="td-block-1" class="td-offset-anchor">&lt;/a>&lt;/div>
+&lt;section class="row td-box td-box--primary td-box--height-auto">
+&lt;div class="col">
+&lt;div class="container">
+&lt;h2 id="关于我">关于我&lt;/h2>
+&lt;p>欢迎来到我的个人空间，在这里我分享我在技术和开发方面的旅程。&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/section>
+&lt;script src="https://pinyinjj.github.io/Docsy/js/random-background.js">&lt;/script></description></item><item><title>搜索结果</title><link>https://pinyinjj.github.io/Docsy/cn/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://pinyinjj.github.io/Docsy/cn/search/</guid><description/></item></channel></rss>

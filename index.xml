@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zed's Doc Site on Zed</title><link>https://pinyinjj.github.io/Docsy/</link><description>Recent content in Zed's Doc Site on Zed</description><generator>Hugo</generator><language>en</language><atom:link href="https://pinyinjj.github.io/Docsy/index.xml" rel="self" type="application/rss+xml"/><item><title>About Me</title><link>https://pinyinjj.github.io/Docsy/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://pinyinjj.github.io/Docsy/about/</guid><description>&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
+ &lt;div class="col-12">
+ &lt;div class="container td-overlay__inner">
+ &lt;div class="text-center">
+ 
+ 
+ &lt;div class="pt-3 lead">
+ 
+ &lt;div class="contact-info-container">
+ &lt;div class="contact-card">
+ &lt;div class="contact-icon">
+ &lt;i class="fab fa-qq">&lt;/i>
+ &lt;/div>
+ &lt;div class="contact-details">
+ &lt;p class="contact-value">914640123&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="contact-card">
+ &lt;div class="contact-icon">
+ &lt;i class="fab fa-weixin">&lt;/i>
+ &lt;/div>
+ &lt;div class="contact-details">
+ &lt;p class="contact-value">miao23333QAQ&lt;/p>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="contact-card">
+ &lt;div class="contact-icon">
+ &lt;i class="fas fa-envelope">&lt;/i>
+ &lt;/div>
+ &lt;div class="contact-details">
+ &lt;p class="contact-value">workworkzed@gmail.com&lt;/p>
+ &lt;/div>
+ &lt;/div>
+&lt;/div>
+&lt;p>&lt;a class="btn btn-link text-light" href="#td-block-1" aria-label="Read more">&lt;i class="fa-solid fa-circle-chevron-down" style="font-size: 400%">&lt;/i>&lt;/a>&lt;/p>
+ 
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ 
+&lt;/section>
+
+&lt;div>&lt;a id="td-block-1" class="td-offset-anchor">&lt;/a>&lt;/div>
+&lt;section class="row td-box td-box--primary td-box--height-auto">
+&lt;div class="col">
+&lt;div class="container">
+&lt;h2 id="about-me">About Me&lt;/h2>
+&lt;p>Welcome to my personal space where I share my journey in technology and development.&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/section>
+&lt;script src="https://pinyinjj.github.io/Docsy/js/random-background.js">&lt;/script></description></item><item><title>Search Results</title><link>https://pinyinjj.github.io/Docsy/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://pinyinjj.github.io/Docsy/search/</guid><description/></item></channel></rss>

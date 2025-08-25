@@ -1,0 +1,459 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=cn class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><link rel="shortcut icon" href=/Docsy/favicons/favicon.ico><link rel=apple-touch-icon href=/Docsy/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/Docsy/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/Docsy/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/Docsy/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/Docsy/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/Docsy/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/Docsy/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/Docsy/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/Docsy/favicons/android-192x192.png sizes=192x192><title>自定义NiceGUI中Leaflet的marker样式和旋转 | Zed</title>
+<meta name=description content="在 NiceGUI 框架中实现 JavaScript Bridge 架构，通过 Python 封装 JavaScript 代码，实现对 Leaflet 地图插件的样式定制和功能扩展。涵盖架构设计、核心实现、使用示例、扩展性设计等完整技术方案。"><meta property="og:url" content="https://pinyinjj.github.io/Docsy/cn/blog/08/25/2025/%E8%87%AA%E5%AE%9A%E4%B9%89nicegui%E4%B8%ADleaflet%E7%9A%84marker%E6%A0%B7%E5%BC%8F%E5%92%8C%E6%97%8B%E8%BD%AC/"><meta property="og:site_name" content="Zed"><meta property="og:title" content="自定义NiceGUI中Leaflet的marker样式和旋转"><meta property="og:description" content="在 NiceGUI 框架中实现 JavaScript Bridge 架构，通过 Python 封装 JavaScript 代码，实现对 Leaflet 地图插件的样式定制和功能扩展。涵盖架构设计、核心实现、使用示例、扩展性设计等完整技术方案。"><meta property="og:locale" content="cn"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2025-08-25T00:00:00+00:00"><meta property="article:modified_time" content="2025-08-25T15:59:28+08:00"><meta property="article:tag" content="NiceGUI"><meta property="article:tag" content="JavaScript"><meta property="article:tag" content="Leaflet"><meta property="article:tag" content="无人机"><meta property="article:tag" content="地面站"><meta property="article:tag" content="Python"><meta itemprop=name content="自定义NiceGUI中Leaflet的marker样式和旋转"><meta itemprop=description content="在 NiceGUI 框架中实现 JavaScript Bridge 架构，通过 Python 封装 JavaScript 代码，实现对 Leaflet 地图插件的样式定制和功能扩展。涵盖架构设计、核心实现、使用示例、扩展性设计等完整技术方案。"><meta itemprop=datePublished content="2025-08-25T00:00:00+00:00"><meta itemprop=dateModified content="2025-08-25T15:59:28+08:00"><meta itemprop=wordCount content="2494"><meta itemprop=keywords content="NiceGUI,JavaScript,Leaflet,无人机,地面站,Python"><meta name=twitter:card content="summary"><meta name=twitter:title content="自定义NiceGUI中Leaflet的marker样式和旋转"><meta name=twitter:description content="在 NiceGUI 框架中实现 JavaScript Bridge 架构，通过 Python 封装 JavaScript 代码，实现对 Leaflet 地图插件的样式定制和功能扩展。涵盖架构设计、核心实现、使用示例、扩展性设计等完整技术方案。"><link rel=preload href=/Docsy/scss/main.min.071a34a97139732b75fb614130e317c26e79087deed0e323aa0b80ad95a0ea8e.css as=style integrity="sha256-Bxo0qXE5cyt1+2FBMOMXwm55CH3u0OMjqguArZWg6o4=" crossorigin=anonymous><link href=/Docsy/scss/main.min.071a34a97139732b75fb614130e317c26e79087deed0e323aa0b80ad95a0ea8e.css rel=stylesheet integrity="sha256-Bxo0qXE5cyt1+2FBMOMXwm55CH3u0OMjqguArZWg6o4=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script></head><body class="td-page td-blog"><header><nav class="td-navbar js-navbar-scroll" data-bs-theme=dark><div class="container-fluid flex-column flex-md-row"><a class=navbar-brand href=/Docsy/cn/><span class="navbar-brand__logo navbar-logo"><svg viewBox="0 0 640 640"><path d="M304 70.1C313.1 61.9 326.9 61.9 336 70.1l232 208C577.9 286.9 578.7 302.1 569.8 312 560.9 321.9 545.8 322.7 535.9 313.8L527.9 306.6V511.9c0 35.3000000000001-28.7 64-64 64h-288c-35.3.0-64-28.6999999999999-64-64V306.6L103.9 313.8C94 322.6 78.9 321.8 70 312 61.1 302.2 62 287 71.8 278.1L304 70.1zm16 50.1L160 263.7V512C160 520.8 167.2 528 176 528h48V424c0-39.8 32.2-72 72-72h48c39.8.0 72 32.2 72 72V528h48C472.8 528 480 520.8 480 512V263.7L320 120.3zM272 528h96V424c0-13.3-10.7-24-24-24H296c-13.3.0-24 10.7-24 24V528z"/></svg></span><span class=navbar-brand__name>Zed</span></a><div class="td-navbar-nav-scroll ms-md-auto" id=main_navbar><ul class=navbar-nav><li class=nav-item><a class=nav-link href=/Docsy/cn/about/><span>关于</span></a></li><li class=nav-item><a class=nav-link href=/Docsy/cn/docs/><span>文档</span></a></li><li class=nav-item><a class="nav-link active" href=/Docsy/cn/blog/><span>博客</span></a></li><li class=nav-item><a class=nav-link href=/Docsy/cn/community/><span>碎碎念</span></a></li><li class="nav-item dropdown d-none d-lg-block"><div class=dropdown><a class="nav-link dropdown-toggle" href=# role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false>中文(Chinese)</a><ul class=dropdown-menu><li><a class=dropdown-item href=/Docsy/>English</a></li></ul></div></li></ul></div><div class="d-none d-lg-block"><div class=td-search><div class=td-search__icon></div><input type=search class="td-search__input form-control td-search-input" placeholder=搜索 aria-label=搜索 autocomplete=off></div></div></div></nav></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none"><div id=td-sidebar-menu class=td-sidebar__inner><form class="td-sidebar__search d-flex align-items-center"><div class=td-search><div class=td-search__icon></div><input type=search class="td-search__input form-control td-search-input" placeholder=搜索 aria-label=搜索 autocomplete=off></div><button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type=button data-bs-toggle=collapse data-bs-target=#td-section-nav aria-controls=td-section-nav aria-expanded=false aria-label="Toggle section navigation"></button></form><nav class="td-sidebar-nav collapse" id=td-section-nav><div class="td-sidebar-nav__section nav-item dropdown d-block d-lg-none"><div class=dropdown><a class="nav-link dropdown-toggle" href=# role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false>中文(Chinese)</a><ul class=dropdown-menu><li><a class=dropdown-item href=/Docsy/>English</a></li></ul></div></div><ul class="td-sidebar-nav__section pe-md-3 ul-0"><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docsycnblog-li><a href=/Docsy/cn/blog/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id=m-docsycnblog><span>博客</span></a><ul class=ul-1><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docsycnblogairsim-li><a href=/Docsy/cn/blog/airsim/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsycnblogairsim><span>AirSim</span></a><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsycnblog08082025airsim-agent-e5a4a7e6a8a1e59e8be9a9b1e58aa8e697a0e4babae69cba-li><a href=/Docsy/cn/blog/08/08/2025/airsim-agent-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A9%B1%E5%8A%A8%E6%97%A0%E4%BA%BA%E6%9C%BA/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsycnblog08082025airsim-agent-e5a4a7e6a8a1e59e8be9a9b1e58aa8e697a0e4babae69cba><span>Airsim Agent 大模型驱动无人机</span></a></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docsycnblognicegui-li><a href=/Docsy/cn/blog/nicegui/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsycnblognicegui><span>NiceGUI</span></a><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id=m-docsycnblog08252025e887aae5ae9ae4b989niceguie4b8adleaflete79a84markere6a0b7e5bc8fe5928ce6978be8bdac-li><a href=/Docsy/cn/blog/08/25/2025/%E8%87%AA%E5%AE%9A%E4%B9%89nicegui%E4%B8%ADleaflet%E7%9A%84marker%E6%A0%B7%E5%BC%8F%E5%92%8C%E6%97%8B%E8%BD%AC/ class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id=m-docsycnblog08252025e887aae5ae9ae4b989niceguie4b8adleaflete79a84markere6a0b7e5bc8fe5928ce6978be8bdac><span class=td-sidebar-nav-active-item>自定义NiceGUI中Leaflet的marker样式和旋转</span></a></li></ul></li></ul></li></ul></nav></div></aside><aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none"><div class="td-page-meta ms-2 pb-1 pt-2 mb-0"><a href=https://github.com/pinyinjj/Docsy/tree/main/content/cn/blog/NiceGUI/Leaflet%20custom%20and%20rotate%20markers.md class="td-page-meta--view td-page-meta__view" target=_blank rel=noopener><i class="fa-solid fa-file-lines fa-fw"></i> 查看此页面</a>
+<a href=https://github.com/pinyinjj/Docsy/edit/main/content/cn/blog/NiceGUI/Leaflet%20custom%20and%20rotate%20markers.md class="td-page-meta--edit td-page-meta__edit" target=_blank rel=noopener><i class="fa-solid fa-pen-to-square fa-fw"></i> 编辑此页面</a>
+<a href="https://github.com/pinyinjj/Docsy/new/main/content/cn/blog/NiceGUI?filename=change-me.md&amp;value=---%0Atitle%3A+%22Long+Page+Title%22%0AlinkTitle%3A+%22Short+Nav+Title%22%0Aweight%3A+100%0Adescription%3A+%3E-%0A+++++Page+description+for+heading+and+indexes.%0A---%0A%0A%23%23+Heading%0A%0AEdit+this+template+to+create+your+new+page.%0A%0A%2A+Give+it+a+good+name%2C+ending+in+%60.md%60+-+e.g.+%60getting-started.md%60%0A%2A+Edit+the+%22front+matter%22+section+at+the+top+of+the+page+%28weight+controls+how+its+ordered+amongst+other+pages+in+the+same+directory%3B+lowest+number+first%29.%0A%2A+Add+a+good+commit+message+at+the+bottom+of+the+page+%28%3C80+characters%3B+use+the+extended+description+field+for+more+detail%29.%0A%2A+Create+a+new+branch+so+you+can+preview+your+new+file+and+request+a+review+via+Pull+Request.%0A" class="td-page-meta--child td-page-meta__child" target=_blank rel=noopener><i class="fa-solid fa-pen-to-square fa-fw"></i> 创建子页面</a>
+<a href="https://github.com/pinyinjj/Docsy/issues/new?title=%e8%87%aa%e5%ae%9a%e4%b9%89NiceGUI%e4%b8%adLeaflet%e7%9a%84marker%e6%a0%b7%e5%bc%8f%e5%92%8c%e6%97%8b%e8%bd%ac" class="td-page-meta--issue td-page-meta__issue" target=_blank rel=noopener><i class="fa-solid fa-list-check fa-fw"></i> 创建问题</a>
+<a id=print href=/Docsy/cn/blog/nicegui/_print/><i class="fa-solid fa-print fa-fw"></i> 打印整个章节</a></div><div class=td-toc><nav id=TableOfContents><ul><li><ul><li><a href=#技术栈>技术栈</a></li></ul></li><li><a href=#架构设计>架构设计</a><ul><li><a href=#整体架构图>整体架构图</a></li><li><a href=#文件关联关系>文件关联关系</a></li><li><a href=#数据流图>数据流图</a></li></ul></li><li><a href=#核心实现>核心实现</a><ul><li><a href=#javascript层实现-markerjs>JavaScript层实现 (marker.js)</a></li><li><a href=#python包装器实现-markerpy>Python包装器实现 (marker.py)</a></li><li><a href=#样式系统实现-stylespy>样式系统实现 (styles.py)</a></li></ul></li><li><a href=#使用示例>使用示例</a><ul><li><a href=#批量操作示例>批量操作示例</a></li></ul></li><li><a href=#扩展性设计>扩展性设计</a><ul><li><a href=#新标记类型扩展>新标记类型扩展</a></li><li><a href=#动画效果扩展>动画效果扩展</a></li><li><a href=#事件系统扩展>事件系统扩展</a></li></ul></li><li><a href=#配置管理>配置管理</a><ul><li><a href=#配置层次结构>配置层次结构</a></li><li><a href=#配置示例>配置示例</a></li></ul></li><li><a href=#代码段参考>代码段参考</a><ul><li><a href=#1-javascript层核心实现-markerjs>1. JavaScript层核心实现 (marker.js)</a></li><li><a href=#2-python包装器实现-markerpy>2. Python包装器实现 (marker.py)</a></li><li><a href=#3-样式系统实现-stylespy>3. 样式系统实现 (styles.py)</a></li><li><a href=#4-地图组件封装-mappy>4. 地图组件封装 (map.py)</a></li><li><a href=#5-使用示例>5. 使用示例</a></li><li><a href=#6-样式配置>6. 样式配置</a></li></ul></li><li><a href=#参考文献>参考文献</a></li></ul></nav></div><div class="taxonomy taxonomy-terms-cloud taxo-tags"><h5 class=taxonomy-title>Tag Cloud</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/airsim/ data-taxonomy-term=airsim><span class=taxonomy-label>AirSim</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/javascript/ data-taxonomy-term=javascript><span class=taxonomy-label>JavaScript</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/leaflet/ data-taxonomy-term=leaflet><span class=taxonomy-label>Leaflet</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/nicegui/ data-taxonomy-term=nicegui><span class=taxonomy-label>NiceGUI</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/python/ data-taxonomy-term=python><span class=taxonomy-label>Python</span><span class=taxonomy-count>2</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/%E4%BB%BF%E7%9C%9F/ data-taxonomy-term=%E4%BB%BF%E7%9C%9F><span class=taxonomy-label>仿真</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/%E5%9C%B0%E9%9D%A2%E7%AB%99/ data-taxonomy-term=%E5%9C%B0%E9%9D%A2%E7%AB%99><span class=taxonomy-label>地面站</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/ data-taxonomy-term=%E5%A4%A7%E6%A8%A1%E5%9E%8B><span class=taxonomy-label>大模型</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/ data-taxonomy-term=%E6%97%A0%E4%BA%BA%E6%9C%BA><span class=taxonomy-label>无人机</span><span class=taxonomy-count>2</span></a></li></ul></div><div class="taxonomy taxonomy-terms-cloud taxo-categories"><h5 class=taxonomy-title>Categories</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ data-taxonomy-term=%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0><span class=taxonomy-label>学习笔记</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/ data-taxonomy-term=%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3><span class=taxonomy-label>技术文档</span><span class=taxonomy-count>1</span></a></li></ul></div></aside><main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role=main><a class=td-rss-button title=RSS href=/Docsy/cn/blog/nicegui/index.xml target=_blank rel=noopener><i class="fa-solid fa-rss" aria-hidden=true></i></a><nav aria-label=breadcrumb class=td-breadcrumbs><ol class=breadcrumb><li class=breadcrumb-item><a href=/Docsy/cn/blog/>博客</a></li><li class=breadcrumb-item><a href=/Docsy/cn/blog/nicegui/>NiceGUI</a></li><li class="breadcrumb-item active" aria-current=page>自定义NiceGUI中Leaflet的marker样式和旋转</li></ol></nav><div class=td-content><h1>自定义NiceGUI中Leaflet的marker样式和旋转</h1><div class="td-byline mb-4"><time datetime=2025-08-25 class=text-body-secondary>2025年8月25日</time></div><header class=article-meta><div class="taxonomy taxonomy-terms-article taxo-tags"><h5 class=taxonomy-title>Tags:</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/nicegui/ data-taxonomy-term=nicegui><span class=taxonomy-label>NiceGUI</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/javascript/ data-taxonomy-term=javascript><span class=taxonomy-label>JavaScript</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/leaflet/ data-taxonomy-term=leaflet><span class=taxonomy-label>Leaflet</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/ data-taxonomy-term=%E6%97%A0%E4%BA%BA%E6%9C%BA><span class=taxonomy-label>无人机</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/%E5%9C%B0%E9%9D%A2%E7%AB%99/ data-taxonomy-term=%E5%9C%B0%E9%9D%A2%E7%AB%99><span class=taxonomy-label>地面站</span></a></li><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/tags/python/ data-taxonomy-term=python><span class=taxonomy-label>Python</span></a></li></ul></div><div class="taxonomy taxonomy-terms-article taxo-categories"><h5 class=taxonomy-title>Categories:</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=https://pinyinjj.github.io/Docsy/cn/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/ data-taxonomy-term=%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3><span class=taxonomy-label>技术文档</span></a></li></ul></div></header><p>本文档详细描述了在NiceGUI框架中实现JavaScript Bridge架构的方法，该架构通过Python封装JavaScript代码，实现对Leaflet地图插件的样式定制和功能扩展。最终实现了替换NiceGUI中Leaflet标记样式，新增无人机和人的标记，并通过对象管理所有标记。</p><p><img src=/Docsy/images/custom%20icons.png alt="Leaflet 自定义图标示意图"></p><h3 id=技术栈>技术栈</h3><ul><li><strong>前端</strong>: NiceGUI + Leaflet + JavaScript</li><li><strong>后端</strong>: Python</li><li><strong>通信</strong>: JavaScript Bridge</li><li><strong>样式</strong>: CSS + SVG图标</li></ul><h2 id=架构设计>架构设计</h2><h3 id=整体架构图>整体架构图</h3><pre class=mermaid>graph TB
+    subgraph &#34;Python 应用层&#34;
+        A[MarkerManager] --&gt; B[状态管理]
+        A --&gt; C[方法封装]
+        A --&gt; D[事件处理]
+    end
+    
+    subgraph &#34;NiceGUI Bridge Layer&#34;
+        E[ui.run_javascript] --&gt; F[ui.leaflet]
+        F --&gt; G[事件监听]
+    end
+    
+    subgraph &#34;JavaScript 层&#34;
+        H[marker.js] --&gt; I[标记管理]
+        H --&gt; J[样式定制]
+        H --&gt; K[事件分发]
+    end
+    
+    subgraph &#34;Leaflet 插件层&#34;
+        L[地图渲染] --&gt; M[标记显示]
+        M --&gt; N[交互处理]
+    end
+    
+    A --&gt; E
+    E --&gt; H
+    H --&gt; L
+    G --&gt; A
+    K --&gt; G</pre><h3 id=文件关联关系>文件关联关系</h3><pre class=mermaid>graph LR
+    subgraph &#34;项目根目录&#34;
+        A[config.yaml]
+        B[ui/config.yaml]
+    end
+    
+    subgraph &#34;UI模块&#34;
+        C[ui/main_page.py]
+        D[ui/map.py]
+        E[ui/marker.py]
+        F[ui/styles.py]
+    end
+    
+    subgraph &#34;静态资源&#34;
+        G[ui/static/marker.js]
+        H[ui/static/drone.svg]
+        I[ui/static/person.svg]
+    end
+    
+    A --&gt; C
+    B --&gt; C
+    C --&gt; D
+    C --&gt; E
+    C --&gt; F
+    D --&gt; G
+    E --&gt; G
+    F --&gt; H
+    F --&gt; I</pre><h3 id=数据流图>数据流图</h3><pre class=mermaid>sequenceDiagram
+    participant P as Python应用
+    participant N as NiceGUI
+    participant J as JavaScript
+    participant L as Leaflet
+    
+    P-&gt;&gt;N: 创建地图组件
+    N-&gt;&gt;L: 初始化地图
+    L--&gt;&gt;N: 地图就绪
+    N--&gt;&gt;P: 返回地图引用
+    
+    P-&gt;&gt;N: 创建MarkerManager
+    N-&gt;&gt;J: 调用initMarkers()
+    J-&gt;&gt;L: 创建FeatureGroup
+    L--&gt;&gt;J: 返回FeatureGroup
+    J--&gt;&gt;N: 初始化完成
+    N--&gt;&gt;P: 包装器就绪
+    
+    P-&gt;&gt;N: 调用move_to()
+    N-&gt;&gt;J: 执行moveMarker()
+    J-&gt;&gt;L: 更新标记位置
+    L--&gt;&gt;J: 更新完成
+    J--&gt;&gt;N: 操作完成
+    N--&gt;&gt;P: 状态同步</pre><h2 id=核心实现>核心实现</h2><h3 id=javascript层实现-markerjs>JavaScript层实现 (marker.js)</h3><h4 id=状态管理架构>状态管理架构</h4><pre class=mermaid>classDiagram
+    class MarkersState {
+        &#43;boolean initialized
+        &#43;FeatureGroup featureGroup
+        &#43;DivIcon icon
+        &#43;Object byId
+        &#43;Map map
+    }
+    
+    class MarkerFunctions {
+        &#43;initMarkers(mapId)
+        &#43;addMarker(mapId, id, lat, lng, heading, z, className, label)
+        &#43;updateMarker(id, lat, lng, heading, z, label)
+        &#43;deleteMarker(id)
+        &#43;setClass(id, className)
+    }
+    
+    MarkersState --&gt; MarkerFunctions</pre><h3 id=python包装器实现-markerpy>Python包装器实现 (marker.py)</h3><h4 id=类设计架构>类设计架构</h4><pre class=mermaid>classDiagram
+    class MarkerManager {
+        &#43;ui.leaflet map_element
+        &#43;str marker_id
+        &#43;float lat
+        &#43;float lng
+        &#43;float heading
+        &#43;str class_name
+        &#43;str label
+        &#43;int z_index
+        &#43;boolean _added
+        
+        &#43;__init__(map_element, marker_id, lat, lng, heading, class_name, label, z_index)
+        &#43;add()
+        &#43;move_to(lat, lng, heading)
+        &#43;rotate_to(heading)
+        &#43;set_class(class_name)
+        &#43;remove()
+        &#43;create_drone()
+        &#43;create_person()
+    }
+    
+    class MarkerFactory {
+        &#43;create_drone(map_element, marker_id, lat, lng, heading, label, z_index)
+        &#43;create_person(map_element, marker_id, lat, lng, heading, label, z_index)
+    }
+    
+    MarkerManager --&gt; MarkerFactory</pre><h3 id=样式系统实现-stylespy>样式系统实现 (styles.py)</h3><h4 id=样式注入流程>样式注入流程</h4><pre class=mermaid>flowchart TD
+    A[应用启动] --&gt; B[调用apply_global_styles]
+    B --&gt; C[ui.add_body_html]
+    C --&gt; D[注入CSS样式]
+    D --&gt; E[定义图标样式]
+    E --&gt; F[设置容器样式]
+    F --&gt; G[配置响应式设计]
+    G --&gt; H[样式生效]</pre><h2 id=使用示例>使用示例</h2><h3 id=批量操作示例>批量操作示例</h3><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#8f5902;font-style:italic># 创建多个标记</span>
+</span></span><span style=display:flex><span><span style=color:#000>markers</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>{}</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>for</span> <span style=color:#000>i</span> <span style=color:#204a87;font-weight:700>in</span> <span style=color:#204a87>range</span><span style=color:#000;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>3</span><span style=color:#000;font-weight:700>):</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>marker_id</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>f</span><span style=color:#4e9a06>&#34;drone_</span><span style=color:#4e9a06>{</span><span style=color:#000>i</span><span style=color:#4e9a06>:</span><span style=color:#4e9a06>03d</span><span style=color:#4e9a06>}</span><span style=color:#4e9a06>&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>markers</span><span style=color:#000;font-weight:700>[</span><span style=color:#000>marker_id</span><span style=color:#000;font-weight:700>]</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>MarkerManager</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>create_drone</span><span style=color:#000;font-weight:700>(</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>map_element</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#000>map_element</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>marker_id</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#000>marker_id</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>lat</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#0000cf;font-weight:700>39.9042</span> <span style=color:#ce5c00;font-weight:700>+</span> <span style=color:#000>i</span> <span style=color:#ce5c00;font-weight:700>*</span> <span style=color:#0000cf;font-weight:700>0.001</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>lng</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#0000cf;font-weight:700>116.4074</span> <span style=color:#ce5c00;font-weight:700>+</span> <span style=color:#000>i</span> <span style=color:#ce5c00;font-weight:700>*</span> <span style=color:#0000cf;font-weight:700>0.001</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>heading</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#000>i</span> <span style=color:#ce5c00;font-weight:700>*</span> <span style=color:#0000cf;font-weight:700>45.0</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>label</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#4e9a06>f</span><span style=color:#4e9a06>&#34;无人机</span><span style=color:#4e9a06>{</span><span style=color:#000>i</span><span style=color:#ce5c00;font-weight:700>+</span><span style=color:#0000cf;font-weight:700>1</span><span style=color:#4e9a06>}</span><span style=color:#4e9a06>&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># 批量更新</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>for</span> <span style=color:#000>marker</span> <span style=color:#204a87;font-weight:700>in</span> <span style=color:#000>markers</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>values</span><span style=color:#000;font-weight:700>():</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>marker</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>move_to</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>new_lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>new_lng</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>new_heading</span><span style=color:#000;font-weight:700>)</span>
+</span></span></code></pre></div><h2 id=扩展性设计>扩展性设计</h2><h3 id=新标记类型扩展>新标记类型扩展</h3><h4 id=扩展流程>扩展流程</h4><pre class=mermaid>flowchart TD
+    A[设计新图标] --&gt; B[创建SVG文件]
+    B --&gt; C[添加CSS样式]
+    C --&gt; D[扩展JavaScript函数]
+    D --&gt; E[扩展Python工厂方法]
+    E --&gt; F[测试验证]
+    F --&gt; G[文档更新]</pre><h4 id=样式扩展示例>样式扩展示例</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=display:flex><span><span style=color:#000;font-weight:700>.</span><span style=color:#000>target-icon</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>width</span><span style=color:#000;font-weight:700>:</span> <span style=color:#0000cf;font-weight:700>32</span><span style=color:#204a87;font-weight:700>px</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>height</span><span style=color:#000;font-weight:700>:</span> <span style=color:#0000cf;font-weight:700>32</span><span style=color:#204a87;font-weight:700>px</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>background-image</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>url</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>&#39;/static/target.svg&#39;</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>background-size</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87;font-weight:700>contain</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>background-repeat</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87;font-weight:700>no-repeat</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>filter</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>drop-shadow</span><span style=color:#000;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>0</span> <span style=color:#0000cf;font-weight:700>2</span><span style=color:#204a87;font-weight:700>px</span> <span style=color:#0000cf;font-weight:700>4</span><span style=color:#204a87;font-weight:700>px</span> <span style=color:#204a87>rgba</span><span style=color:#000;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span><span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span><span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span><span style=color:#0000cf;font-weight:700>0.3</span><span style=color:#000;font-weight:700>));</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>.</span><span style=color:#000>target-icon-animated</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>animation</span><span style=color:#000;font-weight:700>:</span> <span style=color:#000>pulse</span> <span style=color:#0000cf;font-weight:700>2</span><span style=color:#204a87;font-weight:700>s</span> <span style=color:#204a87;font-weight:700>infinite</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>@</span><span style=color:#204a87;font-weight:700>keyframes</span> <span style=color:#204a87;font-weight:700>pulse</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>0</span><span style=color:#ce5c00;font-weight:700>%</span> <span style=color:#000;font-weight:700>{</span> <span style=color:#204a87;font-weight:700>transform</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>scale</span><span style=color:#000;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>1</span><span style=color:#000;font-weight:700>);</span> <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>50</span><span style=color:#ce5c00;font-weight:700>%</span> <span style=color:#000;font-weight:700>{</span> <span style=color:#204a87;font-weight:700>transform</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>scale</span><span style=color:#000;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>1.1</span><span style=color:#000;font-weight:700>);</span> <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>100</span><span style=color:#ce5c00;font-weight:700>%</span> <span style=color:#000;font-weight:700>{</span> <span style=color:#204a87;font-weight:700>transform</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>scale</span><span style=color:#000;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>1</span><span style=color:#000;font-weight:700>);</span> <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span></code></pre></div><h3 id=动画效果扩展>动画效果扩展</h3><h4 id=动画系统架构>动画系统架构</h4><pre class=mermaid>graph TB
+    subgraph &#34;动画类型&#34;
+        A[脉冲动画]
+        B[旋转动画]
+        C[闪烁动画]
+        D[缩放动画]
+    end
+    
+    subgraph &#34;控制层&#34;
+        E[CSS动画]
+        F[JavaScript控制]
+        G[Python接口]
+    end
+    
+    subgraph &#34;触发条件&#34;
+        H[状态变化]
+        I[用户交互]
+        J[定时触发]
+    end
+    
+    A --&gt; E
+    B --&gt; E
+    C --&gt; E
+    D --&gt; E
+    E --&gt; F
+    F --&gt; G
+    H --&gt; G
+    I --&gt; G
+    J --&gt; G</pre><h3 id=事件系统扩展>事件系统扩展</h3><h4 id=事件流架构>事件流架构</h4><pre class=mermaid>sequenceDiagram
+    participant U as 用户
+    participant L as Leaflet
+    participant J as JavaScript
+    participant N as NiceGUI
+    participant P as Python
+    
+    U-&gt;&gt;L: 鼠标悬停
+    L-&gt;&gt;J: 触发mouseover事件
+    J-&gt;&gt;J: handleMarkerHover()
+    J-&gt;&gt;N: emitEvent(&#39;marker-hovered&#39;)
+    N-&gt;&gt;P: 事件回调
+    P-&gt;&gt;P: 处理业务逻辑</pre><h2 id=配置管理>配置管理</h2><h3 id=配置层次结构>配置层次结构</h3><pre class=mermaid>graph TB
+    subgraph &#34;全局配置 config.yaml&#34;
+        A[地图配置]
+        B[无人机配置]
+        C[系统配置]
+    end
+    
+    subgraph &#34;UI配置 ui/config.yaml&#34;
+        D[界面设置]
+        E[样式配置]
+        F[调试选项]
+    end
+    
+    subgraph &#34;运行时配置&#34;
+        G[动态参数]
+        H[用户偏好]
+        I[性能设置]
+    end
+    
+    A --&gt; G
+    D --&gt; G
+    B --&gt; H
+    E --&gt; H
+    C --&gt; I
+    F --&gt; I</pre><h3 id=配置示例>配置示例</h3><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#8f5902;font-style:italic># config.yaml</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline></span><span style=color:#204a87;font-weight:700>map</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>center_lat</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>39.9042</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>center_lng</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>116.4074</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>zoom_level</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>12</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>bing_key</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#4e9a06>&#34;your_bing_maps_key&#34;</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline></span><span style=color:#204a87;font-weight:700>markers</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>default_size</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>default_anchor</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>16</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>16</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>animation_enabled</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#204a87;font-weight:700>true</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>batch_update_threshold</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>10</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline></span><span style=color:#8f5902;font-style:italic># ui/config.yaml</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline></span><span style=color:#204a87;font-weight:700>ui</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>mouse_debug_window</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#204a87;font-weight:700>false</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>marker_animations</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#204a87;font-weight:700>true</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>performance_mode</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#204a87;font-weight:700>false</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline></span><span style=color:#204a87;font-weight:700>styles</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>drone_icon_size</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>person_icon_size</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>28</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>28</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>target_icon_size</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>24</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>24</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span></code></pre></div><h2 id=代码段参考>代码段参考</h2><h3 id=1-javascript层核心实现-markerjs>1. JavaScript层核心实现 (marker.js)</h3><h4 id=自定义图标创建>自定义图标创建</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#204a87;font-weight:700>function</span> <span style=color:#000>addMarker</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>mapId</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>id</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>heading</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>z</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>className</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#39;drone-icon&#39;</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>label</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#39;&#39;</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#8f5902;font-style:italic>// 创建自定义DivIcon
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#204a87;font-weight:700>var</span> <span style=color:#000>IconCtor</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>L</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>DivIcon</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>extend</span><span style=color:#000;font-weight:700>({</span> 
+</span></span><span style=display:flex><span>        <span style=color:#000>options</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000;font-weight:700>{</span> 
+</span></span><span style=display:flex><span>            <span style=color:#000>className</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>className</span><span style=color:#000;font-weight:700>,</span>        <span style=color:#8f5902;font-style:italic>// CSS类名控制样式
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>            <span style=color:#000>iconSize</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>,</span> <span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>],</span>         <span style=color:#8f5902;font-style:italic>// 图标尺寸
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>            <span style=color:#000>iconAnchor</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>16</span><span style=color:#000;font-weight:700>,</span> <span style=color:#0000cf;font-weight:700>16</span><span style=color:#000;font-weight:700>],</span>       <span style=color:#8f5902;font-style:italic>// 锚点位置
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>            <span style=color:#000>popupAnchor</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span> <span style=color:#ce5c00;font-weight:700>-</span><span style=color:#0000cf;font-weight:700>16</span><span style=color:#000;font-weight:700>],</span>      <span style=color:#8f5902;font-style:italic>// 弹窗位置
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>            <span style=color:#000>html</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>label</span>                 <span style=color:#8f5902;font-style:italic>// 动态标签
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>        <span style=color:#000;font-weight:700>}</span> 
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>});</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>var</span> <span style=color:#000>iconx</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>new</span> <span style=color:#000>IconCtor</span><span style=color:#000;font-weight:700>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>var</span> <span style=color:#000>marker</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>L</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>marker</span><span style=color:#000;font-weight:700>([</span><span style=color:#000>lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>],</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>icon</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>iconx</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>zIndexOffset</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>z</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>rotationAngle</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>heading</span><span style=color:#000;font-weight:700>,</span>         <span style=color:#8f5902;font-style:italic>// 旋转角度
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>        <span style=color:#000>rotationOrigin</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#4e9a06>&#39;16px 16px&#39;</span><span style=color:#000;font-weight:700>,</span>    <span style=color:#8f5902;font-style:italic>// 旋转中心点
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000;font-weight:700>}).</span><span style=color:#000>addTo</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>markers</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>featureGroup</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#000>marker</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>_id</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>id</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>markers</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>byId</span><span style=color:#000;font-weight:700>[</span><span style=color:#000>id</span><span style=color:#000;font-weight:700>]</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>marker</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span></code></pre></div><h4 id=标记旋转更新>标记旋转更新</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#204a87;font-weight:700>function</span> <span style=color:#000>updateMarker</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>id</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>heading</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>null</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>z</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>null</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>label</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>null</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>var</span> <span style=color:#000>marker</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>markers</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>byId</span><span style=color:#000;font-weight:700>[</span><span style=color:#000>id</span><span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#ce5c00;font-weight:700>!</span><span style=color:#000>marker</span><span style=color:#000;font-weight:700>)</span> <span style=color:#204a87;font-weight:700>return</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>lat</span> <span style=color:#ce5c00;font-weight:700>!==</span> <span style=color:#204a87;font-weight:700>null</span> <span style=color:#ce5c00;font-weight:700>&amp;&amp;</span> <span style=color:#000>lng</span> <span style=color:#ce5c00;font-weight:700>!==</span> <span style=color:#204a87;font-weight:700>null</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000>marker</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>setLatLng</span><span style=color:#000;font-weight:700>([</span><span style=color:#000>lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>]);</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>heading</span> <span style=color:#ce5c00;font-weight:700>!==</span> <span style=color:#204a87;font-weight:700>null</span> <span style=color:#ce5c00;font-weight:700>&amp;&amp;</span> <span style=color:#204a87;font-weight:700>typeof</span> <span style=color:#000>marker</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>setRotationAngle</span> <span style=color:#ce5c00;font-weight:700>===</span> <span style=color:#4e9a06>&#39;function&#39;</span><span style=color:#000;font-weight:700>)</span> 
+</span></span><span style=display:flex><span>        <span style=color:#000>marker</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>setRotationAngle</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>heading</span><span style=color:#000;font-weight:700>);</span>  <span style=color:#8f5902;font-style:italic>// 更新旋转角度
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>z</span> <span style=color:#ce5c00;font-weight:700>!==</span> <span style=color:#204a87;font-weight:700>null</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000>marker</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>setZIndexOffset</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>z</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>label</span> <span style=color:#ce5c00;font-weight:700>!==</span> <span style=color:#204a87;font-weight:700>null</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#8f5902;font-style:italic>// 更新图标标签
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>        <span style=color:#204a87;font-weight:700>var</span> <span style=color:#000>currentIcon</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>marker</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>options</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>icon</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#204a87;font-weight:700>var</span> <span style=color:#000>newIcon</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>L</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>divIcon</span><span style=color:#000;font-weight:700>({</span> 
+</span></span><span style=display:flex><span>            <span style=color:#000>className</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>currentIcon</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>options</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>className</span><span style=color:#000;font-weight:700>,</span> 
+</span></span><span style=display:flex><span>            <span style=color:#000>iconSize</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>currentIcon</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>options</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>iconSize</span><span style=color:#000;font-weight:700>,</span> 
+</span></span><span style=display:flex><span>            <span style=color:#000>iconAnchor</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>currentIcon</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>options</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>iconAnchor</span><span style=color:#000;font-weight:700>,</span> 
+</span></span><span style=display:flex><span>            <span style=color:#000>popupAnchor</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>currentIcon</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>options</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>popupAnchor</span><span style=color:#000;font-weight:700>,</span> 
+</span></span><span style=display:flex><span>            <span style=color:#000>html</span><span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#000>label</span> 
+</span></span><span style=display:flex><span>        <span style=color:#000;font-weight:700>});</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>marker</span><span style=color:#000;font-weight:700>.</span><span style=color:#000>setIcon</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>newIcon</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span></code></pre></div><h3 id=2-python包装器实现-markerpy>2. Python包装器实现 (marker.py)</h3><h4 id=样式类切换>样式类切换</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#204a87;font-weight:700>def</span> <span style=color:#000>set_class</span><span style=color:#000;font-weight:700>(</span><span style=color:#3465a4>self</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>class_name</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>str</span><span style=color:#000;font-weight:700>):</span>
+</span></span><span style=display:flex><span>    <span style=color:#4e9a06>&#34;&#34;&#34;切换样式类&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>class_name</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>class_name</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>with</span> <span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>map_element</span><span style=color:#000;font-weight:700>:</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>ui</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>run_javascript</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>f</span><span style=color:#4e9a06>&#34;setClass(&#39;</span><span style=color:#4e9a06>{</span><span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>marker_id</span><span style=color:#4e9a06>}</span><span style=color:#4e9a06>&#39;, &#39;</span><span style=color:#4e9a06>{</span><span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>class_name</span><span style=color:#4e9a06>}</span><span style=color:#4e9a06>&#39;)&#34;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>def</span> <span style=color:#000>rotate_to</span><span style=color:#000;font-weight:700>(</span><span style=color:#3465a4>self</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>heading</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>float</span><span style=color:#000;font-weight:700>):</span>
+</span></span><span style=display:flex><span>    <span style=color:#4e9a06>&#34;&#34;&#34;仅更新朝向&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>heading</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>heading</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>with</span> <span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>map_element</span><span style=color:#000;font-weight:700>:</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>ui</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>run_javascript</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>f</span><span style=color:#4e9a06>&#34;updateMarker(&#39;</span><span style=color:#4e9a06>{</span><span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>marker_id</span><span style=color:#4e9a06>}</span><span style=color:#4e9a06>&#39;, null, null, </span><span style=color:#4e9a06>{</span><span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>heading</span><span style=color:#4e9a06>}</span><span style=color:#4e9a06>)&#34;</span><span style=color:#000;font-weight:700>)</span>
+</span></span></code></pre></div><h4 id=工厂方法---预设样式>工厂方法 - 预设样式</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#5c35cc;font-weight:700>@classmethod</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>def</span> <span style=color:#000>create_drone</span><span style=color:#000;font-weight:700>(</span><span style=color:#3465a4>cls</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>map_element</span><span style=color:#000;font-weight:700>:</span> <span style=color:#000>ui</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>leaflet</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>marker_id</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>str</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lat</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>float</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>float</span><span style=color:#000;font-weight:700>,</span> 
+</span></span><span style=display:flex><span>                 <span style=color:#000>heading</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>float</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>label</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>str</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#39;&#39;</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>z_index</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>int</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>):</span>
+</span></span><span style=display:flex><span>    <span style=color:#4e9a06>&#34;&#34;&#34;创建无人机标记 - 使用drone-icon样式&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>return</span> <span style=color:#3465a4>cls</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>map_element</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>marker_id</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>heading</span><span style=color:#000;font-weight:700>,</span> <span style=color:#4e9a06>&#39;drone-icon&#39;</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>label</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>z_index</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#5c35cc;font-weight:700>@classmethod</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>def</span> <span style=color:#000>create_person</span><span style=color:#000;font-weight:700>(</span><span style=color:#3465a4>cls</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>map_element</span><span style=color:#000;font-weight:700>:</span> <span style=color:#000>ui</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>leaflet</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>marker_id</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>str</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lat</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>float</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>float</span><span style=color:#000;font-weight:700>,</span> 
+</span></span><span style=display:flex><span>                  <span style=color:#000>heading</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>float</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>label</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>str</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#39;&#39;</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>z_index</span><span style=color:#000;font-weight:700>:</span> <span style=color:#204a87>int</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>):</span>
+</span></span><span style=display:flex><span>    <span style=color:#4e9a06>&#34;&#34;&#34;创建人员标记 - 使用person-icon样式&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>return</span> <span style=color:#3465a4>cls</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>map_element</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>marker_id</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>lng</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>heading</span><span style=color:#000;font-weight:700>,</span> <span style=color:#4e9a06>&#39;person-icon&#39;</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>label</span><span style=color:#000;font-weight:700>,</span> <span style=color:#000>z_index</span><span style=color:#000;font-weight:700>)</span>
+</span></span></code></pre></div><h3 id=3-样式系统实现-stylespy>3. 样式系统实现 (styles.py)</h3><h4 id=图标样式定义>图标样式定义</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#204a87;font-weight:700>def</span> <span style=color:#000>apply_global_styles</span><span style=color:#000;font-weight:700>():</span>
+</span></span><span style=display:flex><span>    <span style=color:#4e9a06>&#34;&#34;&#34;应用全局样式&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>ui</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>add_body_html</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>&#39;&#39;&#39;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>    &lt;style&gt;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        /* 无人机图标样式 */
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        .drone-icon {
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            width: 32px;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            height: 32px;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            background-image: url(&#39;/static/drone.svg&#39;);
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            background-size: contain;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            background-repeat: no-repeat;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        /* 人员图标样式 */
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        .person-icon {
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            width: 28px;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            height: 28px;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            background-image: url(&#39;/static/person.svg&#39;);
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            background-size: contain;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            background-repeat: no-repeat;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        /* 激活状态样式 */
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        .drone-icon-active {
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            filter: drop-shadow(0 2px 4px rgba(255,0,0,0.5)) brightness(1.2);
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        /* 动画效果 */
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        .drone-icon-animated {
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            animation: pulse 2s infinite;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        @keyframes pulse {
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            0% { transform: scale(1); }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            50% { transform: scale(1.1); }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>            100% { transform: scale(1); }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>        }
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>    &lt;/style&gt;
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>    &#39;&#39;&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span></code></pre></div><h3 id=4-地图组件封装-mappy>4. 地图组件封装 (map.py)</h3><h4 id=旋转插件集成>旋转插件集成</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#204a87;font-weight:700>def</span> <span style=color:#000>create_full_page_map</span><span style=color:#000;font-weight:700>(</span><span style=color:#3465a4>self</span><span style=color:#000;font-weight:700>):</span>
+</span></span><span style=display:flex><span>    <span style=color:#4e9a06>&#34;&#34;&#34;创建支持旋转的地图&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>additional_resources</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span>
+</span></span><span style=display:flex><span>        <span style=color:#4e9a06>&#39;https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js&#39;</span><span style=color:#000;font-weight:700>,</span>  <span style=color:#8f5902;font-style:italic># 旋转插件</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>]</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#000>map_element</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>ui</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>leaflet</span><span style=color:#000;font-weight:700>(</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>center</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#000;font-weight:700>[</span><span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>center_lat</span><span style=color:#000;font-weight:700>,</span> <span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>center_lng</span><span style=color:#000;font-weight:700>],</span> 
+</span></span><span style=display:flex><span>        <span style=color:#000>zoom</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#3465a4>self</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>zoom_level</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>additional_resources</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#000>additional_resources</span>  <span style=color:#8f5902;font-style:italic># 加载旋转插件</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>)</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>classes</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>&#39;map-container&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>return</span> <span style=color:#000>map_element</span>
+</span></span></code></pre></div><h3 id=5-使用示例>5. 使用示例</h3><h4 id=样式和旋转操作>样式和旋转操作</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#8f5902;font-style:italic># 创建带样式的标记</span>
+</span></span><span style=display:flex><span><span style=color:#000>drone</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>MarkerManager</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>create_drone</span><span style=color:#000;font-weight:700>(</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>map_element</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#000>map_element</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>marker_id</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#4e9a06>&#34;drone_001&#34;</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>lat</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#0000cf;font-weight:700>39.9042</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>lng</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#0000cf;font-weight:700>116.4074</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>heading</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#0000cf;font-weight:700>45.0</span><span style=color:#000;font-weight:700>,</span>        <span style=color:#8f5902;font-style:italic># 初始朝向</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>label</span><span style=color:#ce5c00;font-weight:700>=</span><span style=color:#4e9a06>&#34;无人机1&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># 更新旋转角度</span>
+</span></span><span style=display:flex><span><span style=color:#000>drone</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>rotate_to</span><span style=color:#000;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>90.0</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># 切换样式类</span>
+</span></span><span style=display:flex><span><span style=color:#000>drone</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>set_class</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>&#34;drone-icon-active&#34;</span><span style=color:#000;font-weight:700>)</span>  <span style=color:#8f5902;font-style:italic># 激活状态</span>
+</span></span><span style=display:flex><span><span style=color:#000>drone</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>set_class</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>&#34;drone-icon-animated&#34;</span><span style=color:#000;font-weight:700>)</span>  <span style=color:#8f5902;font-style:italic># 动画效果</span>
+</span></span></code></pre></div><h3 id=6-样式配置>6. 样式配置</h3><h4 id=图标尺寸配置>图标尺寸配置</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#204a87;font-weight:700>styles</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>drone_icon_size</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>32</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>      </span><span style=color:#8f5902;font-style:italic># 无人机图标尺寸</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>person_icon_size</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>28</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>28</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>     </span><span style=color:#8f5902;font-style:italic># 人员图标尺寸</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>icon_anchor</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#000;font-weight:700>[</span><span style=color:#0000cf;font-weight:700>16</span><span style=color:#000;font-weight:700>,</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#0000cf;font-weight:700>16</span><span style=color:#000;font-weight:700>]</span><span style=color:#f8f8f8;text-decoration:underline>          </span><span style=color:#8f5902;font-style:italic># 图标锚点</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span><span style=display:flex><span><span style=color:#f8f8f8;text-decoration:underline>  </span><span style=color:#204a87;font-weight:700>rotation_origin</span><span style=color:#000;font-weight:700>:</span><span style=color:#f8f8f8;text-decoration:underline> </span><span style=color:#4e9a06>&#34;16px 16px&#34;</span><span style=color:#f8f8f8;text-decoration:underline>   </span><span style=color:#8f5902;font-style:italic># 旋转中心点</span><span style=color:#f8f8f8;text-decoration:underline>
+</span></span></span></code></pre></div><h2 id=参考文献>参考文献</h2><ul><li><p><strong><a href=https://leafletjs.com/examples/custom-icons/>Leaflet Custom Icons Tutorial</a></strong> - Leaflet 官方自定义图标教程。</p></li><li><p><strong><a href=https://nicegui.io/documentation/leaflet>NiceGUI Leaflet Documentation</a></strong> - NiceGUI 中使用 Leaflet 地图的基础 API 和示例代码。</p></li><li><p><strong><a href=https://github.com/zauberzeug/nicegui/discussions/2361>NiceGUI Leaflet Marker Selection Discussion</a></strong> - 提供了在 NiceGUI 中实现标记点击事件和交互功能的解决方案。</p></li><li><p><strong><a href=https://stackoverflow.com/questions/9912145/leaflet-how-to-find-existing-markers-and-delete-markers>Leaflet Marker Management on Stack Overflow</a></strong></p></li><li><p><strong><a href=https://github.com/bbecquet/Leaflet.RotatedMarker>Leaflet.RotatedMarker Plugin</a></strong> - 支持标记旋转功能的 Leaflet 插件。</p></li></ul><ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5"><li><a class="btn btn-primary disabled"><span class=me-1>←</span>上一页</a></li><li><a class="btn btn-primary disabled">下一页<span class=ms-1>→</span></a></li></ul><div class=td-page-meta__lastmod>最后修改 2025年8月25日: <a data-proofer-ignore href=https://github.com/pinyinjj/Docsy/commit/4f74a435ee62fd539279b90d81109109bc6897ca>Add NiceGUI Leaflet marker customization docs (4f74a43)</a></div></div></main></div></div><footer class="td-footer row d-print-none"><div class=container-fluid><div class="row mx-md-2"><div class="td-footer__left col-6 col-sm-4 order-sm-1"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title=Mail aria-label=Mail><a target=_blank rel=noopener href=/about/ aria-label=Mail><i class="fa fa-envelope"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title=Wechat aria-label=Wechat><a target=_blank rel=noopener href=/about/ aria-label=Wechat><i class="fab fa-weixin"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title=QQ aria-label=QQ><a target=_blank rel=noopener href=/about/ aria-label=QQ><i class="fab fa-qq"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title=Wallhaven aria-label=Wallhaven><a target=_blank rel=noopener href=https://wallhaven.cc/user/pinyinjj/favorites/1954116 aria-label=Wallhaven><i class="fa fa-image"></i></a></li></ul></div><div class="td-footer__right col-6 col-sm-4 order-sm-3"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title="Docsy & Template" aria-label="Docsy & Template"><a target=_blank rel=noopener href=https://github.com/google/docsy aria-label="Docsy & Template"><i class="fab fa-github"></i></a></li></ul></div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2"><span class=td-footer__copyright>&copy;
+2018&ndash;2025
+<span class=td-footer__authors>Docsy Authors | <a href=https://creativecommons.org/licenses/by/4.0>CC BY 4.0</a> |</span></span><span class=td-footer__all_rights_reserved>保留所有权利</span><span class=ms-2><a href=https://policies.google.com/privacy target=_blank rel=noopener>隐私政策</a></span></div></div></div></footer></div><script type=module async>
+  import mermaid from "https:\/\/cdn.jsdelivr.net\/npm\/mermaid@latest\/dist\/mermaid.esm.min.mjs";
+
+  (function ($) {
+    if ($('.mermaid').length == 0) {
+      mermaid.initialize({ startOnLoad: false });
+      return;
+    }
+
+    var params = {};
+
+    
+    
+    var norm = function (defaultConfig, params) {
+      var result = {};
+      for (const key in defaultConfig) {
+        const keyLower = key.toLowerCase();
+        if (defaultConfig.hasOwnProperty(key) && params.hasOwnProperty(keyLower)) {
+          if (typeof defaultConfig[key] === "object") {
+            result[key] = norm(defaultConfig[key], params[keyLower]);
+          } else {
+            result[key] = params[keyLower];
+          }
+        }
+      }
+      return result;
+    };
+
+    var settings = norm(mermaid.mermaidAPI.defaultConfig, params);
+    settings.startOnLoad = true;
+    if ($('html[data-bs-theme="dark"]').length) {
+      settings.theme = 'dark';
+    }
+    mermaid.initialize(settings);
+
+    
+    const lightDarkModeThemeChangeHandler = function (mutationsList, observer) {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme') {
+          
+          
+          
+          location.reload();
+        }
+      }
+    };
+
+    const observer = new MutationObserver(lightDarkModeThemeChangeHandler);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-bs-theme']
+    });
+    
+
+  })(jQuery);
+</script><script src=/Docsy/js/main.min.eb3a559e087abc917039ac59a1144bab6433b263416d17e09df508a401f1bb73.js integrity="sha256-6zpVngh6vJFwOaxZoRRLq2QzsmNBbRfgnfUIpAHxu3M=" crossorigin=anonymous></script><script defer src=/Docsy/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js integrity="sha256-c0eKfUgHaYrtfjVesj+YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin=anonymous></script><script src=/Docsy/js/tabpane-persist.js></script></body></html>
