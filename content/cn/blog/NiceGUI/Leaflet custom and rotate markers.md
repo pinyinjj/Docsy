@@ -569,3 +569,4 @@ styles:
 - **[Leaflet Marker Management on Stack Overflow](https://stackoverflow.com/questions/9912145/leaflet-how-to-find-existing-markers-and-delete-markers)**
 
 - **[Leaflet.RotatedMarker Plugin](https://github.com/bbecquet/Leaflet.RotatedMarker)** - 支持标记旋转功能的 Leaflet 插件。
+ 
