@@ -2,7 +2,7 @@
 title: "Airsim + PX4 SITL + MAVSDK 系统集成踩坑记录"
 date: 2025-08-26
 summary: "基于WSL2与Windows，梳理Airsim、PX4 SITL与MAVSDK集成的端口拓扑、通信协议、AirSim配置的坑点"
-tags: ["AirSim", "PX4", "MAVSDK", "WSL2", "Windows", "RPC", "MAVLink", "SITL", "HIL"]
+tags: ["AirSim", "PX4", "MAVSDK", "WSL2", "Windows", "RPC", "MAVLink", "SITL", "Python", "地面站", "后端"]
 categories: ["技术文档", "踩坑记录"]
 weight: 10
 ---

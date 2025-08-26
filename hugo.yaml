@@ -213,3 +213,8 @@ module:
   imports:
     - path: github.com/google/docsy
       disable: false
+
+# Auto fallback for dates and lastmod from Git/FS when front matter is missing
+frontmatter:
+  date: [":git", ":fileModTime", "date", "publishDate", ":default"]
+  lastmod: [":git", ":fileModTime", "lastmod", ":default"]
