@@ -46,18 +46,17 @@ graph TB
 
 **WSL2: MAVSDK**
 - **地址**: `udpin://127.0.0.1:14540` (MAVLink)
-- **说明**: MAVSDK 默认监听 PX4 SITL 的 MAVLink 数据流（14540 为 MAVLink 默认端口），因为PX4 SITL无法广播UDP，放到PX4同一环境运行（参见2）
-- **方向**: PX4 SITL → MAVSDK
+- **说明**: MAVSDK 默认监听 PX4 SITL 的 MAVLink 数据流（14540 为 MAVLink 默认端口），因为PX4 SITL无法广播UDP，MAVSDK应放到PX4同一环境运行（参见2）
+- **方向**: PX4 SITL → 地面站
 
-**Windows: AirSim API**
+**WSL2: AirSim API**
 - **地址**: `0.0.0.0:41451` (RPC)
 - **说明**: AirSim 提供的默认RPC 接口，用于外部程序（Python/C++ 脚本等）调用控制 API
-- **方向**: 用户程序 ↔ AirSim
+- **方向**: 地面站 ↔ AirSim
 
 **Windows: AirSim (PX4 桥接)**
 - **地址**: `0.0.0.0:4560` (TCP)
-- **说明**: PX4 SITL 运行在 WSL2 中，通过 PX4 桥接接口与 Windows 侧 AirSim 交互
-- **注意**: `0.0.0.0` 监听所有IP，实际为宿主机在 WSL2 网络中的可访问地址（通常是 192.168.x.x 或 `/etc/resolv.conf` 里的网关地址，在`settings.json`中也要同步修改地址
+- **说明**: PX4 SITL 运行在 WSL2 中，通过 PX4 桥接接口与 Windows 侧 AirSim 交互，`0.0.0.0` 监听的IP实际为宿主机在 WSL2 网络中的可访问地址（通常是 192.168.x.x 或 `/etc/resolv.conf` 里的网关地址，在`settings.json`中也要同步修改地址
 - **方向**: PX4 SITL ↔ AirSim
 
 ### AirSim Settings.json 配置示例
@@ -110,22 +109,20 @@ graph TB
 
 #### 问题描述
 - **现象**: PX4 SITL不支持动态配置更改和广播通信
-- **原因**: SITL模式下的PX4固件功能受限，无法像真实硬件一样支持所有MAVLink命令，param 命令并不会真的保存
+- **原因**: SITL模式下的PX4固件功能受限，无法像真实硬件一样支持所有MAVLink命令，param 等命令并不会真的保存
 
 #### 解决方案
+- 在同一环境下使用PX4 SITL和MAVSDK
 ```python
-# 使用MAVSDK地面站与PX4在同一机器下
 class PX4SITLManager:
     def __init__(self):
         self.drone = System()
-        # 必须使用本地连接
+        # 使用本地连接
         self.connection_string = "udpin://127.0.0.1:14540"
     
     def connect(self):
-        # 确保在同一机器下运行
         await self.drone.connect(system_address=self.connection_string)
-        
-        # 等待连接建立
+
         async for state in self.drone.core.connection_state():
             if state.is_connected:
                 break
@@ -186,7 +183,7 @@ class DualAPIManager:
 - **原因**: 
   - AirSim相机信息获取API存在内存泄漏问题
   - 当调用无效相机名称或其他未知问题时，会导致仿真进程崩溃
-  - 该API位于 `airsim/client.py` ，用于获取相机详细信息
+
 
 **问题API详情**:
 ```python
@@ -337,4 +334,4 @@ make px4_sitl gazebo
 - **[PX4 SITL](https://microsoft.github.io/AirSim/px4_sitl/)** - AirSim 官方 PX4 SITL 指南。
 - **[PX4与AirSim整合实践](https://zhuanlan.zhihu.com/p/431075863)** - 知乎专栏实践记录。
 
-- **[建立QGC地面站与WSL2中虚拟环境的连接](https://www.cnblogs.com/Biiigwang/p/17753556.html)** - 参考 QGC 与 PX4 SITL 在不同环境下的连接配置与端口转发实践，可用于无人机仿真环境联调背景知识补充。
+- **[建立QGC地面站与WSL2中虚拟环境的连接](https://www.cnblogs.com/Biiigwang/p/17753556.html)** - 参考 QGC 与 PX4 SITL 在不同环境下的连接配置与端口转发实践。
