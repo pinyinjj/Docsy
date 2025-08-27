@@ -1,3 +1,2 @@
-git pull origin main
-
-git push gitea main
+git pull origin main -v
+git push gitea main -v
