@@ -2,16 +2,13 @@
 title: "Airsim + PX4 SITL + MAVSDK 系统集成踩坑记录"
 date: 2025-08-26
 summary: "基于WSL2与Windows，梳理Airsim、PX4 SITL与MAVSDK集成的端口拓扑、通信协议、AirSim配置的坑点"
-tags: ["AirSim", "PX4", "MAVSDK", "WSL2", "Windows", "RPC", "MAVLink", "SITL", "Python", "地面站", "后端"]
+tags: ["AirSim", "PX4", "MAVSDK", "WSL2", "Windows", "RPC", "MAVLink", "SITL", "Python", "地面站", "后端", "无人机"]
 categories: ["技术文档", "踩坑记录"]
 weight: 10
 ---
 
-# Airsim + PX4 SITL + MAVSDK 踩坑记录
 
-## 1. 端口配置与网络拓扑
-
-### 网络拓扑图
+## 1. 网络拓扑
 
 ```mermaid
 graph TB
@@ -40,7 +37,7 @@ graph TB
     style AirSimCamera fill:#ffebee
 ```
 
-### 端口配置详解
+### 1.1 端口配置详解
 
 #### 核心端口分配与说明
 
@@ -59,7 +56,7 @@ graph TB
 - **说明**: PX4 SITL 运行在 WSL2 中，通过 PX4 桥接接口与 Windows 侧 AirSim 交互，`0.0.0.0` 监听的IP实际为宿主机在 WSL2 网络中的可访问地址（通常是 192.168.x.x 或 `/etc/resolv.conf` 里的网关地址，在`settings.json`中也要同步修改地址
 - **方向**: PX4 SITL ↔ AirSim
 
-### AirSim Settings.json 配置示例
+### 1.2 AirSim Settings.json 配置示例
 
 ```json
 {
@@ -105,7 +102,7 @@ graph TB
 
 ---
 
-## 2. 坑之一： PX4 SITL 广播和配置更改限制
+## 2. 坑之一：PX4 SITL 广播和配置更改限制
 
 #### 问题描述
 - **现象**: PX4 SITL不支持动态配置更改和广播通信
@@ -132,12 +129,12 @@ class PX4SITLManager:
 
 ---
 
-## 3. 坑之二：AirSim相机集成问题
+## 3. 坑之二：AirSim 相机集成问题
 
 ### 3.1 RPC通信与MAVLink不一致
 
 #### 问题描述
-- **现象**: PX4 SITL无法直接调用AirSim相机
+- **现象**: PX4 SITL 无法直接调用 AirSim 相机
 - **原因**: PX4使用MAVLink（WSL2），AirSim相机走RPC（Windows），协议与位置均不同步
 
 #### 解决方案：双API架构
@@ -176,7 +173,7 @@ class DualAPIManager:
             # 处理照片...
 ```
 
-### 3.2 相机API Bug与解决方案
+### 3.2 相机 API Bug 与解决方案
 
 #### 问题描述
 - **现象**: AirSim `simGetCameraInfo()` API导致仿真进程崩溃
@@ -229,7 +226,7 @@ def take_multiple_photos(self, camera_names: list = None):
     return self.client.simGetImages(requests)
 ```
 
-### 3.3 AirSim Settings相机配置
+### 3.3 AirSim Settings 相机配置
 - 参考 [AirSim Settings.json 配置示例](#airsim-settingsjson-配置示例)
 
 ---
@@ -239,7 +236,7 @@ def take_multiple_photos(self, camera_names: list = None):
 
 ### 4.1 防火墙端口配置步骤
 
-#### 步骤1：打开Windows Defender防火墙高级设置
+#### 步骤1：打开 Windows Defender 防火墙高级设置
 ```bash
 # 方法1：通过控制面板
 控制面板 → 系统和安全 → Windows Defender防火墙 → 高级设置
@@ -285,7 +282,7 @@ netstat -an | findstr :4560
 
 ## 5. 环境配置与调试指南
 
-### 5.1 PX4 SITL环境变量配置
+### 5.1 PX4 SITL 环境变量配置
 ```bash
 # 配置PX4与AirSim的连接地址
 export PX4_SIM_HOSTNAME=<Windows_IP>
@@ -298,7 +295,7 @@ make px4_sitl_default none_iris
 mavlink start -p -o 14550
 ```
 
-### 5.2 WSL2双虚拟环境配置
+### 5.2 WSL2 双虚拟环境配置
 - 为了在Windows下和WSL2下快速开发，可以使用双虚拟环境配置的方式
 ```bash
 # Windows下WSL2的双虚拟环境激活命令
@@ -333,5 +330,4 @@ make px4_sitl gazebo
 - **[Upgrade Settings](https://microsoft.github.io/AirSim/upgrade_settings/)** - AirSim 设置升级指南。
 - **[PX4 SITL](https://microsoft.github.io/AirSim/px4_sitl/)** - AirSim 官方 PX4 SITL 指南。
 - **[PX4与AirSim整合实践](https://zhuanlan.zhihu.com/p/431075863)** - 知乎专栏实践记录。
-
 - **[建立QGC地面站与WSL2中虚拟环境的连接](https://www.cnblogs.com/Biiigwang/p/17753556.html)** - 参考 QGC 与 PX4 SITL 在不同环境下的连接配置与端口转发实践。

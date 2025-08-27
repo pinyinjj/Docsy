@@ -1,0 +1,68 @@
+{{ define "main" }}
+<div class="td-content">
+  {{ if .IsHome }}
+    <!-- 标签列表页面 -->
+    <h1>{{ i18n "ui_all_tags" | default "All Tags" }}</h1>
+    
+    {{ if .Content }}
+    <div class="lead">
+      {{ .Content }}
+    </div>
+    {{ end }}
+
+    <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <ul class="taxonomy-terms">
+        {{ range .Data.Terms.Alphabetical }}
+          <li><a class="taxonomy-term" href="{{ .Page.RelPermalink }}" data-taxonomy-term="{{ .Page.Title }}"><span class="taxonomy-label">{{ .Page.Title }}</span><span class="taxonomy-count">{{ .Count }}</span></a></li>
+        {{ end }}
+      </ul>
+    </div>
+  {{ else }}
+    <!-- 单个标签页面 -->
+    <h1>{{ i18n "tags" | default "Tags" }}: {{ .Title }}</h1>
+    
+    {{ if .Content }}
+    <div class="lead">
+      {{ .Content }}
+    </div>
+    {{ end }}
+
+    <div class="blog-posts mt-4">
+      {{ $paginator := .Paginate .Pages }}
+      {{ if gt (len $paginator.Pages) 0 }}
+        {{ range $paginator.Pages }}
+          <article class="blog-post-item mb-4">
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <div class="blog-post-meta text-muted mb-2">
+              <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006-01-02" }}</time>
+              {{ if .Params.categories }}
+                {{ range .Params.categories }}
+                  <span class="badge bg-primary ms-2">{{ . }}</span>
+                {{ end }}
+              {{ end }}
+              {{ if .Params.tags }}
+                {{ range first 3 .Params.tags }}
+                  <span class="badge bg-secondary ms-1">{{ . }}</span>
+                {{ end }}
+              {{ end }}
+            </div>
+            <p>
+              {{ if .Params.summary }}
+                {{ .Params.summary }}
+              {{ else if .Params.description }}
+                {{ .Params.description }}
+              {{ else }}
+                {{ .Summary }}
+              {{ end }}
+            </p>
+          </article>
+        {{ end }}
+
+        {{ template "_internal/pagination.html" . }}
+      {{ else }}
+        <p>{{ i18n "no_posts_found" | default "No posts found" }}</p>
+      {{ end }}
+    </div>
+  {{ end }}
+</div>
+{{ end }}

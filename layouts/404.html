@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <div class="td-cover-block td-cover-block--height-full position-relative overflow-hidden">
-  <!-- 404内容容器，包含404文字和按钮 -->
   <div class="not-found-container">
     <div class="not-found-text">
       <h1>404</h1>
@@ -26,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
       <a class="btn btn-lg btn-transparent me-3 mb-4" href="{{ "" | relURL }}">
         Home <i class="fas fa-home ms-2"></i>
       </a>
-      <a class="btn btn-lg btn-transparent me-3 mb-4" href="Docsy/docs/">
+      <!-- if language is chonese back to cn blog site, else go en doc site -->
+      <a class="btn btn-lg btn-transparent me-3 mb-4" href="{{ if eq .Site.Language.Lang "zh" }}{{ .Site.BaseURL }}{{ .Site.Language.Lang }}/{{ else }}{{ .Site.BaseURL }}{{ .Site.Language.Lang }}/{{ end }}">
         Docs <i class="fas fa-book ms-2"></i>
       </a>
     </div>
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <style>
-/* 404页面全屏背景样式 */
+
 html, body {
   margin: 0 !important;
   padding: 0 !important;
@@ -42,7 +42,7 @@ html, body {
   overflow-x: hidden !important;
 }
 
-/* 覆盖页面左右两侧的边框 */
+
 .td-main {
   margin: 0 !important;
   padding: 0 !important;

@@ -36,7 +36,10 @@
   translation: "本页内容"
 
 - id: "last_updated"
-  translation: "最后更新"
+  translation: "更新于"
+
+- id: "published_on"
+  translation: "发布于"
 
 - id: "reading_time"
   translation: "阅读时间"
@@ -126,7 +129,7 @@
   translation: "贡献指南"
 
 - id: "post_last_mod"
-  translation: "最后修改"
+  translation: "更新于"
 
 - id: "print_printable_section"
   translation: "打印此章节"
@@ -148,3 +151,28 @@
 
 - id: "ui_pager_next"
   translation: "下一页"
+
+# 分类和标签
+- id: "categories"
+  translation: "分类"
+
+- id: "tags"
+  translation: "标签"
+
+- id: "category"
+  translation: "分类"
+
+- id: "tag"
+  translation: "标签"
+
+- id: "articles"
+  translation: "篇文章"
+
+- id: "ui_all_tags"
+  translation: "所有标签"
+
+- id: "ui_all_categories"
+  translation: "所有分类"
+
+- id: "no_posts_found"
+  translation: "没有找到文章"

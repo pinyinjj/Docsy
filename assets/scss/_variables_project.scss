@@ -418,7 +418,32 @@
     text-decoration: underline !important;
 }
 
+/* 隐藏带有 datetime 属性的时间戳，但保留 td-page-meta__lastmod */
+.td-content [datetime]:not(.td-page-meta__lastmod [datetime]) {
+    display: none !important;
+}
 
+/* td-page-meta__lastmod 样式 - 强制覆盖所有默认样式 */
+.td-page-meta__lastmod {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    color: inherit !important;
+}
+
+/* 更高优先级的选择器来确保覆盖 */
+.td-content .td-page-meta__lastmod,
+.td-content div.td-page-meta__lastmod,
+.td-content .border-top.td-page-meta__lastmod,
+.td-content .text-body-secondary.td-page-meta__lastmod {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    border-top-width: 0 !important;
+    border-top-style: none !important;
+    border-top-color: transparent !important;
+    color: inherit !important;
+}
 
 
 /* 响应式设计 */

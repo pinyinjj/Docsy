@@ -48,7 +48,7 @@
         <article class="blog-post-item mb-4">
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
           <div class="blog-post-meta text-muted mb-2">
-            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+            <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006-01-02" }}</time>
             {{ if .Params.categories }}
               {{ range .Params.categories }}
                 <span class="badge bg-primary ms-2">{{ . }}</span>

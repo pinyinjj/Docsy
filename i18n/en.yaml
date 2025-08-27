@@ -1,0 +1,130 @@
+# English translation file
+# Navigation menu
+- id: "nav_home"
+  translation: "Home"
+
+- id: "nav_docs"
+  translation: "Docs"
+
+- id: "nav_blog"
+  translation: "Blog"
+
+- id: "nav_about"
+  translation: "About"
+
+- id: "nav_community"
+  translation: "Community"
+
+# Page elements
+- id: "search_placeholder"
+  translation: "Search docs..."
+
+- id: "search_results"
+  translation: "Search Results"
+
+- id: "no_results"
+  translation: "No results found"
+
+- id: "page_not_found"
+  translation: "Page Not Found"
+
+- id: "back_to_home"
+  translation: "Back to Home"
+
+# Documentation related
+- id: "on_this_page"
+  translation: "On this page"
+
+- id: "last_updated"
+  translation: "Updated"
+
+- id: "published_on"
+  translation: "Published on"
+
+- id: "reading_time"
+  translation: "Reading time"
+
+- id: "table_of_contents"
+  translation: "Table of Contents"
+
+# Feedback
+- id: "was_this_page_helpful"
+  translation: "Was this page helpful?"
+
+- id: "yes"
+  translation: "Yes"
+
+- id: "no"
+  translation: "No"
+
+# Footer
+- id: "copyright"
+  translation: "Copyright"
+
+- id: "powered_by"
+  translation: "Powered by Hugo and Docsy"
+
+# Additional translations
+- id: "ui_search"
+  translation: "Search"
+
+- id: "footer_all_rights_reserved"
+  translation: "All rights reserved"
+
+- id: "ui_read_more"
+  translation: "Read more"
+
+- id: "post_view_this"
+  translation: "View this page"
+
+- id: "post_create_child_page"
+  translation: "Create child page"
+
+- id: "footer_privacy_policy"
+  translation: "Privacy Policy"
+
+- id: "community_join"
+  translation: "Join the community"
+
+- id: "community_introduce"
+  translation: "Introduce"
+
+- id: "post_edit_this"
+  translation: "Edit this page"
+
+- id: "post_create_issue"
+  translation: "Create an issue"
+
+- id: "community_learn"
+  translation: "Learn"
+
+- id: "print_entire_section"
+  translation: "Print entire section"
+
+- id: "post_last_mod"
+  translation: "Last updated"
+
+# Categories and tags
+- id: "categories"
+  translation: "Categories"
+
+- id: "tags"
+  translation: "Tags"
+
+- id: "category"
+  translation: "Category"
+
+- id: "tag"
+  translation: "Tag"
+
+- id: "articles"
+  translation: "articles"
+
+- id: "ui_all_tags"
+  translation: "All Tags"
+
+- id: "ui_all_categories"
+  translation: "All Categories"
+
+- id: "no_posts_found"
+  translation: "No posts found"

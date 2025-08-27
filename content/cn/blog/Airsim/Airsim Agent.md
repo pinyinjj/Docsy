@@ -1,14 +1,14 @@
 ---
-title: "Airsim Agent 大模型驱动无人机"
+title: "AirSim Agent 大模型驱动无人机"
 date: 2025-08-08
 summary: "AirSim 仿真环境搭建 → API 封装设计 → 大模型集成 → 知识库构建 → 智能体开发 → 语音控制，完整的无人机智能控制系统开发实战。涵盖环境配置、Python SDK、OpenAI 调用、提示工程、多模态感知等核心技术栈。"
 tags: ["AirSim", "无人机", "大模型", "仿真", "Python"]
 categories: ["学习笔记"]
 weight: 10
 ---
-[**Airsim Agent**](https://github.com/maris205/airsim_agent)来源于微软开源项目[**PromptCraft-Robotics**](https://github.com/microsoft/PromptCraft-Robotics) ，提供了由大模型驱动机器人的解决方案。
+[**AirSim Agent**](https://github.com/maris205/airsim_agent)来源于微软开源项目[**PromptCraft-Robotics**](https://github.com/microsoft/PromptCraft-Robotics) ，提供了由大模型驱动机器人的解决方案。
 
-## 1. Airsim安装、编译和使用尝试
+## 1. AirSim 安装、编译和使用尝试
 ### 1.1 开发环境与编译平台建议
 
 - 硬件/系统

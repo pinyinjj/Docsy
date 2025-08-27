@@ -1,0 +1,55 @@
+{{ define "main" }}
+<div class="td-content">
+  <h1>{{ .Title }}</h1>
+    <!-- 分类和标签 -->
+    {{ if or .Params.categories .Params.tags }}
+    <header class="article-meta">
+      {{ if .Params.tags }}
+        <div class="taxonomy taxonomy-terms-article taxo-tags">
+          <h5 class="taxonomy-title">{{ i18n "tags" | default "Tags" }}:</h5>
+          <ul class="taxonomy-terms">
+            {{ range .Params.tags }}
+              <li><a class="taxonomy-term" href="{{ $.Site.BaseURL }}{{ $.Site.Language.Lang }}/tags/{{ . | urlize }}/" data-taxonomy-term="{{ . }}"><span class="taxonomy-label">{{ . }}</span></a></li>
+            {{ end }}
+          </ul>
+        </div>
+      {{ end }}
+      {{ if .Params.categories }}
+        <div class="taxonomy taxonomy-terms-article taxo-categories">
+          <h5 class="taxonomy-title">{{ i18n "categories" | default "Categories" }}:</h5>
+          <ul class="taxonomy-terms">
+            {{ range .Params.categories }}
+              <li><a class="taxonomy-term" href="{{ $.Site.BaseURL }}{{ $.Site.Language.Lang }}/categories/{{ . | urlize }}/" data-taxonomy-term="{{ . }}"><span class="taxonomy-label">{{ . }}</span></a></li>
+            {{ end }}
+          </ul>
+        </div>
+      {{ end }}
+    </header>
+  {{ end }}
+  <!-- 在标题下添加最后更新信息 -->
+  <div class="td-page-meta__lastmod">
+    {{ i18n "last_updated" }} {{ .Lastmod.Format "2006年1月2日" }}: 
+    {{ if .GitInfo }}
+      <a data-proofer-ignore="" href="https://github.com/pinyinjj/Docsy/commit/{{ .GitInfo.Hash }}">
+        {{ .GitInfo.Subject }} ({{ .GitInfo.AbbreviatedHash }})
+      </a>
+    {{ end }}
+  </div>
+
+  <hr class="my-4">
+  
+
+  
+  {{ with .Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
+  
+  {{ if (and (not .Params.hide_readingtime) (.Site.Params.ui.readingtime.enable)) }}
+    {{ partial "reading-time.html" . }}
+  {{ end }}
+  
+  {{ .Content }}
+  
+  {{ if (.Site.Params.comments) | and (ne .Params.commentable false) | and (.Site.Params.comments_opts.commentable) }}
+    {{ template "_internal/disqus.html" . }}
+  {{ end }}
+</div>
+{{ end }}
