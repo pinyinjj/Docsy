@@ -1,3 +1,75 @@
+/* Consistent glassmorphism style variables */
+$consistent-bg: rgba(255, 255, 255, 0.1) !important;
+$consistent-blur: blur(10px) !important;
+$consistent-border-color: rgba(255, 255, 255, 0.2) !important;
+$consistent-border: 1px solid $consistent-border-color;
+$consistent-white-border: 1px solid white !important;
+
+/* Add a semi-transparent overlay to the body to ensure text readability over any background image */
+body::before {
+    content: '';
+    position: fixed; /* Use fixed to cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Adjust the opacity (0.3) to make it darker or lighter */
+    z-index: -1; /* Place it behind the content but above the background image */
+}
+
+/* 全局侧边栏模糊效果 */
+.td-sidebar, .td-sidebar-toc {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    -webkit-backdrop-filter: $consistent-blur;
+    border-right: $consistent-border;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+    padding-bottom: 1rem;
+}
+
+.td-sidebar__inner a , .td-sidebar__search a{
+    color: white !important;
+}
+
+/* Make sidebar search input text white */
+.td-sidebar .td-search__input {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.td-sidebar .td-search__input:focus {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important;
+    color: white !important;
+}
+
+.td-sidebar .td-search__input::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.border-bottom {
+    border-bottom:#ffffff !important;
+}
+/* Make the active sidebar item's separator white */
+.td-sidebar-menu .td-sidebar-link.active {
+    border-left-color: white !important;
+}
+
+/* Make the sidebar tree root's bottom border white */
+.td-sidebar-nav .td-sidebar-link.tree-root {
+    border-bottom-color: rgba(255, 255, 255, 0.404) !important;
+}
+
+.taxonomy-terms-cloud .taxonomy-title {
+    display: inline-block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white !important;
+    border-bottom: $consistent-white-border;
+}
 
 .td-cover-block {
   background-size: cover !important;
@@ -75,9 +147,9 @@
 
 /* 下拉菜单样式 */
 .td-navbar .dropdown-menu {
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
 }
 
@@ -110,10 +182,10 @@
 
 /* 透明按钮样式 */
 .btn-transparent {
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.2) !important; // Keeping this slightly different as it's a button
     border: 2px solid rgba(255, 255, 255, 0.8) !important;
     color: white !important;
-    backdrop-filter: blur(10px);
+    backdrop-filter: $consistent-blur;
     transition: all 0.3s ease;
 }
 
@@ -162,9 +234,9 @@
 }
 
 .contact-card {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
     border-radius: 16px;
     padding: 2rem 1.5rem;
     min-width: 240px;
@@ -248,8 +320,8 @@
 
 .td-cover-block .btn.btn-link.text-light,
 .td-cover-block a.btn.btn-link.text-light {
-    background: rgba(255, 255, 255, 0.2) !important;
-    backdrop-filter: blur(8px) !important;
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
     border: none !important;
     border-radius: 50% !important;
     width: 35px !important;
@@ -493,6 +565,8 @@
     display: none;
   }
   
+
+  
 /* Logo位置调整 - 只移动logo图标，不移动文字 */
 .td-navbar .navbar-brand {
     transition: transform 0.3s ease !important;
@@ -526,6 +600,218 @@
     .td-navbar .navbar-brand:hover img,
     .td-navbar .navbar-brand:hover svg {
         transform: translateY(-8px) !important;
+    }
+}
+
+/* 博客页面样式 - 完全透明背景 */
+.blog-page {
+    position: relative;
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+.blog-page .td-content {
+    position: relative;
+    z-index: 2;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Set min-height to roughly viewport height minus navbar/footer to enable vertical centering */
+    min-height: calc(100vh - 120px) !important;
+}
+
+.blog-page .blog-posts {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.blog-page h1,
+.blog-page .h1 {
+    display: none !important;
+}
+
+.blog-page .blog-intro {
+    display: none !important;
+}
+
+/* 博客集合卡片样式 - 增强按钮风格 */
+.blog-collection-card {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
+    border-radius: 25px;
+    padding: 2.5rem;
+    height: 100%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 10px 30px rgba(102, 126, 234, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    cursor: pointer;
+}
+
+.blog-page .blog-post-item {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-page .blog-post-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    border-radius: 16px 16px 0 0;
+}
+
+.blog-page .blog-post-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.blog-page .blog-post-item h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+}
+
+.blog-page .blog-post-item h3 a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-page .blog-post-item h3 a:hover {
+    color: #f8f9fa;
+    text-decoration: none;
+}
+
+.blog-page .blog-post-meta {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+}
+
+.blog-page .blog-post-meta time {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.blog-page .blog-post-item p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 分页样式调整 */
+.blog-page .pagination {
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.blog-page .page-link {
+    background: $consistent-bg;
+    border: $consistent-border;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: $consistent-blur;
+}
+
+.blog-page .page-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.blog-page .page-item.active .page-link {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .blog-page h1 {
+        font-size: 2.5rem;
+    }
+    
+    .blog-collection-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .blog-collection-title {
+        font-size: 1.3rem;
+    }
+    
+    .blog-page .blog-post-item {
+        padding: 1.5rem;
+    }
+    
+    .blog-page .blog-post-item h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* 博客列表两列布局和毛玻璃效果 */
+.td-blog-posts-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem; /* 控制卡片之间的间距 */
+    list-style: none;
+    padding-left: 0;
+}
+
+.td-blog-posts-list__item {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+}
+
+.td-blog-posts-list__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* 响应式设计：在较小的屏幕上恢复为单列布局 */
+@media (max-width: 992px) {
+    .td-blog-posts-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Section/taxonomy anp post pages: make blog post items a 2-column grid */
+.blog-posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+
+}
+
+@media (max-width: 992px) {
+    .blog-posts {
+        grid-template-columns: 1fr;
     }
 }
 

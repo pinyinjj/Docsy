@@ -20,6 +20,8 @@
         const images = getLocalImageList();
         if (images.length === 0) return false;
         const selectedImage = images[Math.floor(Math.random() * images.length)];
+        
+        // 优先选择封面块，然后是博客页面，最后是body
         const targetElement = document.querySelector('.td-cover-block') || document.body;
 
         targetElement.style.setProperty('background-image', `url('${selectedImage}')`, 'important');

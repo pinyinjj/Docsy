@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="td-content">
+<div class="td-content blog-page">
   <h1>{{ .Title }}</h1>
   
   {{ if .Content }}
@@ -14,13 +14,13 @@
       <div class="blog-collections mt-4">
         <div class="row">
           {{ range $subsections.ByWeight }}
-            <div class="col-md-6 col-lg-4 mb-3">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <a href="{{ .RelPermalink }}" class="stretched-link">{{ .Title }}</a>
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="blog-collection-card">
+                <div class="blog-collection-content">
+                  <h5 class="blog-collection-title">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
                   </h5>
-                  <p class="card-text">
+                  <p class="blog-collection-description">
                     {{ if .Params.description }}
                       {{ .Params.description }}
                     {{ else if .Summary }}
@@ -29,9 +29,11 @@
                       {{ .Content | truncate 100 }}
                     {{ end }}
                   </p>
-                  <small class="text-muted">
-                    {{ len .Pages }} {{ i18n "articles" | default "articles" }}
-                  </small>
+                  <div class="blog-collection-meta">
+                    <span class="blog-collection-count">
+                      {{ len .Pages }} {{ i18n "articles" | default "articles" }}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

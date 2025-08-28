@@ -18,6 +18,11 @@ enableGitInfo: true
 # Comment out to disable taxonomies in Docsy
 # disableKinds: [taxonomy]
 
+# We use this to prevent hugo from generating a sitemap of the gallery contents,
+# which are currently not on display.
+disableKinds:
+- RSS
+
 # You can add your own taxonomies
 taxonomies:
   tag: tags
