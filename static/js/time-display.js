@@ -16,6 +16,7 @@ function createTimeDisplay() {
     timeDisplay.style.color = 'rgba(255, 255, 255, 0.2)';
     timeDisplay.style.padding = '10px 15px';
     timeDisplay.style.fontFamily = "'Playwrite PL', sans-serif";
+    timeDisplay.style.setProperty('font-family', "'Playwrite PL', sans-serif", 'important');
     timeDisplay.style.fontSize = '14px';
     timeDisplay.style.fontWeight = '300';
     timeDisplay.style.zIndex = '9999';

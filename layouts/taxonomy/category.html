@@ -1,4 +1,14 @@
 {{ define "main" }}
+<style>
+/* 为博客分类页面设置背景 */
+body {
+    background-image: url('/Docsy/images/blog/blog_background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+</style>
 <div class="td-content">
   {{ if .IsHome }}
     <!-- 分类列表页面 -->

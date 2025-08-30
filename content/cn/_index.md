@@ -5,6 +5,7 @@ title: Zed的文档网站
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
 
 <style>
 .td-content { font-family: 'WDXL Lubrifont TC','Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Hiragino Sans TC',sans-serif; }
@@ -36,5 +37,5 @@ h1.display-1 {
 
 {{< /blocks/cover >}}
 
-<script src="/Docsy/js/random-background.js"></script>
+
 <script src="/Docsy/js/time-display.js"></script>

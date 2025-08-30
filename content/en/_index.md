@@ -18,5 +18,5 @@ title: Zed's Doc Site
 
 {{< /blocks/cover >}}
 
-<script src="/Docsy/js/random-background.js"></script>
+
 <script src="/Docsy/js/time-display.js"></script>

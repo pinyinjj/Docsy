@@ -47,4 +47,3 @@ menu: {main: {weight: 10}}
 
 {{% /blocks/section %}}
 
-<script src="/Docsy/js/random-background.js"></script>

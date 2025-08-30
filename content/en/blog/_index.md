@@ -3,8 +3,12 @@ title: Blog
 menu: {main: {weight: 30}}
 ---
 
-This is the **blog** section. It has two categories: News and Releases.
-
-Files in these directories will be listed in reverse chronological order.
-
-<script src="/Docsy/js/random-background.js"></script>
+<style>
+body {
+    background-image: url('/Docsy/images/backgrounds/bg11.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+</style>

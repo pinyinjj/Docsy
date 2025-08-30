@@ -142,6 +142,7 @@ params:
 
   # Enable syntax highlighting and copy buttons on code blocks with Prism
   prism_syntax_highlighting: false
+  blogBackground: '/Docsy/images/backgrounds/wallhaven-odr71m.jpg'
 
   copyright:
     authors: Docsy Authors | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |

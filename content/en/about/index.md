@@ -46,6 +46,3 @@ menu: {main: {weight: 10}}
 Welcome to my personal space where I share my journey in technology and development.
 
 {{% /blocks/section %}}
-
-
-<script src="/Docsy/js/random-background.js"></script>
