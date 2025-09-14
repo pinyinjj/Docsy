@@ -1,7 +1,7 @@
 ---
 title: "Victoria 3 War Reparations Infamy Fix"
 description: "A mod for Victoria 3 (v1.9.8) that provides an adjustable infamy system for war reparations, allowing players to customize infamy generation with faster decay rates and raised thresholds."
-date: 2025-9-14
+date: 2025-09-14
 tags: ["Victoria 3", "Paradox", "Mod", "Game Balance"]
 categories: ["Paradox Mods"]
 weight: 10
