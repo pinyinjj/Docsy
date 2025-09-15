@@ -37,7 +37,7 @@ git clone --recursive --branch v5.0.6 https://github.com/mavlink/qgroundcontrol.
 
 - 首次编译耗时较长（取决于机器配置）。出现如下日志表示编译完成并生成可运行产物：
 
-```
+```bash
 Making AppRun file executable:  /project/build/AppDir/AppRun
 ```
 

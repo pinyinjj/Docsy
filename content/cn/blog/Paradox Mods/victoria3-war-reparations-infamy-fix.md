@@ -1,6 +1,6 @@
 ---
 title: "Victoria 3 War Reparations Infamy Fix"
-description: "A mod for Victoria 3 (v1.9.8) that provides an adjustable infamy system for war reparations, allowing players to customize infamy generation with faster decay rates and raised thresholds."
+description: "适用于《维多利亚3》（v1.9.8）的模组，为战争赔款提供可调节的恶名机制，允许玩家自定义恶名获取，并加快衰减速度、提高阈值。"
 date: 2025-09-14
 tags: ["Victoria 3", "Paradox", "Mod", "Game Balance"]
 categories: ["Paradox Mods"]
@@ -39,7 +39,7 @@ weight: 10
 
 ## 文件结构
 
-```
+```bash
 common/
 ├── defines/
 │   └── 99_mwid_infamy_fix.txt          # 恶名阈值和衰减率
@@ -66,7 +66,7 @@ max = 20        # 最大恶名 (最大值: 50)
 3. **最小影响**: 精确控制战争赔款恶名，不影响其他外交行动或与其他Mod冲突
 
 核心恶名计算位于：
-```
+```bash
 game/common/treaty_articles/05_transfer_money.txt - money_transfer.wargoal.infamy
 ```
 
