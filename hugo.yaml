@@ -4,8 +4,8 @@ title: Zed
 # cSpell:ignore goldmark github hugo readingtime docsy subdir lastmod pygments linenos catmullrom norsk gu
 
 # Language settings
-contentDir: content/en
-defaultContentLanguage: en
+contentDir: content/cn
+defaultContentLanguage: cn
 defaultContentLanguageInSubdir: false
 # Useful when translating.
 enableMissingTranslationPlaceholders: true
@@ -51,12 +51,6 @@ imaging:
 hasCJKLanguage: true
 
 languages:
-  en:
-    languageName: English
-    title: Zed
-    contentDir: content/en
-    params:
-      description: Technical sharing and experience recording.
   # cSpell:disable
   cn: 
     languageName: "中文(Chinese)"
@@ -67,6 +61,12 @@ languages:
       time_format_default: "2006年1月2日"
       time_format_blog: "2006年1月2日"
   # cSpell:enable
+  en:
+    languageName: English
+    title: Zed
+    contentDir: content/en
+    params:
+      description: Technical sharing and experience recording.
 
 markup:
   goldmark:
