@@ -1,0 +1,24 @@
+# Git attributes for Chinese filename support
+* text=auto eol=lf
+
+# Ensure proper handling of Chinese filenames
+*.md text diff=markdown
+*.html text
+*.css text
+*.js text
+*.json text
+*.yaml text
+*.yml text
+
+# Set encoding for Chinese files
+*.md encoding=utf-8
+content/**/*.md encoding=utf-8
+
+# Hugo specific files
+hugo.yaml encoding=utf-8
+config.yaml encoding=utf-8
+netlify.toml encoding=utf-8
+
+# Ensure Git treats Chinese filenames as UTF-8
+*.md linguist-language=Markdown
+content/cn/**/*.md linguist-language=Markdown
