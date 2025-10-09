@@ -60,11 +60,13 @@ body::before {
   {{ end }}
   <!-- 在标题下添加最后更新信息 -->
   <div class="td-page-meta__lastmod">
-    {{ i18n "last_updated" }} {{ .Lastmod.Format "2006年1月2日" }}: 
     {{ if .GitInfo }}
+      {{ i18n "last_updated" }} {{ .GitInfo.AuthorDate.Format "2006年1月2日" }}: 
       <a data-proofer-ignore="" href="https://github.com/pinyinjj/Docsy/commit/{{ .GitInfo.Hash }}">
         {{ .GitInfo.Subject }} ({{ .GitInfo.AbbreviatedHash }})
       </a>
+    {{ else }}
+      {{ i18n "last_updated" }} {{ .Lastmod.Format "2006年1月2日" }}
     {{ end }}
   </div>
 
