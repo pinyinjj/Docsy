@@ -1,0 +1,28 @@
+{{ $page := . }}
+{{ $lastmod := .Lastmod }}
+{{ $git_branch := (default "main" .Site.Params.github_branch) }}
+{{ $github_repo := .Site.Params.github_repo }}
+{{ $github_subdir := .Site.Params.github_subdir }}
+
+{{ if .GitInfo }}
+  {{ $lastmod = .GitInfo.AuthorDate }}
+  {{ $git_commit := .GitInfo.Hash }}
+  {{ $git_abbrev := .GitInfo.AbbreviatedHash }}
+  {{ $git_subject := .GitInfo.Subject }}
+  
+  {{ $edit_url := printf "%s/edit/%s/%s%s" $github_repo $git_branch $github_subdir $page.File.Path }}
+  {{ $blame_url := printf "%s/blame/%s/%s%s" $github_repo $git_branch $github_subdir $page.File.Path }}
+  {{ $history_url := printf "%s/commits/%s/%s%s" $github_repo $git_branch $github_subdir $page.File.Path }}
+  {{ $commit_url := printf "%s/commit/%s" $github_repo $git_commit }}
+  
+  <div class="td-page-meta__lastmod">
+    {{ i18n "last_updated" }} {{ $lastmod.Format "2006年1月2日" }}: 
+    <a data-proofer-ignore="" href="{{ $commit_url }}">
+      {{ $git_subject }} ({{ $git_abbrev }})
+    </a>
+  </div>
+{{ else }}
+  <div class="td-page-meta__lastmod">
+    {{ i18n "last_updated" }} {{ $lastmod.Format "2006年1月2日" }}
+  </div>
+{{ end }}
