@@ -558,15 +558,11 @@ styles:
   rotation_origin: "16px 16px"   # 旋转中心点
 ```
 
-## 参考文献
+## 参考文档
 
-- **[Leaflet Custom Icons Tutorial](https://leafletjs.com/examples/custom-icons/)** - Leaflet 官方自定义图标教程。
-
-- **[NiceGUI Leaflet Documentation](https://nicegui.io/documentation/leaflet)** - NiceGUI 中使用 Leaflet 地图的基础 API 和示例代码。
-
-- **[NiceGUI Leaflet Marker Selection Discussion](https://github.com/zauberzeug/nicegui/discussions/2361)** - 提供了在 NiceGUI 中实现标记点击事件和交互功能的解决方案。
-
-- **[Leaflet Marker Management on Stack Overflow](https://stackoverflow.com/questions/9912145/leaflet-how-to-find-existing-markers-and-delete-markers)**
-
-- **[Leaflet.RotatedMarker Plugin](https://github.com/bbecquet/Leaflet.RotatedMarker)** - 支持标记旋转功能的 Leaflet 插件。
+- [Leaflet Custom Icons Tutorial](https://leafletjs.com/examples/custom-icons/)
+- [NiceGUI Leaflet Documentation](https://nicegui.io/documentation/leaflet)
+- [NiceGUI Leaflet Marker Selection Discussion](https://github.com/zauberzeug/nicegui/discussions/2361)
+- [Leaflet Marker Management on Stack Overflow](https://stackoverflow.com/questions/9912145/leaflet-how-to-find-existing-markers-and-delete-markers)
+- [Leaflet.RotatedMarker Plugin](https://github.com/bbecquet/Leaflet.RotatedMarker)
  

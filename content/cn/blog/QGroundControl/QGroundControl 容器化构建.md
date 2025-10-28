@@ -10,8 +10,7 @@ weight: 10
 
 本文档基于 QGroundControl v5.0.6 Stable 的二次开发，使用最简单稳定的容器构建方法，也是官方强烈推荐的构建方法。
 
-### 参考文档
-- 官方容器构建指南（中文）：[QGC Dev Guide / Getting Started / Container](https://docs.qgroundcontrol.com/Stable_V5.0/zh/qgc-dev-guide/getting_started/container.html)
+
 
 ### 环境要求
 - Linux（已在 Ubuntu 上验证）
@@ -78,3 +77,6 @@ github   # 打开 GitHub Desktop for Linux
 ### 常见问题
 - 子模块缺失：确保使用 `--recursive` 克隆；若仓库体积明显小于 400MB，请重新克隆。
 - 构建失败：优先对照官方容器构建指南，确认本地 Docker 环境与网络条件正常。
+
+### 参考文档
+- 官方容器构建指南（中文）：[QGC Dev Guide / Getting Started / Container](https://docs.qgroundcontrol.com/Stable_V5.0/zh/qgc-dev-guide/getting_started/container.html)

@@ -1,7 +1,6 @@
 ---
 title: "MavSDK和QGC航点规划兼容性问题的解决方案"
 date: 2025-09-30
-lastmod: 2025-09-30
 summary: "本文档详细分析了MavSDK与QGroundControl 5.0.6在航点规划方面的兼容性问题，提供了基于MissionRaw接口的双层数据转换架构解决方案，确保航点数据与QGC的兼容。"
 tags: ["QGroundControl", "MAVSDK-Python", "任务规划", "无人机", "地面站", "技术文档"]
 categories: ["技术文档"]
@@ -967,13 +966,9 @@ class MissionUploader:
 ```
 
 
-## 参考文献
+## 参考文档
 
-
-### 技术参考
-**MAVLink消息格式**: [https://mavlink.io/en/messages/](https://mavlink.io/en/messages/)
-**QGC航点管理**: [https://docs.qgroundcontrol.com/master/en/PlanView/PlanView.html](https://docs.qgroundcontrol.com/master/en/PlanView/PlanView.html)
-**MAVSDK-Python Mission API**: [https://mavsdk-python.readthedocs.io/en/stable/plugins_sdk.html#mission](https://mavsdk-python.readthedocs.io/en/stable/plugins_sdk.html#mission)
-**MAVLink Mission协议**: [https://mavlink.io/en/services/mission.html](https://mavlink.io/en/services/mission.html)
-
-
+- [MAVLink 消息格式](https://mavlink.io/en/messages/)
+- [QGC 航点管理](https://docs.qgroundcontrol.com/master/en/PlanView/PlanView.html)
+- [MAVSDK-Python Mission API](https://mavsdk-python.readthedocs.io/en/stable/plugins_sdk.html#mission)
+- [MAVLink Mission 协议](https://mavlink.io/en/services/mission.html)

@@ -323,11 +323,11 @@ make px4_sitl gazebo
 
 ---
 
-## 6. 参考文献
+## 参考文档
 
-- **[AirSim Settings](https://microsoft.github.io/AirSim/settings/)** - AirSim 官方 Settings 文档。
-- **[Camera Views](https://microsoft.github.io/AirSim/camera_views/)** - AirSim 官方相机视图说明。
-- **[Upgrade Settings](https://microsoft.github.io/AirSim/upgrade_settings/)** - AirSim 设置升级指南。
-- **[PX4 SITL](https://microsoft.github.io/AirSim/px4_sitl/)** - AirSim 官方 PX4 SITL 指南。
-- **[PX4与AirSim整合实践](https://zhuanlan.zhihu.com/p/431075863)** - 知乎专栏实践记录。
-- **[建立QGC地面站与WSL2中虚拟环境的连接](https://www.cnblogs.com/Biiigwang/p/17753556.html)** - 参考 QGC 与 PX4 SITL 在不同环境下的连接配置与端口转发实践。
+- [AirSim Settings](https://microsoft.github.io/AirSim/settings/)
+- [Camera Views](https://microsoft.github.io/AirSim/camera_views/)
+- [Upgrade Settings](https://microsoft.github.io/AirSim/upgrade_settings/)
+- [PX4 SITL](https://microsoft.github.io/AirSim/px4_sitl/)
+- [PX4与AirSim整合实践](https://zhuanlan.zhihu.com/p/431075863)
+- [建立QGC地面站与WSL2中虚拟环境的连接](https://www.cnblogs.com/Biiigwang/p/17753556.html)
