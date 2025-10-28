@@ -1,5 +1,5 @@
 ---
-title: "QGroundControl 容器化构建"
+title: "QGroundControl 基于官方文档的容器化构建"
 date: 2025-09-11
 summary: "本文档介绍了如何使用官方推荐的容器化方法，在 Linux 环境下为 QGroundControl v5.0.6 Stable 版本进行二次开发和构建。内容涵盖环境要求、源码获取、Docker 构建流程、运行验证及常见问题。"
 tags: ["QGroundControl", "Docker", "地面站", "Qt", "技术文档"]
@@ -7,8 +7,6 @@ categories: ["技术文档"]
 weight: 10
 ---
 
-
-## QGroundControl 开发参考
 
 本文档基于 QGroundControl v5.0.6 Stable 的二次开发，使用最简单稳定的容器构建方法，也是官方强烈推荐的构建方法。
 

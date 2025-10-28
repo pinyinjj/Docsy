@@ -5,8 +5,12 @@
 
 ## 标签列表
 - AirSim
+- CMake
 - MAVLink
 - MAVSDK-Python
+- Linux
+- Ubuntu
+- Android
 - QGroundControl
 - NiceGUI
 - JavaScript
@@ -17,6 +21,7 @@
 - 前端
 - 任务规划
 - 容器化
+- 编译
 - Docker
 - C++
 - Qt
@@ -63,6 +68,12 @@ categories: ["技术文档"]
 weight: 10
 ---
 ```
+# 大小写校验规则
+- 使用标准的写法确保引入的技术框架名称正确，下列是正确的名称,如果文档中包含不符合如下大小写规范的字符串，需要提醒用户，确认是否进行修改或增加标准名称到下方列表中。
+- MAVSDK-Python
+- AirSim
+- MAVLink
+
 
 ## 审核要点（给维护者）
 - 新增标签是否必要且通用？是否可以用现有标签替代？

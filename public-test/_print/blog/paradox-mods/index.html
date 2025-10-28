@@ -1,0 +1,288 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="canonical" type="text/html" href="https://pinyinjj.github.io/Docsy/blog/paradox-mods/">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/Docsy/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/Docsy/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-192x192.png" sizes="192x192">
+
+<title>Paradox Mods | Zed</title>
+<meta name="description" content="本分类提供针对Paradox系列游戏MOD开发的全面参考指南，包括Mod结构、脚本编写、资源管理及部署流程">
+<meta property="og:url" content="https://pinyinjj.github.io/Docsy/blog/paradox-mods/">
+  <meta property="og:site_name" content="Zed">
+  <meta property="og:title" content="Paradox Mods">
+  <meta property="og:description" content="本分类提供针对Paradox系列游戏MOD开发的全面参考指南，包括Mod结构、脚本编写、资源管理及部署流程">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="Paradox Mods">
+  <meta itemprop="description" content="本分类提供针对Paradox系列游戏MOD开发的全面参考指南，包括Mod结构、脚本编写、资源管理及部署流程">
+  <meta itemprop="datePublished" content="2025-09-14T16:38:43+08:00">
+  <meta itemprop="dateModified" content="2025-09-14T16:38:43+08:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Paradox Mods">
+  <meta name="twitter:description" content="本分类提供针对Paradox系列游戏MOD开发的全面参考指南，包括Mod结构、脚本编写、资源管理及部署流程">
+<link rel="preload" href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" as="style" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<link href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" rel="stylesheet" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-section td-blog">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/Docsy/"><span class="navbar-brand__logo navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 70.1C313.1 61.9 326.9 61.9 336 70.1l232 208C577.9 286.9 578.7 302.1 569.8 312 560.9 321.9 545.8 322.7 535.9 313.8L527.9 306.6V511.9c0 35.3000000000001-28.7 64-64 64h-288c-35.3.0-64-28.6999999999999-64-64V306.6L103.9 313.8C94 322.6 78.9 321.8 70 312 61.1 302.2 62 287 71.8 278.1L304 70.1zm16 50.1L160 263.7V512C160 520.8 167.2 528 176 528h48V424c0-39.8 32.2-72 72-72h48c39.8.0 72 32.2 72 72V528h48C472.8 528 480 520.8 480 512V263.7L320 120.3zM272 528h96V424c0-13.3-10.7-24-24-24H296c-13.3.0-24 10.7-24 24V528z"/></svg></span><span class="navbar-brand__name">Zed</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/about/"><span>关于</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/Docsy/blog/"><span>博客</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/reviews/"><span>读后感</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">中文(Chinese)</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/Docsy/en/">English</a></li>
+    </ul>
+</div></li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" class="td-search__input form-control td-search-input" placeholder="搜索" aria-label="搜索" autocomplete="off">
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
+            
+
+
+
+
+<div class="td-content">
+<div class="pageinfo pageinfo-primary d-print-none">
+<p>
+打印此章节
+<a href="#" onclick="print();return false;">点击打印</a>.
+</p><p>
+<a href="/Docsy/blog/paradox-mods/">显示常规版本</a>.
+</p>
+</div>
+
+
+
+<h1 class="title">Paradox Mods</h1>
+<div class="lead">本分类提供针对Paradox系列游戏MOD开发的全面参考指南，包括Mod结构、脚本编写、资源管理及部署流程</div>
+
+
+
+
+    <ul>
+    
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-36e2a31e8ffe1786f1bda58cc689e877">维多利亚3 战争赔款恶名优化mod</a></li>
+
+
+
+    
+  
+
+    </ul>
+
+
+<div class="content">
+      
+</div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-36e2a31e8ffe1786f1bda58cc689e877">维多利亚3 战争赔款恶名优化mod</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2025-10-27" class="text-body-secondary">2025年10月27日</time>
+        
+	</div>
+	<h2 id="概述">概述</h2>
+<p>本Mod解决了维多利亚3中战争赔款系统的不平衡问题，相比征服领土等其他战争目标，要求战争赔款会产生过高的恶名。Mod提供了灵活可定制的解决方案，在保持游戏平衡的同时改善外交策略选择。</p>
+<h2 id="功能特性">功能特性</h2>
+<ul>
+<li><strong>可调节恶名生成</strong>: 较低的divide值会增加恶名生成，可自定义最小/最大值限制</li>
+<li><strong>5倍更快恶名衰减</strong>: 年衰减率从5.0提升到25.0</li>
+<li><strong>战争赔款优化</strong>: 减少战争赔款的过度恶名，同时保持战略平衡</li>
+</ul>
+<h2 id="安装">安装</h2>
+<h3 id="推荐steam创意工坊">推荐：Steam创意工坊</h3>
+<ol>
+<li>访问 <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3567979652">Steam创意工坊页面</a></li>
+<li>点击&quot;订阅&quot;自动下载和安装</li>
+<li>启动维多利亚3 - Mod将自动启用</li>
+</ol>
+<p><strong>注意</strong>：Steam创意工坊安装是最可靠的方法。手动安装可能导致Mod无法正常工作。</p>
+<h3 id="手动安装">手动安装</h3>
+<ol>
+<li>下载Mod文件：<a href="https://github.com/pinyinjj/Victoria3-War-Reparations-Infamy-Fix/tree/1.0.0">GitHub仓库</a></li>
+<li>放置到维多利亚3 Mod目录</li>
+<li>在游戏启动器中启用Mod</li>
+</ol>
+<h2 id="文件结构">文件结构</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>common/
+</span></span><span style="display:flex;"><span>├── defines/
+</span></span><span style="display:flex;"><span>│   └── 99_mwid_infamy_fix.txt          <span style="color:#8f5902;font-style:italic"># 恶名阈值和衰减率</span>
+</span></span><span style="display:flex;"><span>└── treaty_articles/
+</span></span><span style="display:flex;"><span>    └── 05_transfer_money.txt            <span style="color:#8f5902;font-style:italic"># 战争赔款恶名计算</span>
+</span></span></code></pre></div><h2 id="自定义">自定义</h2>
+<p>您可以通过修改 <code>common/treaty_articles/05_transfer_money.txt</code> 中的以下值来调整恶名生成：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>divide = 10000  # 较低值 = 更高恶名
+</span></span><span style="display:flex;"><span>min = 0.5       # 最小恶名 (最大值: 5)
+</span></span><span style="display:flex;"><span>max = 20        # 最大恶名 (最大值: 50)
+</span></span></code></pre></div><h2 id="开发方法">开发方法</h2>
+<p>本Mod使用热补丁方法：</p>
+<ol>
+<li><strong>完整文件覆盖</strong>: 复制并修改整个 <code>05_transfer_money.txt</code> 条约条款文件</li>
+<li><strong>选择性值更改</strong>: 仅调整特定参数 (<code>divide</code>, <code>min</code>, <code>max</code>)，同时保留所有其他功能</li>
+<li><strong>最小影响</strong>: 精确控制战争赔款恶名，不影响其他外交行动或与其他Mod冲突</li>
+</ol>
+<p>核心恶名计算位于：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>game/common/treaty_articles/05_transfer_money.txt - money_transfer.wargoal.infamy
+</span></span></code></pre></div><h2 id="兼容性">兼容性</h2>
+<ul>
+<li><strong>游戏版本</strong>: 维多利亚3 v1.9.8</li>
+<li><strong>多人游戏</strong>: 同步</li>
+<li><strong>其他Mod</strong>: 由于高加载优先级，与大多数Mod兼容</li>
+</ul>
+<h2 id="支持">支持</h2>
+<p>如有问题或建议，请参考Mod讨论页面或在仓库中创建问题。</p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Mail" aria-label="Mail">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Mail">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wechat" aria-label="Wechat">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Wechat">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="QQ" aria-label="QQ">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="QQ">
+      <i class="fab fa-qq"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wallhaven" aria-label="Wallhaven">
+    <a target="_blank" rel="noopener" href="https://wallhaven.cc/user/pinyinjj/favorites/1954116" aria-label="Wallhaven">
+      <i class="fa fa-image"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Docsy &amp; Template" aria-label="Docsy &amp; Template">
+    <a target="_blank" rel="noopener" href="https://github.com/google/docsy" aria-label="Docsy &amp; Template">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2018&ndash;2025
+    <span class="td-footer__authors">Docsy Authors | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/Docsy/js/main.min.82a76d84ad7dfed9e08be53d2fd3eecc4f8379825944028e9e65df3e85ad29ca.js" integrity="sha256-gqdthK19/tngi&#43;U9L9PuzE&#43;DeYJZRAKOnmXfPoWtKco=" crossorigin="anonymous"></script>
+<script defer src="/Docsy/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/Docsy/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

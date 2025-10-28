@@ -10,9 +10,20 @@
   {{ $git_abbrev := .GitInfo.AbbreviatedHash }}
   {{ $git_subject := .GitInfo.Subject }}
   
-  {{ $edit_url := printf "%s/edit/%s/%s%s" $github_repo $git_branch $github_subdir $page.File.Path }}
-  {{ $blame_url := printf "%s/blame/%s/%s%s" $github_repo $git_branch $github_subdir $page.File.Path }}
-  {{ $history_url := printf "%s/commits/%s/%s%s" $github_repo $git_branch $github_subdir $page.File.Path }}
+  {{ $commit_url := printf "%s/commit/%s" $github_repo $git_commit }}
+  
+  <div class="td-page-meta__lastmod">
+    {{ i18n "last_updated" }} {{ $lastmod.Format "2006年1月2日" }}: 
+    <a data-proofer-ignore="" href="{{ $commit_url }}">
+      {{ $git_subject }} ({{ $git_abbrev }})
+    </a>
+  </div>
+{{ else if .Params.gitinfo }}
+  {{ $git_commit := .Params.gitinfo.hash }}
+  {{ $git_abbrev := .Params.gitinfo.abbreviated_hash }}
+  {{ $git_subject := .Params.gitinfo.subject }}
+  {{ $git_date := .Params.gitinfo.author_date }}
+  
   {{ $commit_url := printf "%s/commit/%s" $github_repo $git_commit }}
   
   <div class="td-page-meta__lastmod">

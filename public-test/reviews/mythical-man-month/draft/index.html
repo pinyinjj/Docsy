@@ -1,0 +1,186 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/Docsy/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/Docsy/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-192x192.png" sizes="192x192">
+
+<title>Zed</title>
+<meta name="description" content="原文：由于人员的分工，大型编程项目碰到的管理问题和小型项目碰到的管理问题区别很大，而关键的是维持产品自身的概念完整性。
+第一章 焦油坑 编程产品：具备完备的文档，可以被任何人运行、测试、修复和扩展的程序。在多种操作平台运行，供多套数据使用。通过彻底的测试确保稳定性和可靠性。 程序：极少量开发人员在非正式的环境中开发的功能代码，只能在开发的平台中运行，个体程序员用来估算生产率。 编程系统构件：功能上相互协作，规范格式，可以组装和搭建成用于完成大型任务的的完整设施。 编程系统产品：编程产品 x 编程系统构件">
+<meta property="og:url" content="https://pinyinjj.github.io/Docsy/reviews/mythical-man-month/draft/">
+  <meta property="og:site_name" content="Zed">
+  <meta property="og:title" content="Zed">
+  <meta property="og:description" content="原文：由于人员的分工，大型编程项目碰到的管理问题和小型项目碰到的管理问题区别很大，而关键的是维持产品自身的概念完整性。
+第一章 焦油坑 编程产品：具备完备的文档，可以被任何人运行、测试、修复和扩展的程序。在多种操作平台运行，供多套数据使用。通过彻底的测试确保稳定性和可靠性。 程序：极少量开发人员在非正式的环境中开发的功能代码，只能在开发的平台中运行，个体程序员用来估算生产率。 编程系统构件：功能上相互协作，规范格式，可以组装和搭建成用于完成大型任务的的完整设施。 编程系统产品：编程产品 x 编程系统构件">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="reviews">
+    <meta property="article:published_time" content="2025-09-24T17:32:03+08:00">
+    <meta property="article:modified_time" content="2025-09-24T17:32:03+08:00">
+
+  <meta itemprop="name" content="Zed">
+  <meta itemprop="description" content="原文：由于人员的分工，大型编程项目碰到的管理问题和小型项目碰到的管理问题区别很大，而关键的是维持产品自身的概念完整性。
+第一章 焦油坑 编程产品：具备完备的文档，可以被任何人运行、测试、修复和扩展的程序。在多种操作平台运行，供多套数据使用。通过彻底的测试确保稳定性和可靠性。 程序：极少量开发人员在非正式的环境中开发的功能代码，只能在开发的平台中运行，个体程序员用来估算生产率。 编程系统构件：功能上相互协作，规范格式，可以组装和搭建成用于完成大型任务的的完整设施。 编程系统产品：编程产品 x 编程系统构件">
+  <meta itemprop="datePublished" content="2025-09-24T17:32:03+08:00">
+  <meta itemprop="dateModified" content="2025-09-24T17:32:03+08:00">
+  <meta itemprop="wordCount" content="1405">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Zed">
+  <meta name="twitter:description" content="原文：由于人员的分工，大型编程项目碰到的管理问题和小型项目碰到的管理问题区别很大，而关键的是维持产品自身的概念完整性。
+第一章 焦油坑 编程产品：具备完备的文档，可以被任何人运行、测试、修复和扩展的程序。在多种操作平台运行，供多套数据使用。通过彻底的测试确保稳定性和可靠性。 程序：极少量开发人员在非正式的环境中开发的功能代码，只能在开发的平台中运行，个体程序员用来估算生产率。 编程系统构件：功能上相互协作，规范格式，可以组装和搭建成用于完成大型任务的的完整设施。 编程系统产品：编程产品 x 编程系统构件">
+<link rel="preload" href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" as="style" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<link href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" rel="stylesheet" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/Docsy/"><span class="navbar-brand__logo navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 70.1C313.1 61.9 326.9 61.9 336 70.1l232 208C577.9 286.9 578.7 302.1 569.8 312 560.9 321.9 545.8 322.7 535.9 313.8L527.9 306.6V511.9c0 35.3000000000001-28.7 64-64 64h-288c-35.3.0-64-28.6999999999999-64-64V306.6L103.9 313.8C94 322.6 78.9 321.8 70 312 61.1 302.2 62 287 71.8 278.1L304 70.1zm16 50.1L160 263.7V512C160 520.8 167.2 528 176 528h48V424c0-39.8 32.2-72 72-72h48c39.8.0 72 32.2 72 72V528h48C472.8 528 480 520.8 480 512V263.7L320 120.3zM272 528h96V424c0-13.3-10.7-24-24-24H296c-13.3.0-24 10.7-24 24V528z"/></svg></span><span class="navbar-brand__name">Zed</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/about/"><span>关于</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/blog/"><span>博客</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/Docsy/reviews/"><span>读后感</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">中文(Chinese)</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/Docsy/en/">English</a></li>
+    </ul>
+</div></li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" class="td-search__input form-control td-search-input" placeholder="搜索" aria-label="搜索" autocomplete="off">
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        <p>原文：由于人员的分工，大型编程项目碰到的管理问题和小型项目碰到的管理问题区别很大，而关键的是维持产品自身的概念完整性。</p>
+<p>第一章 焦油坑
+编程产品：具备完备的文档，可以被任何人运行、测试、修复和扩展的程序。在多种操作平台运行，供多套数据使用。通过彻底的测试确保稳定性和可靠性。
+程序：极少量开发人员在非正式的环境中开发的功能代码，只能在开发的平台中运行，个体程序员用来估算生产率。
+编程系统构件：功能上相互协作，规范格式，可以组装和搭建成用于完成大型任务的的完整设施。
+编程系统产品：编程产品 x 编程系统构件</p>
+<pre><code>编程的苦恼：对完美的要求 - 最困难的部分
+            由他人来设定目标，供给资源和提供信息 - 个人权威和他所承担的责任是不匹配的
+            对他人的依赖 - 修改其他完整的编程产品
+            寻找琐碎的bug
+            产品周期过长，导致开发结束时已经过时 - 可能存在与更新的架构和方案的竞争
+</code></pre>
+<p>第二章 人月神话
+原文：缺乏合理的进度安排是造成项目滞后的最主要原因，它比其他所有因素加起来的影响还要大。
+原因：进度估算不成熟
+认为人和月可以互换，混淆了进度与工作量
+项目经理的进度估算经不起挑战，可能因外部压力造成不切实际的调整
+缺少进度监控
+进度出现偏差时，盲目增加人力，火上浇油</p>
+<pre><code>原文：系统编程的进度安排背后的第一个错误的假设是：一切都将正常运转，每一项任务仅花费它所“应该”花费的时间。
+原文：只有在实现的过程中，构思的不完整和不一致才会变得清晰。
+
+编程人员只需通过纯粹的思维活动及灵活的表现形式来构建，因为介质容易驾驭，造成乐观主义的弥漫，然而在具备很多任务，存在“先后顺序”的大型编程工作中，一切正常运转概率非常小，接近于0。
+先后顺序：导致各种功能性bug，集成回归bug，测试漏测等。同时导致debug的次序约束特性。
+
+第二个谬误，人月：对时间估算和进度安排的错误：成本随人月乘积而变化，但进度不是如此。当任务由于次序上的约束而不能分解时，人手的添加对进度没有帮助。 思考：结对开发是一个解决方案吗，结对开发的起源。
+
+面对完全可以分解的任务，人员和时间呈反函数的负相关关系，人越多，时间需要的越少，在人数多到瓶颈时人力增加的边际效益递减。附图
+如果面对可以分解，但子任务需要相互沟通的任务，在计划中需要考虑沟通的工作量，人越多，时间需要的越少，但边际的容错更小，更容易碰到人力瓶颈。附图
+
+沟通成本可分为培训成本和沟通成本，培训成本是不能分解的；沟通成本的计算大致为：如果任务的每个子任务必须分别与其他部分单独协作（1对1沟通），2人时工作量为2人的n(n-1)/2倍，3人工作量是2人的三倍，4人工作量是2人的六倍，如果采用多对多沟通即会议的方式，所增加的用于沟通的工作量可能会完全抵消对原有任务分解产生的作用。附图，关系错综复杂的任务中，随着沟通成本的上升，人力增加反而导致需要时间变长，呈现U型函数。
+
+系统测试：构建调试和系统测试彻底地受到次序约束的影响。需要的时间依赖于遇到的错误数量和微妙程度。由于前文提到的乐观主义，导致实际出现的bug比预料的要多得多，测试进度的安排是编程中最不合理的部分。
+基于作者的经验：1/3规划 1/6编码 1/4构建测试和早期系统测试 1/4所有的构建就绪后，系统测试
+在测试中，更多时间用来计划，一半的时间用来调试，编码仅需1/6的时间。
+如果不考虑这个经验，除了系统测试，进度基本能够保证。
+如果系统测试没有足够时间，将导致灾难，坏消息将很晚且无预兆出现在客户和管理层面前。
+</code></pre>
+
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Mail" aria-label="Mail">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Mail">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wechat" aria-label="Wechat">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Wechat">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="QQ" aria-label="QQ">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="QQ">
+      <i class="fab fa-qq"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wallhaven" aria-label="Wallhaven">
+    <a target="_blank" rel="noopener" href="https://wallhaven.cc/user/pinyinjj/favorites/1954116" aria-label="Wallhaven">
+      <i class="fa fa-image"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Docsy &amp; Template" aria-label="Docsy &amp; Template">
+    <a target="_blank" rel="noopener" href="https://github.com/google/docsy" aria-label="Docsy &amp; Template">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2018&ndash;2025
+    <span class="td-footer__authors">Docsy Authors | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/Docsy/js/main.min.82a76d84ad7dfed9e08be53d2fd3eecc4f8379825944028e9e65df3e85ad29ca.js" integrity="sha256-gqdthK19/tngi&#43;U9L9PuzE&#43;DeYJZRAKOnmXfPoWtKco=" crossorigin="anonymous"></script>
+<script defer src="/Docsy/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/Docsy/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

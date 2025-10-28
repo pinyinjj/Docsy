@@ -1,10 +1,16 @@
 ---
 title: "MavSDK和QGC航点规划兼容性问题的解决方案"
 date: 2025-09-30
+lastmod: 2025-09-30
 summary: "本文档详细分析了MavSDK与QGroundControl 5.0.6在航点规划方面的兼容性问题，提供了基于MissionRaw接口的双层数据转换架构解决方案，确保航点数据与QGC的兼容。"
 tags: ["QGroundControl", "MAVSDK-Python", "任务规划", "无人机", "地面站", "技术文档"]
 categories: ["技术文档"]
 weight: 10
+gitinfo:
+  hash: "aca4645b4df785360660aec7962b216595324728"
+  abbreviated_hash: "aca4645"
+  subject: "Add MAVLink/QGC docs and improve tag consistency"
+  author_date: "2025-09-30T16:51:30+08:00"
 ---
 
 ## 1. 问题背景

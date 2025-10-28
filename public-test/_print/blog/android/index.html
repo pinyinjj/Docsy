@@ -1,0 +1,1227 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="canonical" type="text/html" href="https://pinyinjj.github.io/Docsy/blog/android/">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/Docsy/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/Docsy/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-192x192.png" sizes="192x192">
+
+<title>Android | Zed</title>
+<meta name="description" content="Android平台开发、调试、工具使用和技术文档集合">
+<meta property="og:url" content="https://pinyinjj.github.io/Docsy/blog/android/">
+  <meta property="og:site_name" content="Zed">
+  <meta property="og:title" content="Android">
+  <meta property="og:description" content="Android平台开发、调试、工具使用和技术文档集合">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="Android">
+  <meta itemprop="description" content="Android平台开发、调试、工具使用和技术文档集合">
+  <meta itemprop="datePublished" content="2025-10-28T11:19:09+08:00">
+  <meta itemprop="dateModified" content="2025-10-28T11:19:09+08:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Android">
+  <meta name="twitter:description" content="Android平台开发、调试、工具使用和技术文档集合">
+<link rel="preload" href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" as="style" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<link href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" rel="stylesheet" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-section td-blog">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/Docsy/"><span class="navbar-brand__logo navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 70.1C313.1 61.9 326.9 61.9 336 70.1l232 208C577.9 286.9 578.7 302.1 569.8 312 560.9 321.9 545.8 322.7 535.9 313.8L527.9 306.6V511.9c0 35.3000000000001-28.7 64-64 64h-288c-35.3.0-64-28.6999999999999-64-64V306.6L103.9 313.8C94 322.6 78.9 321.8 70 312 61.1 302.2 62 287 71.8 278.1L304 70.1zm16 50.1L160 263.7V512C160 520.8 167.2 528 176 528h48V424c0-39.8 32.2-72 72-72h48c39.8.0 72 32.2 72 72V528h48C472.8 528 480 520.8 480 512V263.7L320 120.3zM272 528h96V424c0-13.3-10.7-24-24-24H296c-13.3.0-24 10.7-24 24V528z"/></svg></span><span class="navbar-brand__name">Zed</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/about/"><span>关于</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/Docsy/blog/"><span>博客</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/reviews/"><span>读后感</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">中文(Chinese)</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/Docsy/en/">English</a></li>
+    </ul>
+</div></li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" class="td-search__input form-control td-search-input" placeholder="搜索" aria-label="搜索" autocomplete="off">
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
+            
+
+
+
+
+<div class="td-content">
+<div class="pageinfo pageinfo-primary d-print-none">
+<p>
+打印此章节
+<a href="#" onclick="print();return false;">点击打印</a>.
+</p><p>
+<a href="/Docsy/blog/android/">显示常规版本</a>.
+</p>
+</div>
+
+
+
+<h1 class="title">Android</h1>
+
+
+
+
+
+    <ul>
+    
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-7c8ad673eb2666829d888c8d14273d2e">在Ubuntu使用scrcpy进行Android桌面调试</a></li>
+
+
+
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-866bf34e3dc9f7f97acdcfe1d527d9cd"></a></li>
+
+
+
+    
+  
+
+    </ul>
+
+
+<div class="content">
+      
+</div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-7c8ad673eb2666829d888c8d14273d2e">在Ubuntu使用scrcpy进行Android桌面调试</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2025-10-28" class="text-body-secondary">2025年10月28日</time>
+        
+	</div>
+	<h1 id="在ubuntu使用scrcpy进行android桌面调试">在Ubuntu使用scrcpy进行Android桌面调试</h1>
+<p>scrcpy是一个开源的Android屏幕镜像工具，允许用户通过USB或WiFi将Android设备屏幕镜像到Ubuntu桌面，并支持鼠标键盘控制、文件传输、剪贴板同步等功能。</p>
+<h2 id="1-环境准备">1. 环境准备</h2>
+<h3 id="12-安装依赖">1.2 安装依赖</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 更新包列表</span>
+</span></span><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装基础依赖</span>
+</span></span><span style="display:flex;"><span>sudo apt install -y adb scrcpy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装额外工具（可选）</span>
+</span></span><span style="display:flex;"><span>sudo apt install -y android-tools-adb android-tools-fastboot
+</span></span></code></pre></div><h3 id="13-验证安装">1.3 验证安装</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查ADB版本</span>
+</span></span><span style="display:flex;"><span>adb version
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查scrcpy版本</span>
+</span></span><span style="display:flex;"><span>scrcpy --version
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查设备连接</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span></code></pre></div><h2 id="2-android设备配置">2. Android设备配置</h2>
+<h3 id="21-启用开发者选项">2.1 启用开发者选项</h3>
+<ol>
+<li><strong>进入设置</strong> → <strong>关于手机</strong></li>
+<li><strong>连续点击&quot;版本号&quot;7次</strong>，直到出现&quot;您已处于开发者模式&quot;</li>
+<li><strong>返回设置</strong> → <strong>开发者选项</strong></li>
+</ol>
+<h3 id="22-启用usb调试">2.2 启用USB调试</h3>
+<p>在开发者选项中启用：</p>
+<ul>
+<li>✅ <strong>USB调试</strong></li>
+<li>✅ <strong>USB调试（安全设置）</strong></li>
+<li>✅ <strong>USB安装</strong>（可选，用于安装APK）</li>
+<li>✅ <strong>USB调试（安全设置）</strong></li>
+</ul>
+<h3 id="23-连接设备">2.3 连接设备</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 通过USB连接设备</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 预期输出示例：</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># List of devices attached</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1234567890ABCDEF    device</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 9876543210FEDCBA    device</span>
+</span></span></code></pre></div><h2 id="3-adb设备连接与管理">3. ADB设备连接与管理</h2>
+<h3 id="31-usb连接方式">3.1 USB连接方式</h3>
+<h4 id="基础usb连接">基础USB连接</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 通过USB连接设备</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 预期输出示例：</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># List of devices attached</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1234567890ABCDEF    device</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 9876543210FEDCBA    device</span>
+</span></span></code></pre></div><h4 id="usb连接故障排查">USB连接故障排查</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查USB连接</span>
+</span></span><span style="display:flex;"><span>lsusb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重启ADB服务</span>
+</span></span><span style="display:flex;"><span>adb kill-server
+</span></span><span style="display:flex;"><span>adb start-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查设备权限</span>
+</span></span><span style="display:flex;"><span>ls -la /dev/bus/usb/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 添加udev规则（权限被拒绝时）</span>
+</span></span><span style="display:flex;"><span>sudo nano /etc/udev/rules.d/51-android.rules
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 添加以下内容（替换VENDOR_ID）</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SUBSYSTEM</span><span style="color:#ce5c00;font-weight:bold">==</span><span style="color:#4e9a06">&#34;usb&#34;</span>, ATTR<span style="color:#ce5c00;font-weight:bold">{</span>idVendor<span style="color:#ce5c00;font-weight:bold">}==</span><span style="color:#4e9a06">&#34;VENDOR_ID&#34;</span>, <span style="color:#000">MODE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;0666&#34;</span>, <span style="color:#000">GROUP</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;plugdev&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新加载规则</span>
+</span></span><span style="display:flex;"><span>sudo udevadm control --reload-rules
+</span></span><span style="display:flex;"><span>sudo udevadm trigger
+</span></span></code></pre></div><h3 id="32-wifi连接方式">3.2 WiFi连接方式</h3>
+<h4 id="wifi调试原理">WiFi调试原理</h4>
+<p>WiFi调试通过TCP/IP协议实现ADB连接，无需物理USB连接。这种方式特别适合：</p>
+<ul>
+<li>设备距离计算机较远</li>
+<li>需要同时连接多个设备</li>
+<li>避免频繁插拔USB线</li>
+<li>在设备充电时进行调试</li>
+</ul>
+<h4 id="基础wifi调试设置">基础WiFi调试设置</h4>
+<p><strong>方法一：通过USB初始化（推荐）</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1. 通过USB连接设备</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 2. 启用TCP/IP调试（端口5555）</span>
+</span></span><span style="display:flex;"><span>adb tcpip <span style="color:#0000cf;font-weight:bold">5555</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 3. 断开USB连接</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 4. 通过WiFi连接（需要知道设备IP）</span>
+</span></span><span style="display:flex;"><span>adb connect 192.168.1.100:5555
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 5. 验证连接</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span></code></pre></div><p><strong>方法二：通过WiFi直接连接（Android 11+）</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1. 在Android设备上启用&#34;无线调试&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置 → 开发者选项 → 无线调试</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 2. 点击&#34;使用配对码配对设备&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 3. 在Ubuntu上配对设备</span>
+</span></span><span style="display:flex;"><span>adb pair 192.168.1.100:37017
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 4. 输入配对码</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 5. 连接设备</span>
+</span></span><span style="display:flex;"><span>adb connect 192.168.1.100:5555
+</span></span></code></pre></div><h4 id="获取设备ip地址">获取设备IP地址</h4>
+<p><strong>方法一：通过Android设备查看</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 在Android设备上查看IP</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置 → WiFi → 点击已连接的网络 → 查看IP地址</span>
+</span></span></code></pre></div><p><strong>方法二：通过ADB命令查看</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 通过USB连接时查看IP</span>
+</span></span><span style="display:flex;"><span>adb shell ip route <span style="color:#000;font-weight:bold">|</span> grep wlan
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 或者</span>
+</span></span><span style="display:flex;"><span>adb shell ifconfig wlan0 <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#34;inet addr&#34;</span>
+</span></span></code></pre></div><p><strong>方法三：通过网络扫描</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装网络扫描工具</span>
+</span></span><span style="display:flex;"><span>sudo apt install nmap
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 扫描局域网中的Android设备</span>
+</span></span><span style="display:flex;"><span>nmap -sn 192.168.1.0/24
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 扫描特定端口</span>
+</span></span><span style="display:flex;"><span>nmap -p <span style="color:#0000cf;font-weight:bold">5555</span> 192.168.1.0/24
+</span></span></code></pre></div><h4 id="wifi连接管理脚本">WiFi连接管理脚本</h4>
+<p><strong>基础连接脚本 <code>wifi_connect.sh</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># WiFi连接脚本</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DEVICE_IP</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PORT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">2</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">5555</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_IP</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;用法: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> &lt;设备IP地址&gt; [端口]&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;示例: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> 192.168.1.100&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;示例: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> 192.168.1.100 6666&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;🔌 正在连接设备 </span><span style="color:#000">$DEVICE_IP</span><span style="color:#4e9a06">:</span><span style="color:#000">$PORT</span><span style="color:#4e9a06">...&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查网络连通性</span>
+</span></span><span style="display:flex;"><span>ping -c <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000">$DEVICE_IP</span> &gt; /dev/null 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#000">$?</span> -ne <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 无法ping通设备 </span><span style="color:#000">$DEVICE_IP</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请检查：&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1. 设备IP地址是否正确&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2. 设备是否在同一WiFi网络&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;3. 设备是否在线&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 尝试连接</span>
+</span></span><span style="display:flex;"><span>adb connect <span style="color:#000">$DEVICE_IP</span>:<span style="color:#000">$PORT</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#000">$?</span> -eq <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✅ 连接成功&#34;</span>
+</span></span><span style="display:flex;"><span>    adb devices
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 连接失败，请检查：&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1. 设备是否启用了无线调试&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2. 端口是否被占用&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;3. 防火墙是否阻止连接&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;4. 设备是否需要重新配对&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span></code></pre></div><p><strong>设备发现脚本 <code>wifi_discover.sh</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># WiFi设备发现脚本</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;🔍 正在扫描局域网中的Android设备...&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 获取本机IP段</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">LOCAL_IP</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>ip route get 1.1.1.1 <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $7}&#39;</span> <span style="color:#000;font-weight:bold">|</span> head -1<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">NETWORK</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span><span style="color:#204a87">echo</span> <span style="color:#000">$LOCAL_IP</span> <span style="color:#000;font-weight:bold">|</span> cut -d. -f1-3<span style="color:#204a87;font-weight:bold">)</span>.0/24
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📡 扫描网络: </span><span style="color:#000">$NETWORK</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 扫描ADB端口</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DEVICES</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>nmap -p <span style="color:#0000cf;font-weight:bold">5555</span> --open <span style="color:#000">$NETWORK</span> 2&gt;/dev/null <span style="color:#000;font-weight:bold">|</span> grep -E <span style="color:#4e9a06">&#34;Nmap scan report|5555/tcp&#34;</span> <span style="color:#000;font-weight:bold">|</span> grep -B1 <span style="color:#4e9a06">&#34;5555/tcp&#34;</span> <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#34;Nmap scan report&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $5}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICES</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 未发现任何Android设备&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请确保：&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1. 设备已启用无线调试&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2. 设备与计算机在同一网络&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;3. 设备已通过USB初始化过TCP/IP调试&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📱 发现以下设备：&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> device in <span style="color:#000">$DEVICES</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;  - </span><span style="color:#000">$device</span><span style="color:#4e9a06">:5555&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;💡 连接命令示例：&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> device in <span style="color:#000">$DEVICES</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;  adb connect </span><span style="color:#000">$device</span><span style="color:#4e9a06">:5555&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span></code></pre></div><h3 id="33-多设备管理">3.3 多设备管理</h3>
+<h4 id="查看连接的设备">查看连接的设备</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 列出所有连接的设备</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 详细设备信息</span>
+</span></span><span style="display:flex;"><span>adb devices -l
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 查看设备属性</span>
+</span></span><span style="display:flex;"><span>adb shell getprop ro.product.model
+</span></span></code></pre></div><h4 id="多设备操作">多设备操作</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 指定设备执行命令</span>
+</span></span><span style="display:flex;"><span>adb -s 1234567890ABCDEF shell ls /sdcard/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 向指定设备推送文件</span>
+</span></span><span style="display:flex;"><span>adb -s 1234567890ABCDEF push local_file.txt /sdcard/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 从指定设备拉取文件</span>
+</span></span><span style="display:flex;"><span>adb -s 1234567890ABCDEF pull /sdcard/remote_file.txt ./
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装APK到指定设备</span>
+</span></span><span style="display:flex;"><span>adb -s 1234567890ABCDEF install app.apk
+</span></span></code></pre></div><h4 id="混合连接管理">混合连接管理</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 同时管理USB和WiFi连接的设备</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 预期输出示例：</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># List of devices attached</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1234567890ABCDEF    device          # USB设备</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 192.168.1.100:5555  device          # WiFi设备</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 192.168.1.101:5555  device          # WiFi设备</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 对USB设备操作</span>
+</span></span><span style="display:flex;"><span>adb -s 1234567890ABCDEF shell ls /sdcard/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 对WiFi设备操作</span>
+</span></span><span style="display:flex;"><span>adb -s 192.168.1.100:5555 shell ls /sdcard/
+</span></span></code></pre></div><h3 id="34-设备管理脚本">3.4 设备管理脚本</h3>
+<h4 id="通用设备管理脚本-device_managersh">通用设备管理脚本 <code>device_manager.sh</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设备管理脚本</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DEVICE_LIST</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>adb devices <span style="color:#000;font-weight:bold">|</span> grep -v <span style="color:#4e9a06">&#34;List of devices&#34;</span> <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#34;device&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $1}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_LIST</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 没有检测到连接的设备&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📱 检测到以下设备：&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_LIST</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 选择设备</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">select</span> device in <span style="color:#000">$DEVICE_LIST</span> <span style="color:#4e9a06">&#34;退出&#34;</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">$device</span> in
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;退出&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;👋 退出设备管理&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        *<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -n <span style="color:#4e9a06">&#34;</span><span style="color:#000">$device</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✅ 已选择设备: </span><span style="color:#000">$device</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#204a87">export</span> <span style="color:#000">SELECTED_DEVICE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$device</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 无效选择，请重试&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">done</span>
+</span></span></code></pre></div><h4 id="wifi自动重连脚本-wifi_auto_reconnectsh">WiFi自动重连脚本 <code>wifi_auto_reconnect.sh</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># WiFi自动重连脚本</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DEVICE_IP</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PORT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">2</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">5555</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CHECK_INTERVAL</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">3</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">30</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_IP</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;用法: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> &lt;设备IP地址&gt; [端口] [检查间隔秒数]&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;示例: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> 192.168.1.100 5555 30&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;🔄 启动自动重连监控...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;设备: </span><span style="color:#000">$DEVICE_IP</span><span style="color:#4e9a06">:</span><span style="color:#000">$PORT</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;检查间隔: </span><span style="color:#4e9a06">${</span><span style="color:#000">CHECK_INTERVAL</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">秒&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;按 Ctrl+C 停止监控&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">while</span> true<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># 检查设备是否连接</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> ! adb devices <span style="color:#000;font-weight:bold">|</span> grep -q <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_IP</span><span style="color:#4e9a06">:</span><span style="color:#000">$PORT</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span>date<span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">: ❌ 设备断开，尝试重连...&#34;</span>
+</span></span><span style="display:flex;"><span>        adb connect <span style="color:#000">$DEVICE_IP</span>:<span style="color:#000">$PORT</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> adb devices <span style="color:#000;font-weight:bold">|</span> grep -q <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_IP</span><span style="color:#4e9a06">:</span><span style="color:#000">$PORT</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span>date<span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">: ✅ 重连成功&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span>date<span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">: ❌ 重连失败&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span>date<span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">: ✅ 设备连接正常&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    sleep <span style="color:#000">$CHECK_INTERVAL</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">done</span>
+</span></span></code></pre></div><h4 id="一键启动脚本-start_scrcpysh">一键启动脚本 <code>start_scrcpy.sh</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 一键启动scrcpy脚本</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;🚀 启动scrcpy Android调试...&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查设备连接</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DEVICES</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>adb devices <span style="color:#000;font-weight:bold">|</span> grep -v <span style="color:#4e9a06">&#34;List of devices&#34;</span> <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#34;device&#34;</span> <span style="color:#000;font-weight:bold">|</span> wc -l<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICES</span><span style="color:#4e9a06">&#34;</span> -eq <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 没有检测到连接的设备&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请确保：&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1. 设备已连接并启用USB调试&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2. 已授权计算机调试&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICES</span><span style="color:#4e9a06">&#34;</span> -eq <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✅ 检测到1个设备，直接启动scrcpy&#34;</span>
+</span></span><span style="display:flex;"><span>    scrcpy --max-size <span style="color:#0000cf;font-weight:bold">1920</span> --bit-rate 8M --stay-awake
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📱 检测到多个设备，请选择：&#34;</span>
+</span></span><span style="display:flex;"><span>    adb devices
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">read</span> -p <span style="color:#4e9a06">&#34;请输入设备ID: &#34;</span> device_id
+</span></span><span style="display:flex;"><span>    scrcpy -s <span style="color:#4e9a06">&#34;</span><span style="color:#000">$device_id</span><span style="color:#4e9a06">&#34;</span> --max-size <span style="color:#0000cf;font-weight:bold">1920</span> --bit-rate 8M --stay-awake
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span></code></pre></div><h4 id="设备控制脚本-device_controlsh">设备控制脚本 <code>device_control.sh</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设备控制脚本</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">$1</span> in
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;list&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📱 连接的设备：&#34;</span>
+</span></span><span style="display:flex;"><span>        adb devices -l
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;restart&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;🔄 重启ADB服务...&#34;</span>
+</span></span><span style="display:flex;"><span>        adb kill-server
+</span></span><span style="display:flex;"><span>        adb start-server
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;install&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$2</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;用法: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> install &lt;APK文件路径&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📦 安装APK: </span><span style="color:#000">$2</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        adb install <span style="color:#4e9a06">&#34;</span><span style="color:#000">$2</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;screenshot&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📸 截取屏幕截图...&#34;</span>
+</span></span><span style="display:flex;"><span>        adb shell screencap -p /sdcard/screenshot.png
+</span></span><span style="display:flex;"><span>        adb pull /sdcard/screenshot.png ./screenshot_<span style="color:#204a87;font-weight:bold">$(</span>date +%Y%m%d_%H%M%S<span style="color:#204a87;font-weight:bold">)</span>.png
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✅ 截图已保存&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    *<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;用法: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> {list|restart|install|screenshot}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;  list      - 列出连接的设备&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;  restart   - 重启ADB服务&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;  install   - 安装APK文件&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;  screenshot - 截取屏幕截图&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">esac</span>
+</span></span></code></pre></div><h3 id="35-连接故障排查">3.5 连接故障排查</h3>
+<h4 id="usb连接问题">USB连接问题</h4>
+<p><strong>问题1：设备未识别</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查USB连接</span>
+</span></span><span style="display:flex;"><span>lsusb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重启ADB服务</span>
+</span></span><span style="display:flex;"><span>adb kill-server
+</span></span><span style="display:flex;"><span>adb start-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查设备权限</span>
+</span></span><span style="display:flex;"><span>ls -la /dev/bus/usb/
+</span></span></code></pre></div><p><strong>问题2：权限被拒绝</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 添加udev规则</span>
+</span></span><span style="display:flex;"><span>sudo nano /etc/udev/rules.d/51-android.rules
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 添加以下内容（替换VENDOR_ID）</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SUBSYSTEM</span><span style="color:#ce5c00;font-weight:bold">==</span><span style="color:#4e9a06">&#34;usb&#34;</span>, ATTR<span style="color:#ce5c00;font-weight:bold">{</span>idVendor<span style="color:#ce5c00;font-weight:bold">}==</span><span style="color:#4e9a06">&#34;VENDOR_ID&#34;</span>, <span style="color:#000">MODE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;0666&#34;</span>, <span style="color:#000">GROUP</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;plugdev&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新加载规则</span>
+</span></span><span style="display:flex;"><span>sudo udevadm control --reload-rules
+</span></span><span style="display:flex;"><span>sudo udevadm trigger
+</span></span></code></pre></div><h4 id="wifi连接问题">WiFi连接问题</h4>
+<p><strong>问题1：无法发现设备</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查网络连通性</span>
+</span></span><span style="display:flex;"><span>ping 192.168.1.100
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查端口是否开放</span>
+</span></span><span style="display:flex;"><span>telnet 192.168.1.100 <span style="color:#0000cf;font-weight:bold">5555</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查防火墙设置</span>
+</span></span><span style="display:flex;"><span>sudo ufw status
+</span></span><span style="display:flex;"><span>sudo ufw allow <span style="color:#0000cf;font-weight:bold">5555</span>
+</span></span></code></pre></div><p><strong>问题2：连接不稳定</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查网络质量</span>
+</span></span><span style="display:flex;"><span>ping -c <span style="color:#0000cf;font-weight:bold">10</span> 192.168.1.100
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 调整ADB超时设置</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">ADB_LOCAL_TRANSPORT_MAX_PORT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">5585</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">ADB_LOCAL_TRANSPORT_MIN_PORT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">5585</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重启ADB服务</span>
+</span></span><span style="display:flex;"><span>adb kill-server
+</span></span><span style="display:flex;"><span>adb start-server
+</span></span></code></pre></div><p><strong>问题3：配对失败</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 清除配对信息</span>
+</span></span><span style="display:flex;"><span>adb pair --clear
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新配对</span>
+</span></span><span style="display:flex;"><span>adb pair 192.168.1.100:37017
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查配对码是否正确</span>
+</span></span></code></pre></div><h3 id="36-安全注意事项">3.6 安全注意事项</h3>
+<h4 id="usb调试安全">USB调试安全</h4>
+<ul>
+<li>仅在受信任的计算机上启用</li>
+<li>使用完毕后及时关闭</li>
+<li>定期检查已授权的设备</li>
+</ul>
+<h4 id="wifi调试安全">WiFi调试安全</h4>
+<ul>
+<li>仅在受信任的WiFi网络中使用</li>
+<li>避免在公共WiFi上启用无线调试</li>
+<li>使用强密码保护WiFi网络</li>
+<li>定期检查已配对的设备</li>
+<li>使用完毕后及时断开连接</li>
+</ul>
+<h2 id="4-scrcpy使用指南">4. scrcpy使用指南</h2>
+<h3 id="41-基础使用">4.1 基础使用</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 基本启动（自动选择第一个设备）</span>
+</span></span><span style="display:flex;"><span>scrcpy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 指定设备启动</span>
+</span></span><span style="display:flex;"><span>scrcpy -s 1234567890ABCDEF
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 指定设备名称启动</span>
+</span></span><span style="display:flex;"><span>scrcpy -s <span style="color:#4e9a06">&#34;Galaxy S21&#34;</span>
+</span></span></code></pre></div><h3 id="42-常用参数配置">4.2 常用参数配置</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置窗口大小</span>
+</span></span><span style="display:flex;"><span>scrcpy --max-size <span style="color:#0000cf;font-weight:bold">1920</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置比特率（提高画质）</span>
+</span></span><span style="display:flex;"><span>scrcpy --bit-rate 8M
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置帧率</span>
+</span></span><span style="display:flex;"><span>scrcpy --max-fps <span style="color:#0000cf;font-weight:bold">60</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 全屏启动</span>
+</span></span><span style="display:flex;"><span>scrcpy --fullscreen
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 保持屏幕常亮</span>
+</span></span><span style="display:flex;"><span>scrcpy --stay-awake
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 关闭屏幕（仅镜像）</span>
+</span></span><span style="display:flex;"><span>scrcpy --turn-screen-off
+</span></span></code></pre></div><h3 id="43-高级配置">4.3 高级配置</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 自定义配置启动</span>
+</span></span><span style="display:flex;"><span>scrcpy <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --max-size <span style="color:#0000cf;font-weight:bold">1920</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --bit-rate 8M <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --max-fps <span style="color:#0000cf;font-weight:bold">60</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --stay-awake <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --disable-screensaver <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --window-title <span style="color:#4e9a06">&#34;Android调试&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --always-on-top
+</span></span></code></pre></div><h2 id="5-文件传输功能">5. 文件传输功能</h2>
+<h3 id="51-通过adb传输文件">5.1 通过ADB传输文件</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 推送文件到设备</span>
+</span></span><span style="display:flex;"><span>adb push /path/to/local/file.txt /sdcard/Download/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 从设备拉取文件</span>
+</span></span><span style="display:flex;"><span>adb pull /sdcard/Download/file.txt /path/to/local/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 批量传输</span>
+</span></span><span style="display:flex;"><span>adb push /path/to/folder/ /sdcard/Download/
+</span></span></code></pre></div><h3 id="52-通过scrcpy拖拽传输">5.2 通过scrcpy拖拽传输</h3>
+<ol>
+<li><strong>启用文件拖拽功能</strong>：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>scrcpy --push-target /sdcard/Download/
+</span></span></code></pre></div><ol start="2">
+<li><strong>拖拽文件到scrcpy窗口</strong>，文件会自动传输到Android设备</li>
+</ol>
+<h3 id="53-文件传输脚本">5.3 文件传输脚本</h3>
+<p>创建文件传输脚本 <code>file_transfer.sh</code>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 文件传输脚本</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DEVICE_ID</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">FILE_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$2</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">TARGET_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/sdcard/Download/&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_ID</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FILE_PATH</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;用法: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> &lt;设备ID&gt; &lt;文件路径&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;示例: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> 1234567890ABCDEF /home/user/document.pdf&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> ! -f <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FILE_PATH</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 文件不存在: </span><span style="color:#000">$FILE_PATH</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📤 正在传输文件...&#34;</span>
+</span></span><span style="display:flex;"><span>adb -s <span style="color:#4e9a06">&#34;</span><span style="color:#000">$DEVICE_ID</span><span style="color:#4e9a06">&#34;</span> push <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FILE_PATH</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$TARGET_PATH</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#000">$?</span> -eq <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✅ 文件传输成功&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;📁 目标位置: </span><span style="color:#000">$TARGET_PATH</span><span style="color:#204a87;font-weight:bold">$(</span>basename <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FILE_PATH</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;❌ 文件传输失败&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span></code></pre></div><h2 id="6-剪贴板同步">6. 剪贴板同步</h2>
+<h3 id="61-启用剪贴板同步">6.1 启用剪贴板同步</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 启用剪贴板同步</span>
+</span></span><span style="display:flex;"><span>scrcpy --clipboard-autosync
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 双向剪贴板同步</span>
+</span></span><span style="display:flex;"><span>scrcpy --clipboard-autosync --forward-all-clipboard
+</span></span></code></pre></div><h3 id="62-剪贴板操作">6.2 剪贴板操作</h3>
+<ul>
+<li><strong>Ubuntu → Android</strong>：在Ubuntu中复制，在Android应用中粘贴</li>
+<li><strong>Android → Ubuntu</strong>：在Android中复制，在Ubuntu应用中粘贴</li>
+</ul>
+<h2 id="7-故障排查">7. 故障排查</h2>
+<h3 id="71-常见问题">7.1 常见问题</h3>
+<p><strong>问题1：设备未识别</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查USB连接</span>
+</span></span><span style="display:flex;"><span>lsusb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重启ADB服务</span>
+</span></span><span style="display:flex;"><span>adb kill-server
+</span></span><span style="display:flex;"><span>adb start-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查设备权限</span>
+</span></span><span style="display:flex;"><span>ls -la /dev/bus/usb/
+</span></span></code></pre></div><p><strong>问题2：权限被拒绝</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 添加udev规则</span>
+</span></span><span style="display:flex;"><span>sudo nano /etc/udev/rules.d/51-android.rules
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 添加以下内容（替换VENDOR_ID）</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SUBSYSTEM</span><span style="color:#ce5c00;font-weight:bold">==</span><span style="color:#4e9a06">&#34;usb&#34;</span>, ATTR<span style="color:#ce5c00;font-weight:bold">{</span>idVendor<span style="color:#ce5c00;font-weight:bold">}==</span><span style="color:#4e9a06">&#34;VENDOR_ID&#34;</span>, <span style="color:#000">MODE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;0666&#34;</span>, <span style="color:#000">GROUP</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;plugdev&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新加载规则</span>
+</span></span><span style="display:flex;"><span>sudo udevadm control --reload-rules
+</span></span><span style="display:flex;"><span>sudo udevadm trigger
+</span></span></code></pre></div><p><strong>问题3：scrcpy启动失败</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查设备连接</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查scrcpy版本</span>
+</span></span><span style="display:flex;"><span>scrcpy --version
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 使用详细模式启动</span>
+</span></span><span style="display:flex;"><span>scrcpy --verbose
+</span></span></code></pre></div><h3 id="72-性能优化">7.2 性能优化</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 降低画质提高性能</span>
+</span></span><span style="display:flex;"><span>scrcpy --max-size <span style="color:#0000cf;font-weight:bold">1280</span> --bit-rate 2M
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 关闭音频（如果不需要）</span>
+</span></span><span style="display:flex;"><span>scrcpy --no-audio
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 使用硬件加速</span>
+</span></span><span style="display:flex;"><span>scrcpy --encoder h264
+</span></span></code></pre></div><hr>
+<h2 id="参考文档">参考文档</h2>
+<ul>
+<li><a href="https://github.com/Genymobile/scrcpy">scrcpy官方文档</a></li>
+<li><a href="https://developer.android.com/studio/command-line/adb">Android ADB官方文档</a></li>
+<li><a href="https://developer.android.com/studio/install">Ubuntu Android开发环境配置</a></li>
+</ul>
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-866bf34e3dc9f7f97acdcfe1d527d9cd"></h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2025-10-28" class="text-body-secondary">2025年10月28日</time>
+        
+	</div>
+	<h1 id="使用-termux-在-android-运行-python-源码">使用 Termux 在 Android 运行 Python 源码</h1>
+<h2 id="1-termux-安装和配置">1. Termux 安装和配置</h2>
+<h3 id="安装-termux">安装 Termux</h3>
+<p><strong>方法一：通过应用商店</strong></p>
+<ol>
+<li>从 F-Droid 或 Google Play 安装 Termux</li>
+<li>打开 Termux 应用</li>
+</ol>
+<p><strong>方法二：通过 ADB 安装 APK</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 下载 Termux APK 文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 从 https://f-droid.org/packages/com.termux/ 下载最新版本</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 通过 ADB 安装</span>
+</span></span><span style="display:flex;"><span>adb install termux.apk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 或者强制安装（覆盖现有版本）</span>
+</span></span><span style="display:flex;"><span>adb install -r termux.apk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查安装是否成功</span>
+</span></span><span style="display:flex;"><span>adb shell pm list packages <span style="color:#000;font-weight:bold">|</span> grep termux
+</span></span></code></pre></div><h3 id="adb-连接与-scrcpy-远程桌面">ADB 连接与 scrcpy 远程桌面</h3>
+<p><strong>USB 连接（推荐）</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1. 使用 USB 线连接设备</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 2. 在设备上启用 USB 调试</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 3. 检查连接</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 如果显示设备，说明连接成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 运行scrcpy打开安卓桌面</span>
+</span></span><span style="display:flex;"><span>scrcpy
+</span></span></code></pre></div><p><strong>无线 ADB 连接</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1. 确保两个设备在同一网段下，通过 USB 连接并启用无线调试</span>
+</span></span><span style="display:flex;"><span>adb tcpip <span style="color:#0000cf;font-weight:bold">5555</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>adb connect 192.168.0.132:5555
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 4. 检查连接</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 运行scrcpy打开安卓桌面</span>
+</span></span><span style="display:flex;"><span>scrcpy
+</span></span></code></pre></div><p>在termux上使用清华源加速安装依赖
+pip install -i <a href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a> -r requirements.txt</p>
+<h3 id="基础环境配置">基础环境配置</h3>
+<h4 id="1-更新包管理器">1. 更新包管理器</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 更新包列表和系统</span>
+</span></span><span style="display:flex;"><span>pkg update <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> pkg upgrade
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 清理缓存</span>
+</span></span><span style="display:flex;"><span>pkg clean
+</span></span></code></pre></div><h4 id="2-一键安装所有依赖">2. 一键安装所有依赖</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装核心依赖（纯 Python 项目，无需编译工具）</span>
+</span></span><span style="display:flex;"><span>pkg install -y python python-pip git curl wget openssh iproute2 net-tools htop procps rsync tree neofetch android-tools rust clang make pkg-config
+</span></span></code></pre></div><h2 id="4-项目部署">4. 项目部署</h2>
+<h3 id="克隆项目">克隆项目</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 在 Termux 中</span>
+</span></span><span style="display:flex;"><span>git clone https://github.com/pinyinjj/LLM-Airsim.git
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> LLM-Airsim
+</span></span></code></pre></div><h3 id="安装依赖">安装依赖</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装 Python 依赖</span>
+</span></span><span style="display:flex;"><span>pip install -r requirements.txt
+</span></span></code></pre></div><h3 id="运行项目">运行项目</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 后台运行</span>
+</span></span><span style="display:flex;"><span>nohup python start_backend.py &gt; drone.log 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000;font-weight:bold">&amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查运行状态</span>
+</span></span><span style="display:flex;"><span>ps aux <span style="color:#000;font-weight:bold">|</span> grep python
+</span></span><span style="display:flex;"><span>curl http://localhost:8000/health
+</span></span></code></pre></div><h2 id="5-网络访问配置">5. 网络访问配置</h2>
+<h3 id="获取可访问地址">获取可访问地址</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 查看所有网络接口</span>
+</span></span><span style="display:flex;"><span>ip addr show
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 获取局域网 IP</span>
+</span></span><span style="display:flex;"><span>hostname -I
+</span></span></code></pre></div><h3 id="防火墙配置如果需要">防火墙配置（如果需要）</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Termux 通常不需要额外防火墙配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 但可以检查端口监听</span>
+</span></span><span style="display:flex;"><span>netstat -tlnp <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#0000cf;font-weight:bold">8000</span>
+</span></span></code></pre></div><h2 id="6-常用管理命令">6. 常用管理命令</h2>
+<h3 id="服务管理">服务管理</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 查看运行中的 Python 进程</span>
+</span></span><span style="display:flex;"><span>ps aux <span style="color:#000;font-weight:bold">|</span> grep python
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 停止服务</span>
+</span></span><span style="display:flex;"><span>pkill -f <span style="color:#4e9a06">&#34;python start_backend.py&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重启服务</span>
+</span></span><span style="display:flex;"><span>nohup python start_backend.py &gt; drone.log 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000;font-weight:bold">&amp;</span>
+</span></span></code></pre></div><h3 id="日志查看">日志查看</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 查看应用日志</span>
+</span></span><span style="display:flex;"><span>tail -f drone.log
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 查看系统日志</span>
+</span></span><span style="display:flex;"><span>logcat <span style="color:#000;font-weight:bold">|</span> grep -i python
+</span></span></code></pre></div><h3 id="文件传输">文件传输</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 通过 ADB 传输文件</span>
+</span></span><span style="display:flex;"><span>adb push local_file.txt /data/data/com.termux/files/home/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 从设备拉取文件</span>
+</span></span><span style="display:flex;"><span>adb pull /data/data/com.termux/files/home/drone.log ./
+</span></span></code></pre></div><h2 id="7-ssh-连接故障排除">7. SSH 连接故障排除</h2>
+<h3 id="常见-ssh-连接问题">常见 SSH 连接问题</h3>
+<p><strong>问题1：Connection refused</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查 ADB 连接</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查 Termux 是否运行</span>
+</span></span><span style="display:flex;"><span>adb shell pm list packages <span style="color:#000;font-weight:bold">|</span> grep termux
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重启 Termux</span>
+</span></span><span style="display:flex;"><span>adb shell am force-stop com.termux
+</span></span><span style="display:flex;"><span>adb shell am start -n com.termux/.HomeActivity
+</span></span></code></pre></div><p><strong>问题2：Connection closed</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 在 Termux 中检查 SSH 服务</span>
+</span></span><span style="display:flex;"><span>adb shell run-as com.termux /data/data/com.termux/files/usr/bin/bash -c <span style="color:#4e9a06">&#34;ps aux | grep sshd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新启动 SSH</span>
+</span></span><span style="display:flex;"><span>adb shell run-as com.termux /data/data/com.termux/files/usr/bin/bash -c <span style="color:#4e9a06">&#34;pkill sshd &amp;&amp; sshd&#34;</span>
+</span></span></code></pre></div><p><strong>问题3：Permission denied</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新设置密码</span>
+</span></span><span style="display:flex;"><span>adb shell run-as com.termux /data/data/com.termux/files/usr/bin/bash -c <span style="color:#4e9a06">&#34;passwd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查 SSH 配置</span>
+</span></span><span style="display:flex;"><span>adb shell run-as com.termux /data/data/com.termux/files/usr/bin/bash -c <span style="color:#4e9a06">&#34;ls -la ~/.ssh/&#34;</span>
+</span></span></code></pre></div><p><strong>问题4：端口转发失败</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 清除现有端口转发</span>
+</span></span><span style="display:flex;"><span>adb forward --remove tcp:8022
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新设置端口转发</span>
+</span></span><span style="display:flex;"><span>adb forward tcp:8022 tcp:22
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查端口转发状态</span>
+</span></span><span style="display:flex;"><span>adb forward --list
+</span></span></code></pre></div><h3 id="完整-ssh-重置流程">完整 SSH 重置流程</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1. 停止所有相关服务</span>
+</span></span><span style="display:flex;"><span>adb shell am force-stop com.termux
+</span></span><span style="display:flex;"><span>adb kill-server
+</span></span><span style="display:flex;"><span>adb start-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 2. 重启 Termux</span>
+</span></span><span style="display:flex;"><span>adb shell am start -n com.termux/.HomeActivity
+</span></span><span style="display:flex;"><span>sleep <span style="color:#0000cf;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 3. 重新配置 SSH</span>
+</span></span><span style="display:flex;"><span>adb shell run-as com.termux /data/data/com.termux/files/usr/bin/bash -c <span style="color:#4e9a06">&#34;pkg install -y openssh&#34;</span>
+</span></span><span style="display:flex;"><span>adb shell run-as com.termux /data/data/com.termux/files/usr/bin/bash -c <span style="color:#4e9a06">&#34;echo &#39;123456&#39; | passwd&#34;</span>
+</span></span><span style="display:flex;"><span>adb shell run-as com.termux /data/data/com.termux/files/usr/bin/bash -c <span style="color:#4e9a06">&#34;sshd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 4. 设置端口转发</span>
+</span></span><span style="display:flex;"><span>adb forward tcp:8022 tcp:22
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 5. 测试连接</span>
+</span></span><span style="display:flex;"><span>ssh -p <span style="color:#0000cf;font-weight:bold">8022</span> localhost
+</span></span></code></pre></div><h2 id="8-其他故障排除">8. 其他故障排除</h2>
+<h3 id="端口访问问题">端口访问问题</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查端口监听</span>
+</span></span><span style="display:flex;"><span>netstat -tlnp <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#0000cf;font-weight:bold">8000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查防火墙</span>
+</span></span><span style="display:flex;"><span>iptables -L
+</span></span></code></pre></div><h3 id="python-依赖问题">Python 依赖问题</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 重新安装依赖</span>
+</span></span><span style="display:flex;"><span>pip install --upgrade -r requirements.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 检查 Python 版本</span>
+</span></span><span style="display:flex;"><span>python --version
+</span></span></code></pre></div><h2 id="8-高级配置">8. 高级配置</h2>
+<h3 id="自动启动脚本">自动启动脚本</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 创建启动脚本</span>
+</span></span><span style="display:flex;"><span>cat &gt; ~/start_drone.sh <span style="color:#4e9a06">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">cd /data/data/com.termux/files/home/LLM-Airsim
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">nohup python start_backend.py &gt; drone.log 2&gt;&amp;1 &amp;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chmod +x ~/start_drone.sh
+</span></span></code></pre></div><h3 id="系统服务如果支持">系统服务（如果支持）</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装 termux-services</span>
+</span></span><span style="display:flex;"><span>pkg install termux-services
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 创建服务配置</span>
+</span></span><span style="display:flex;"><span>mkdir -p ~/.termux/services
+</span></span><span style="display:flex;"><span>cat &gt; ~/.termux/services/drone-backend <span style="color:#4e9a06">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">cd /data/data/com.termux/files/home/LLM-Airsim
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">python start_backend.py
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chmod +x ~/.termux/services/drone-backend
+</span></span></code></pre></div><h2 id="9-安全注意事项">9. 安全注意事项</h2>
+<h3 id="ssh-安全配置">SSH 安全配置</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 修改 SSH 配置</span>
+</span></span><span style="display:flex;"><span>nano ~/.ssh/config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 添加以下内容：</span>
+</span></span><span style="display:flex;"><span>Host *
+</span></span><span style="display:flex;"><span>    StrictHostKeyChecking no
+</span></span><span style="display:flex;"><span>    UserKnownHostsFile /dev/null
+</span></span></code></pre></div><h3 id="网络安全">网络安全</h3>
+<ul>
+<li>使用强密码</li>
+<li>考虑使用密钥认证</li>
+<li>限制网络访问范围</li>
+</ul>
+<h2 id="10-性能优化">10. 性能优化</h2>
+<h3 id="内存管理">内存管理</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 监控内存使用</span>
+</span></span><span style="display:flex;"><span>free -h
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 清理缓存</span>
+</span></span><span style="display:flex;"><span>sync <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">echo</span> <span style="color:#0000cf;font-weight:bold">3</span> &gt; /proc/sys/vm/drop_caches
+</span></span></code></pre></div><h3 id="进程管理">进程管理</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置进程优先级</span>
+</span></span><span style="display:flex;"><span>nice -n <span style="color:#0000cf;font-weight:bold">10</span> python start_backend.py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 监控 CPU 使用</span>
+</span></span><span style="display:flex;"><span>top -p <span style="color:#204a87;font-weight:bold">$(</span>pgrep python<span style="color:#204a87;font-weight:bold">)</span>
+</span></span></code></pre></div><hr>
+<h2 id="快速开始命令">快速开始命令</h2>
+<h3 id="1-获取项目代码">1. 获取项目代码</h3>
+<p><strong>方法一：Git Clone（公开仓库）</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 克隆 Termux 分支</span>
+</span></span><span style="display:flex;"><span>git clone -b Termux https://github.com/pinyinjj/LLM-Airsim.git
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> LLM-Airsim
+</span></span></code></pre></div><p><strong>方法二：文件传输（私有仓库推荐）</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 在电脑上执行，复制项目到 Termux</span>
+</span></span><span style="display:flex;"><span>adb -s 192.168.0.132:5555 push /home/yj/Documents/GitHub/LLM-Airsim /data/data/com.termux/files/home/LLM-Airsim
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 排除虚拟环境目录</span>
+</span></span><span style="display:flex;"><span>rsync -avz --exclude<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;.venv&#39;</span> --exclude<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;.git&#39;</span> --exclude<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;__pycache__&#39;</span> /home/yj/Documents/GitHub/LLM-Airsim/ 192.168.0.132:/data/data/com.termux/files/home/LLM-Airsim/
+</span></span></code></pre></div><h3 id="2-在-termux-中执行">2. 在 Termux 中执行</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 更新系统</span>
+</span></span><span style="display:flex;"><span>pkg update <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> pkg upgrade
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装核心依赖</span>
+</span></span><span style="display:flex;"><span>pkg install -y python3.12 python-pip git curl wget openssh iproute2 net-tools htop procps rsync tree neofetch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置 SSH 密码</span>
+</span></span><span style="display:flex;"><span>passwd
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 输入密码（例如：123456）</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 启动 SSH 服务</span>
+</span></span><span style="display:flex;"><span>sshd
+</span></span></code></pre></div><h3 id="3-在电脑上执行">3. 在电脑上执行</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置端口转发</span>
+</span></span><span style="display:flex;"><span>adb forward tcp:8022 tcp:22
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 连接 SSH</span>
+</span></span><span style="display:flex;"><span>ssh -p <span style="color:#0000cf;font-weight:bold">8022</span> localhost
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 输入密码：123456</span>
+</span></span></code></pre></div><h3 id="4-在-termux-ssh-中部署项目">4. 在 Termux SSH 中部署项目</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 克隆项目（如果还没克隆）</span>
+</span></span><span style="display:flex;"><span>git clone -b Termux https://github.com/pinyinjj/LLM-Airsim.git
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> LLM-Airsim
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装 Python 依赖</span>
+</span></span><span style="display:flex;"><span>pip install -r requirements.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 启动服务</span>
+</span></span><span style="display:flex;"><span>nohup python start_backend.py &gt; drone.log 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000;font-weight:bold">&amp;</span>
+</span></span></code></pre></div><h2 id="11-一键部署脚本">11. 一键部署脚本</h2>
+<h3 id="完整自动化部署">完整自动化部署</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 创建一键部署脚本</span>
+</span></span><span style="display:flex;"><span>cat &gt; deploy_to_termux.sh <span style="color:#4e9a06">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># 颜色定义
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">RED=&#39;\033[0;31m&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">GREEN=&#39;\033[0;32m&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">YELLOW=&#39;\033[1;33m&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">NC=&#39;\033[0m&#39; # No Color
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${GREEN}=== LLM-Airsim Termux 一键部署脚本 ===${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># 检查 ADB 连接
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${YELLOW}检查 ADB 连接...${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">if ! adb devices | grep -q &#34;device$&#34;; then
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo -e &#34;${RED}错误: 未检测到 Android 设备${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo &#34;请确保:&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo &#34;1. 设备已连接 USB&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo &#34;2. 已启用 USB 调试&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo &#34;3. 已授权调试权限&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    exit 1
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">fi
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${GREEN}✓ ADB 连接正常${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># 安装 Termux（如果需要）
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${YELLOW}检查 Termux 安装...${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">if ! adb shell pm list packages | grep -q &#34;com.termux&#34;; then
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo -e &#34;${YELLOW}安装 Termux...${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    if [ ! -f &#34;termux.apk&#34; ]; then
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">        echo &#34;下载 Termux APK...&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">        curl -L -o termux.apk &#34;https://f-droid.org/repo/com.termux_118.apk&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    fi
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    adb install -r termux.apk
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo -e &#34;${GREEN}✓ Termux 安装完成${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">else
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo -e &#34;${GREEN}✓ Termux 已安装${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">fi
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># 启动 Termux
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${YELLOW}启动 Termux...${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">adb shell am start -n com.termux/.HomeActivity
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">sleep 3
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># 设置端口转发
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${YELLOW}设置端口转发...${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">adb forward tcp:8022 tcp:22
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">adb forward tcp:8000 tcp:8000
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${GREEN}✓ 端口转发设置完成${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># 在 Termux 中执行部署命令
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo -e &#34;${YELLOW}在 Termux 中部署项目...${NC}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">adb shell &lt;&lt; &#39;TERMUX_EOF</span><span style="color:#a40000">&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 更新包管理器</span>
+</span></span><span style="display:flex;"><span>pkg update -y <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> pkg upgrade -y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装必要工具</span>
+</span></span><span style="display:flex;"><span>pkg install -y python python-pip git openssh curl wget
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置 SSH 密码（默认密码：termux123）</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;termux123&#34;</span> <span style="color:#000;font-weight:bold">|</span> passwd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 启动 SSH 服务</span>
+</span></span><span style="display:flex;"><span>sshd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 克隆项目（替换为你的仓库地址）</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> ! -d <span style="color:#4e9a06">&#34;LLM-Airsim&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    git clone https://github.com/pinyinjj/LLM-Airsim.git
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> LLM-Airsim
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装 Python 依赖</span>
+</span></span><span style="display:flex;"><span>pip install -r requirements.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 后台运行服务</span>
+</span></span><span style="display:flex;"><span>nohup python start_backend.py &gt; drone.log 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000;font-weight:bold">&amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;部署完成！&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;SSH 连接: ssh -p 8022 localhost&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;API 访问: http://localhost:8000&#34;</span>
+</span></span><span style="display:flex;"><span>TERMUX_EOF
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">GREEN</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">=== 部署完成 ===</span><span style="color:#4e9a06">${</span><span style="color:#000">NC</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">GREEN</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">SSH 连接命令: ssh -p 8022 localhost</span><span style="color:#4e9a06">${</span><span style="color:#000">NC</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">GREEN</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">API 访问地址: http://localhost:8000</span><span style="color:#4e9a06">${</span><span style="color:#000">NC</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">GREEN</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">API 文档地址: http://localhost:8000/api/v1/docs</span><span style="color:#4e9a06">${</span><span style="color:#000">NC</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">YELLOW</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">默认 SSH 密码: termux123</span><span style="color:#4e9a06">${</span><span style="color:#000">NC</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">YELLOW</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">建议首次连接后修改密码</span><span style="color:#4e9a06">${</span><span style="color:#000">NC</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>EOF
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chmod +x deploy_to_termux.sh
+</span></span><span style="display:flex;"><span>./deploy_to_termux.sh
+</span></span></code></pre></div><h3 id="使用说明">使用说明</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 1. 运行一键部署脚本</span>
+</span></span><span style="display:flex;"><span>./deploy_to_termux.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 2. 连接 SSH（密码: termux123）</span>
+</span></span><span style="display:flex;"><span>ssh -p <span style="color:#0000cf;font-weight:bold">8022</span> localhost
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 3. 检查服务状态</span>
+</span></span><span style="display:flex;"><span>curl http://localhost:8000/health
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 4. 查看 API 文档</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 在浏览器中访问: http://localhost:8000/api/v1/docs</span>
+</span></span></code></pre></div>
+</div>
+
+
+
+
+
+    
+	
+  
+
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Mail" aria-label="Mail">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Mail">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wechat" aria-label="Wechat">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Wechat">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="QQ" aria-label="QQ">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="QQ">
+      <i class="fab fa-qq"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wallhaven" aria-label="Wallhaven">
+    <a target="_blank" rel="noopener" href="https://wallhaven.cc/user/pinyinjj/favorites/1954116" aria-label="Wallhaven">
+      <i class="fa fa-image"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Docsy &amp; Template" aria-label="Docsy &amp; Template">
+    <a target="_blank" rel="noopener" href="https://github.com/google/docsy" aria-label="Docsy &amp; Template">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2018&ndash;2025
+    <span class="td-footer__authors">Docsy Authors | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/Docsy/js/main.min.82a76d84ad7dfed9e08be53d2fd3eecc4f8379825944028e9e65df3e85ad29ca.js" integrity="sha256-gqdthK19/tngi&#43;U9L9PuzE&#43;DeYJZRAKOnmXfPoWtKco=" crossorigin="anonymous"></script>
+<script defer src="/Docsy/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/Docsy/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

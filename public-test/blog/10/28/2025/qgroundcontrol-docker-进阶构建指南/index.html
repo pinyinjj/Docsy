@@ -1,0 +1,1497 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/Docsy/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/Docsy/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/Docsy/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/Docsy/favicons/android-192x192.png" sizes="192x192">
+
+<title>QGroundControl Docker 进阶构建指南 | Zed</title>
+<meta name="description" content="使用Docker容器构建QGroundControl Android APK和Ubuntu的完整指南，包括环境配置、构建流程、签名管理、密钥生成和故障排查。提供交互式构建脚本和完整的Dockerfile配置。">
+<meta property="og:url" content="https://pinyinjj.github.io/Docsy/blog/10/28/2025/qgroundcontrol-docker-%E8%BF%9B%E9%98%B6%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/">
+  <meta property="og:site_name" content="Zed">
+  <meta property="og:title" content="QGroundControl Docker 进阶构建指南">
+  <meta property="og:description" content="使用Docker容器构建QGroundControl Android APK和Ubuntu的完整指南，包括环境配置、构建流程、签名管理、密钥生成和故障排查。提供交互式构建脚本和完整的Dockerfile配置。">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2025-10-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-10-28T11:14:44+08:00">
+    <meta property="article:tag" content="QGroundControl">
+    <meta property="article:tag" content="Docker">
+    <meta property="article:tag" content="容器化">
+    <meta property="article:tag" content="Qt">
+    <meta property="article:tag" content="CMake">
+    <meta property="article:tag" content="编译">
+
+  <meta itemprop="name" content="QGroundControl Docker 进阶构建指南">
+  <meta itemprop="description" content="使用Docker容器构建QGroundControl Android APK和Ubuntu的完整指南，包括环境配置、构建流程、签名管理、密钥生成和故障排查。提供交互式构建脚本和完整的Dockerfile配置。">
+  <meta itemprop="datePublished" content="2025-10-28T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-28T11:14:44+08:00">
+  <meta itemprop="wordCount" content="5689">
+  <meta itemprop="keywords" content="QGroundControl,Docker,容器化,Qt,CMake,编译,技术文档,地面站,Android,Ubuntu">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="QGroundControl Docker 进阶构建指南">
+  <meta name="twitter:description" content="使用Docker容器构建QGroundControl Android APK和Ubuntu的完整指南，包括环境配置、构建流程、签名管理、密钥生成和故障排查。提供交互式构建脚本和完整的Dockerfile配置。">
+<link rel="preload" href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" as="style" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<link href="/Docsy/scss/main.min.1941679b2870208b4a910bd69b7679bf41a3cd36e03cfdb830dabbe6bda791af.css" rel="stylesheet" integrity="sha256-GUFnmyhwIItKkQvWm3Z5v0GjzTbgPP24MNq75r2nka8=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-page td-blog">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/Docsy/"><span class="navbar-brand__logo navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M304 70.1C313.1 61.9 326.9 61.9 336 70.1l232 208C577.9 286.9 578.7 302.1 569.8 312 560.9 321.9 545.8 322.7 535.9 313.8L527.9 306.6V511.9c0 35.3000000000001-28.7 64-64 64h-288c-35.3.0-64-28.6999999999999-64-64V306.6L103.9 313.8C94 322.6 78.9 321.8 70 312 61.1 302.2 62 287 71.8 278.1L304 70.1zm16 50.1L160 263.7V512C160 520.8 167.2 528 176 528h48V424c0-39.8 32.2-72 72-72h48c39.8.0 72 32.2 72 72V528h48C472.8 528 480 520.8 480 512V263.7L320 120.3zM272 528h96V424c0-13.3-10.7-24-24-24H296c-13.3.0-24 10.7-24 24V528z"/></svg></span><span class="navbar-brand__name">Zed</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/about/"><span>关于</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/Docsy/blog/"><span>博客</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Docsy/reviews/"><span>读后感</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">中文(Chinese)</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/Docsy/en/">English</a></li>
+    </ul>
+</div></li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" class="td-search__input form-control td-search-input" placeholder="搜索" aria-label="搜索" autocomplete="off">
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" class="td-search__input form-control td-search-input" placeholder="搜索" aria-label="搜索" autocomplete="off">
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="td-sidebar-nav collapse" id="td-section-nav">
+    <div class="td-sidebar-nav__section nav-item dropdown d-block d-lg-none">
+      <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">中文(Chinese)</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/Docsy/en/">English</a></li>
+    </ul>
+</div>
+    </div>
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docsyblog-li">
+  <a href="/Docsy/blog/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-docsyblog"><span class="">博客</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsyblogandroid-li">
+  <a href="/Docsy/blog/android/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsyblogandroid"><span class="">Android</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10282025e59ca8ubuntue4bdbfe794a8scrcpye8bf9be8a18candroide6a18ce99da2e8b083e8af95-li">
+  <a href="/Docsy/blog/10/28/2025/%E5%9C%A8ubuntu%E4%BD%BF%E7%94%A8scrcpy%E8%BF%9B%E8%A1%8Candroid%E6%A1%8C%E9%9D%A2%E8%B0%83%E8%AF%95/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10282025e59ca8ubuntue4bdbfe794a8scrcpye8bf9be8a18candroide6a18ce99da2e8b083e8af95"><span class="">在Ubuntu使用scrcpy进行Android桌面调试</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10282025-li">
+  <a href="/Docsy/blog/10/28/2025/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10282025"><span class=""></span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsyblogvibe-coding-li">
+  <a href="/Docsy/blog/vibe-coding/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsyblogvibe-coding"><span class="">Vibe Coding</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10282025e4bdbfe794a8fuck-u-codee4bc98e58c96e4bba3e7a081e8b4a8e9878f-li">
+  <a href="/Docsy/blog/10/28/2025/%E4%BD%BF%E7%94%A8fuck-u-code%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10282025e4bdbfe794a8fuck-u-codee4bc98e58c96e4bba3e7a081e8b4a8e9878f"><span class="">使用fuck-u-code优化代码质量</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsyblogmavlink-li">
+  <a href="/Docsy/blog/mavlink/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsyblogmavlink"><span class="">MAVLink</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10272025mavlink-e59fbae4ba8epymavlinke79a84e4bbbbe58aa1e8a784e58892e5ae9ee78eb0-li">
+  <a href="/Docsy/blog/10/27/2025/mavlink-%E5%9F%BA%E4%BA%8Epymavlink%E7%9A%84%E4%BB%BB%E5%8A%A1%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10272025mavlink-e59fbae4ba8epymavlinke79a84e4bbbbe58aa1e8a784e58892e5ae9ee78eb0"><span class="">MAVLink-基于Pymavlink的任务规划实现</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsyblogparadox-mods-li">
+  <a href="/Docsy/blog/paradox-mods/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsyblogparadox-mods"><span class="">Paradox Mods</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10272025e7bbb4e5a49ae588a9e4ba9a3-e68898e4ba89e8b594e6acbee681b6e5908de4bc98e58c96mod-li">
+  <a href="/Docsy/blog/10/27/2025/%E7%BB%B4%E5%A4%9A%E5%88%A9%E4%BA%9A3-%E6%88%98%E4%BA%89%E8%B5%94%E6%AC%BE%E6%81%B6%E5%90%8D%E4%BC%98%E5%8C%96mod/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10272025e7bbb4e5a49ae588a9e4ba9a3-e68898e4ba89e8b594e6acbee681b6e5908de4bc98e58c96mod"><span class="">维多利亚3 战争赔款恶名优化mod</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docsyblogqgroundcontrol-li">
+  <a href="/Docsy/blog/qgroundcontrol/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsyblogqgroundcontrol"><span class="">QGroundControl</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10282025mavsdke5928cqgce888aae782b9e8a784e58892e585bce5aeb9e680a7e997aee9a298e79a84e8a7a3e586b3e696b9e6a188-li">
+  <a href="/Docsy/blog/10/28/2025/mavsdk%E5%92%8Cqgc%E8%88%AA%E7%82%B9%E8%A7%84%E5%88%92%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10282025mavsdke5928cqgce888aae782b9e8a784e58892e585bce5aeb9e680a7e997aee9a298e79a84e8a7a3e586b3e696b9e6a188"><span class="">MavSDK和QGC航点规划兼容性问题的解决方案</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10282025qgroundcontrol-e59fbae4ba8ee5ae98e696b9e69687e6a1a3e79a84e5aeb9e599a8e58c96e69e84e5bbba-li">
+  <a href="/Docsy/blog/10/28/2025/qgroundcontrol-%E5%9F%BA%E4%BA%8E%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%9A%84%E5%AE%B9%E5%99%A8%E5%8C%96%E6%9E%84%E5%BB%BA/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10282025qgroundcontrol-e59fbae4ba8ee5ae98e696b9e69687e6a1a3e79a84e5aeb9e599a8e58c96e69e84e5bbba"><span class="">QGroundControl 基于官方文档的容器化构建</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-docsyblog10282025qgroundcontrol-docker-e8bf9be998b6e69e84e5bbbae68c87e58d97-li">
+  <a href="/Docsy/blog/10/28/2025/qgroundcontrol-docker-%E8%BF%9B%E9%98%B6%E6%9E%84%E5%BB%BA%E6%8C%87%E5%8D%97/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-docsyblog10282025qgroundcontrol-docker-e8bf9be998b6e69e84e5bbbae68c87e58d97"><span class="td-sidebar-nav-active-item">QGroundControl Docker 进阶构建指南</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10272025-li">
+  <a href="/Docsy/blog/10/27/2025/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10272025"><span class=""></span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsyblogairsim-li">
+  <a href="/Docsy/blog/airsim/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsyblogairsim"><span class="">AirSim</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10272025airsim--px4-sitl--mavsdk-e7b3bbe7bb9fe99b86e68890e8b8a9e59d91e8aeb0e5bd95-li">
+  <a href="/Docsy/blog/10/27/2025/airsim--px4-sitl--mavsdk-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10272025airsim--px4-sitl--mavsdk-e7b3bbe7bb9fe99b86e68890e8b8a9e59d91e8aeb0e5bd95"><span class="">Airsim &#43; PX4 SITL &#43; MAVSDK 系统集成踩坑记录</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10272025airsim-agent-e5a4a7e6a8a1e59e8be9a9b1e58aa8e697a0e4babae69cba-li">
+  <a href="/Docsy/blog/10/27/2025/airsim-agent-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A9%B1%E5%8A%A8%E6%97%A0%E4%BA%BA%E6%9C%BA/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10272025airsim-agent-e5a4a7e6a8a1e59e8be9a9b1e58aa8e697a0e4babae69cba"><span class="">AirSim Agent 大模型驱动无人机</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsyblognicegui-li">
+  <a href="/Docsy/blog/nicegui/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsyblognicegui"><span class="">NiceGUI</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsyblog10272025e887aae5ae9ae4b989niceguie4b8adleaflete79a84markere6a0b7e5bc8fe5928ce6978be8bdac-li">
+  <a href="/Docsy/blog/10/27/2025/%E8%87%AA%E5%AE%9A%E4%B9%89nicegui%E4%B8%ADleaflet%E7%9A%84marker%E6%A0%B7%E5%BC%8F%E5%92%8C%E6%97%8B%E8%BD%AC/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsyblog10272025e887aae5ae9ae4b989niceguie4b8adleaflete79a84markere6a0b7e5bc8fe5928ce6978be8bdac"><span class="">自定义NiceGUI中Leaflet的marker样式和旋转</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a href="https://github.com/pinyinjj/Docsy/tree/main/content/cn/blog/QGroundControl/QGC%e8%bf%9b%e9%98%b6%e4%bd%bf%e7%94%a8%e5%ae%b9%e5%99%a8%e6%9e%84%e5%bb%ba.md" class="td-page-meta--view td-page-meta__view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> 查看此页面</a>
+  <a href="https://github.com/pinyinjj/Docsy/edit/main/content/cn/blog/QGroundControl/QGC%e8%bf%9b%e9%98%b6%e4%bd%bf%e7%94%a8%e5%ae%b9%e5%99%a8%e6%9e%84%e5%bb%ba.md" class="td-page-meta--edit td-page-meta__edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 编辑此页面</a>
+  <a href="https://github.com/pinyinjj/Docsy/new/main/content/cn/blog/QGroundControl?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child td-page-meta__child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 创建子页面</a>
+  <a href="https://github.com/pinyinjj/Docsy/issues/new?title=QGroundControl%20Docker%20%e8%bf%9b%e9%98%b6%e6%9e%84%e5%bb%ba%e6%8c%87%e5%8d%97" class="td-page-meta--issue td-page-meta__issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> 创建问题</a>
+  <a id="print" href="/Docsy/_print/blog/qgroundcontrol/"><i class="fa-solid fa-print fa-fw"></i> 打印整个章节</a>
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-android-构建">1. Android 构建</a>
+      <ul>
+        <li><a href="#依赖版本">依赖版本</a></li>
+        <li><a href="#11-支持版本">1.1 支持版本</a></li>
+        <li><a href="#12-构建说明">1.2 构建说明</a></li>
+        <li><a href="#13-apk-签名">1.3 APK 签名</a></li>
+        <li><a href="#14-故障排查">1.4 故障排查</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-ubuntu-构建">2. Ubuntu 构建</a>
+      <ul>
+        <li><a href="#21-依赖版本">2.1 依赖版本</a></li>
+        <li><a href="#22-快速开始">2.2 快速开始</a></li>
+      </ul>
+    </li>
+    <li><a href="#验证编译结果">验证编译结果</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#3-为什么使用-docker">3. 为什么使用 Docker？</a>
+      <ul>
+        <li><a href="#31-网络优化">3.1 网络优化</a></li>
+        <li><a href="#32-构建参数">3.2 构建参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-修改版构建脚本">4. 修改版构建脚本</a>
+      <ul>
+        <li><a href="#41-android-构建脚本">4.1 Android 构建脚本</a></li>
+        <li><a href="#42-ubuntu-构建脚本">4.2 Ubuntu 构建脚本</a></li>
+        <li><a href="#43-脚本使用说明">4.3 脚本使用说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-参考文档">5. 参考文档</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">Tag Cloud</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/airsim/" data-taxonomy-term="airsim"><span class="taxonomy-label">AirSim</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/android/" data-taxonomy-term="android"><span class="taxonomy-label">Android</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/c&#43;&#43;/" data-taxonomy-term="c&#43;&#43;"><span class="taxonomy-label">C&#43;&#43;</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/javascript/" data-taxonomy-term="javascript"><span class="taxonomy-label">JavaScript</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/leaflet/" data-taxonomy-term="leaflet"><span class="taxonomy-label">Leaflet</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/mavlink/" data-taxonomy-term="mavlink"><span class="taxonomy-label">MAVLink</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/mavsdk-python/" data-taxonomy-term="mavsdk-python"><span class="taxonomy-label">MAVSDK-Python</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/nicegui/" data-taxonomy-term="nicegui"><span class="taxonomy-label">NiceGUI</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/paradox-mods/" data-taxonomy-term="paradox-mods"><span class="taxonomy-label">Paradox Mods</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/px4/" data-taxonomy-term="px4"><span class="taxonomy-label">PX4</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/pymavlink/" data-taxonomy-term="pymavlink"><span class="taxonomy-label">Pymavlink</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/qgroundcontrol/" data-taxonomy-term="qgroundcontrol"><span class="taxonomy-label">QGroundControl</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/rpc/" data-taxonomy-term="rpc"><span class="taxonomy-label">RPC</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/sitl/" data-taxonomy-term="sitl"><span class="taxonomy-label">SITL</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/wsl2/" data-taxonomy-term="wsl2"><span class="taxonomy-label">WSL2</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E4%BB%BB%E5%8A%A1%E8%A7%84%E5%88%92/" data-taxonomy-term="%E4%BB%BB%E5%8A%A1%E8%A7%84%E5%88%92"><span class="taxonomy-label">任务规划</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E4%BB%BF%E7%9C%9F/" data-taxonomy-term="%E4%BB%BF%E7%9C%9F"><span class="taxonomy-label">仿真</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E5%89%8D%E7%AB%AF/" data-taxonomy-term="%E5%89%8D%E7%AB%AF"><span class="taxonomy-label">前端</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E5%90%8E%E7%AB%AF/" data-taxonomy-term="%E5%90%8E%E7%AB%AF"><span class="taxonomy-label">后端</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E5%9C%B0%E9%9D%A2%E7%AB%99/" data-taxonomy-term="%E5%9C%B0%E9%9D%A2%E7%AB%99"><span class="taxonomy-label">地面站</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-taxonomy-term="%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="taxonomy-label">大模型</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/" data-taxonomy-term="%E5%AE%B9%E5%99%A8%E5%8C%96"><span class="taxonomy-label">容器化</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" data-taxonomy-term="%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3"><span class="taxonomy-label">技术文档</span><span class="taxonomy-count">7</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/" data-taxonomy-term="%E6%97%A0%E4%BA%BA%E6%9C%BA"><span class="taxonomy-label">无人机</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/tags/%E7%BC%96%E8%AF%91/" data-taxonomy-term="%E7%BC%96%E8%AF%91"><span class="taxonomy-label">编译</span><span class="taxonomy-count">1</span></a></li>
+        </ul>
+    </div>
+  <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      <h5 class="taxonomy-title">Categories</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/categories/paradox-mods/" data-taxonomy-term="paradox-mods"><span class="taxonomy-label">Paradox Mods</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-taxonomy-term="%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="taxonomy-label">学习笔记</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" data-taxonomy-term="%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3"><span class="taxonomy-label">技术文档</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/categories/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/" data-taxonomy-term="%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="taxonomy-label">踩坑记录</span><span class="taxonomy-count">1</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/Docsy/blog/">博客</a></li>
+  <li class="breadcrumb-item">
+    <a href="/Docsy/blog/qgroundcontrol/">QGroundControl</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    QGroundControl Docker 进阶构建指南</li>
+  </ol>
+</nav>
+<style>
+
+body {
+    background-image: url('/Docsy/images/backgrounds/wallhaven-odr71m.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+
+body::before {
+    content: '';
+    display: block !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+ 
+.td-section.td-blog .td-sidebar,
+.td-section.td-blog .td-sidebar-toc {
+    color: black !important;
+}
+.td-section.td-blog .td-sidebar a,
+.td-section.td-blog .td-sidebar-toc a {
+    color: black !important;
+}
+</style>
+<div class="td-content">
+  <h1>QGroundControl Docker 进阶构建指南</h1>
+    
+    
+    <header class="article-meta">
+      
+        <div class="taxonomy taxonomy-terms-article taxo-tags">
+          <h5 class="taxonomy-title">标签:</h5>
+          <ul class="taxonomy-terms">
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/qgroundcontrol/" data-taxonomy-term="QGroundControl"><span class="taxonomy-label">QGroundControl</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/docker/" data-taxonomy-term="Docker"><span class="taxonomy-label">Docker</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/" data-taxonomy-term="容器化"><span class="taxonomy-label">容器化</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/qt/" data-taxonomy-term="Qt"><span class="taxonomy-label">Qt</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/cmake/" data-taxonomy-term="CMake"><span class="taxonomy-label">CMake</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/%E7%BC%96%E8%AF%91/" data-taxonomy-term="编译"><span class="taxonomy-label">编译</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" data-taxonomy-term="技术文档"><span class="taxonomy-label">技术文档</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/%E5%9C%B0%E9%9D%A2%E7%AB%99/" data-taxonomy-term="地面站"><span class="taxonomy-label">地面站</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/android/" data-taxonomy-term="Android"><span class="taxonomy-label">Android</span></a></li>
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/tags/ubuntu/" data-taxonomy-term="Ubuntu"><span class="taxonomy-label">Ubuntu</span></a></li>
+            
+          </ul>
+        </div>
+      
+      
+        <div class="taxonomy taxonomy-terms-article taxo-categories">
+          <h5 class="taxonomy-title">分类:</h5>
+          <ul class="taxonomy-terms">
+            
+              <li><a class="taxonomy-term" href="https://pinyinjj.github.io/Docsy/cn/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" data-taxonomy-term="技术文档"><span class="taxonomy-label">技术文档</span></a></li>
+            
+          </ul>
+        </div>
+      
+    </header>
+  
+  
+<div class="td-page-meta__lastmod">
+  
+
+
+
+
+
+
+  <div class="td-page-meta__lastmod">
+    更新于 2025年10月28日
+  </div>
+
+
+</div>
+
+
+
+  <hr class="my-4">
+  
+
+  
+  
+  
+  
+  
+  <blockquote>
+<p><strong>版本约束：</strong> 本文档基于 QGroundControl 5.0.6 版本编写</p>
+</blockquote>
+<h2 id="1-android-构建">1. Android 构建</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 在项目根目录执行</span>
+</span></span><span style="display:flex;"><span>./deploy/docker/run-docker-android.sh
+</span></span></code></pre></div><h3 id="依赖版本">依赖版本</h3>
+<table>
+  <thead>
+      <tr>
+          <th>组件</th>
+          <th>版本</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>基础镜像</td>
+          <td>Ubuntu 22.04</td>
+      </tr>
+      <tr>
+          <td>Java</td>
+          <td>OpenJDK 17</td>
+      </tr>
+      <tr>
+          <td>Qt</td>
+          <td>6.6.3</td>
+      </tr>
+      <tr>
+          <td>Android SDK</td>
+          <td>34</td>
+      </tr>
+      <tr>
+          <td>Build Tools</td>
+          <td>34.0.0</td>
+      </tr>
+      <tr>
+          <td>NDK</td>
+          <td>25.1.8937393 (25B)</td>
+      </tr>
+      <tr>
+          <td>Platform</td>
+          <td>android-28 (Android 9)</td>
+      </tr>
+      <tr>
+          <td>构建工具</td>
+          <td>CMake + Ninja</td>
+      </tr>
+      <tr>
+          <td>时区</td>
+          <td>Asia/Shanghai</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Qt 版本详情：</strong></p>
+<p><strong>为什么 Android 使用 Qt 6.6.3？</strong></p>
+<p>在官方文档中，对QGC v5.0.6 的 Qt 版本要求明确指定为6.8.3,但因为NDK和Herelink兼容性问题，只能选择6.6.3进行编译。</p>
+<ol>
+<li><strong>NDK 兼容性</strong> - Qt 6.6.3 与 Android NDK 25.1.8937393 有最佳兼容性</li>
+<li><strong>Herelink 支持</strong> - 该版本对 Herelink 设备有完整的支持</li>
+<li><strong>构建工具链</strong> - 与 CMake 3.24+ 和 Android SDK 34 配合良好</li>
+</ol>
+<p><strong>安装的 Qt 模块：</strong></p>
+<ul>
+<li>qtcharts, qtpositioning, qtspeech, qt5compat</li>
+<li>qtmultimedia, qtserialport, qtimageformats</li>
+<li>qtshadertools, qtconnectivity, qtquick3d</li>
+<li>qtsensors, qtlocation</li>
+</ul>
+<h3 id="11-支持版本">1.1 支持版本</h3>
+<p><strong>架构支持：</strong>
+构建同时支持两种架构：</p>
+<ul>
+<li><code>armeabi-v7a</code>（32位 ARM）</li>
+<li><code>arm64-v8a</code>（64位 ARM）</li>
+</ul>
+<p><strong>Android 版本支持：</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>项目</th>
+          <th>版本</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>最低版本 (minSdk)</strong></td>
+          <td>API 28 (Android 9.0)</td>
+          <td>设备必须运行 Android 9.0 或更高版本</td>
+      </tr>
+      <tr>
+          <td><strong>目标版本 (targetSdk)</strong></td>
+          <td>API 35 (Android 15)</td>
+          <td>针对 Android 15 优化</td>
+      </tr>
+      <tr>
+          <td><strong>编译版本 (compileSdk)</strong></td>
+          <td>API 34 (Android 14)</td>
+          <td>使用 Android 14 SDK 编译</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li>✅ Android 9.0 (Pie, API 28)</li>
+<li>✅ Android 10 (Q, API 29)</li>
+<li>✅ Android 11 (R, API 30)</li>
+<li>✅ Android 12 (S, API 31)</li>
+<li>✅ Android 12L (Sv2, API 32)</li>
+<li>✅ Android 13 (T, API 33)</li>
+<li>✅ Android 14 (U, API 34)</li>
+<li>✅ Android 15 (V, API 35)</li>
+</ul>
+<h3 id="12-构建说明">1.2 构建说明</h3>
+<p><strong>构建输出：</strong></p>
+<pre tabindex="0"><code>build/shadow_build_dir/android-build/build/outputs/apk/release/android-build-release.apk
+</code></pre><p><strong>安装APK到设备：</strong></p>
+<p>如果使用wifi连接adb设备</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#在usb连接时</span>
+</span></span><span style="display:flex;"><span>adb tcpip <span style="color:#0000cf;font-weight:bold">5555</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#之后使用</span>
+</span></span><span style="display:flex;"><span>adb connect <span style="color:#ce5c00;font-weight:bold">{</span>IP<span style="color:#ce5c00;font-weight:bold">}</span>:5555
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 使用adb安装APK到连接的Android设备</span>
+</span></span><span style="display:flex;"><span>adb install build/shadow_build_dir/android-build/build/outputs/apk/release/android-build-release-signed.apk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 如果设备上已存在旧版本，使用以下命令强制覆盖安装</span>
+</span></span><span style="display:flex;"><span>adb install -r build/shadow_build_dir/android-build/build/outputs/apk/release/android-build-release-signed.apk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 查看连接的设备</span>
+</span></span><span style="display:flex;"><span>adb devices
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 卸载旧版本（如果需要）</span>
+</span></span><span style="display:flex;"><span>adb uninstall org.mavlink.qgroundcontrol
+</span></span></code></pre></div><h3 id="13-apk-签名">1.3 APK 签名</h3>
+<p><strong>为什么需要签名？</strong></p>
+<ol>
+<li>
+<p><strong>系统要求</strong> - Android 系统强制要求所有 APK 必须签名才能安装，未签名的 APK 无法运行</p>
+</li>
+<li>
+<p><strong>应用身份</strong> - 签名是应用的唯一标识，用于：</p>
+<ul>
+<li>验证应用来源和开发者身份</li>
+<li>防止应用被篡改或伪造</li>
+<li>建立应用之间的信任关系</li>
+</ul>
+</li>
+<li>
+<p><strong>应用更新</strong> - 只有使用<strong>相同密钥</strong>签名的新版本才能覆盖安装旧版本</p>
+<ul>
+<li>更换密钥后，用户必须先卸载旧版本（会丢失数据）</li>
+<li>无法在应用市场（如 Google Play）更新应用</li>
+</ul>
+</li>
+<li>
+<p><strong>安全保障</strong> - 签名机制确保 APK 在分发过程中未被修改</p>
+</li>
+</ol>
+<p><strong>生成密钥库：</strong></p>
+<p>使用以下脚本自动生成 Android 发布密钥库：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Script to create Android release keystore</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Make sure to install JDK first: sudo apt install openjdk-17-jdk-headless -y</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Android Release Keystore Generator&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Configuration - Edit these values</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">KEYSTORE_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;android_release_new.keystore&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">KEY_ALIAS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qgc_release&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">KEY_PASSWORD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;{yourpasswd}&#34;</span>  <span style="color:#8f5902;font-style:italic"># Change this!</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">STORE_PASSWORD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;{yourpasswd}&#34;</span>  <span style="color:#8f5902;font-style:italic"># Change this!</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">VALIDITY_DAYS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">10000</span>  <span style="color:#8f5902;font-style:italic"># About 27 years</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Distinguished Name (DN) information</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DN_CN</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;QGroundControl&#34;</span>  <span style="color:#8f5902;font-style:italic"># Common Name</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DN_OU</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;Development&#34;</span>     <span style="color:#8f5902;font-style:italic"># Organizational Unit</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DN_O</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;QGroundControl&#34;</span>   <span style="color:#8f5902;font-style:italic"># Organization</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DN_L</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;City&#34;</span>            <span style="color:#8f5902;font-style:italic"># Locality/City</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DN_S</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;State&#34;</span>           <span style="color:#8f5902;font-style:italic"># State</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DN_C</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;US&#34;</span>              <span style="color:#8f5902;font-style:italic"># Country Code (2 letters)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SCRIPT_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span><span style="color:#204a87">cd</span> <span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span>dirname <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BASH_SOURCE</span><span style="color:#000;font-weight:bold">[0]</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">pwd</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">KEYSTORE_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$SCRIPT_DIR</span><span style="color:#4e9a06">/</span><span style="color:#000">$KEYSTORE_NAME</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Keystore will be created at: </span><span style="color:#000">$KEYSTORE_PATH</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Key alias: </span><span style="color:#000">$KEY_ALIAS</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Check if keytool is available</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> ! <span style="color:#204a87">command</span> -v keytool <span style="color:#000;font-weight:bold">&amp;</span>&gt; /dev/null<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: keytool not found!&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Please install JDK first:&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;  sudo apt install openjdk-17-jdk-headless -y&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Check if keystore already exists</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -f <span style="color:#4e9a06">&#34;</span><span style="color:#000">$KEYSTORE_PATH</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">read</span> -p <span style="color:#4e9a06">&#34;Keystore already exists. Overwrite? (y/N): &#34;</span> -n <span style="color:#0000cf;font-weight:bold">1</span> -r
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[[</span> ! <span style="color:#000">$REPLY</span> <span style="color:#ce5c00;font-weight:bold">=</span>~ ^<span style="color:#ce5c00;font-weight:bold">[</span>Yy<span style="color:#ce5c00;font-weight:bold">]</span>$ <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Cancelled.&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    rm -f <span style="color:#4e9a06">&#34;</span><span style="color:#000">$KEYSTORE_PATH</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Generate keystore</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Generating keystore...&#34;</span>
+</span></span><span style="display:flex;"><span>keytool -genkey -v <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -keystore <span style="color:#4e9a06">&#34;</span><span style="color:#000">$KEYSTORE_PATH</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -alias <span style="color:#4e9a06">&#34;</span><span style="color:#000">$KEY_ALIAS</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -keyalg RSA <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -keysize <span style="color:#0000cf;font-weight:bold">2048</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -validity <span style="color:#000">$VALIDITY_DAYS</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -storepass <span style="color:#4e9a06">&#34;</span><span style="color:#000">$STORE_PASSWORD</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -keypass <span style="color:#4e9a06">&#34;</span><span style="color:#000">$KEY_PASSWORD</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -dname <span style="color:#4e9a06">&#34;CN=</span><span style="color:#000">$DN_CN</span><span style="color:#4e9a06">, OU=</span><span style="color:#000">$DN_OU</span><span style="color:#4e9a06">, O=</span><span style="color:#000">$DN_O</span><span style="color:#4e9a06">, L=</span><span style="color:#000">$DN_L</span><span style="color:#4e9a06">, S=</span><span style="color:#000">$DN_S</span><span style="color:#4e9a06">, C=</span><span style="color:#000">$DN_C</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Keystore created successfully!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Add these lines to your deploy/docker/run-docker-android.sh:&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;QT_ANDROID_KEYSTORE_PATH=\&#34;/project/source/deploy/android/</span><span style="color:#000">$KEYSTORE_NAME</span><span style="color:#4e9a06">\&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;QT_ANDROID_KEYSTORE_ALIAS=\&#34;</span><span style="color:#000">$KEY_ALIAS</span><span style="color:#4e9a06">\&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;QT_ANDROID_KEYSTORE_STORE_PASS=\&#34;</span><span style="color:#000">$STORE_PASSWORD</span><span style="color:#4e9a06">\&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;QT_ANDROID_KEYSTORE_KEY_PASS=\&#34;</span><span style="color:#000">$KEY_PASSWORD</span><span style="color:#4e9a06">\&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;⚠️  IMPORTANT: Keep these passwords safe!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;⚠️  Backup your keystore file - you cannot recover it if lost!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Verify the keystore</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Verifying keystore...&#34;</span>
+</span></span><span style="display:flex;"><span>keytool -list -v -keystore <span style="color:#4e9a06">&#34;</span><span style="color:#000">$KEYSTORE_PATH</span><span style="color:#4e9a06">&#34;</span> -storepass <span style="color:#4e9a06">&#34;</span><span style="color:#000">$STORE_PASSWORD</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">|</span> head -20
+</span></span></code></pre></div><p><strong>使用步骤：</strong></p>
+<ol>
+<li>
+<p><strong>安装 JDK（如果未安装）：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install openjdk-17-jdk-headless -y
+</span></span></code></pre></div></li>
+<li>
+<p><strong>修改脚本配置：</strong></p>
+<ul>
+<li>编辑 <code>KEY_PASSWORD</code> 和 <code>STORE_PASSWORD</code> 为您的密码</li>
+<li>根据需要修改 DN 信息（组织名称、城市等）</li>
+</ul>
+</li>
+<li>
+<p><strong>运行脚本：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x create_keystore.sh
+</span></span><span style="display:flex;"><span>./create_keystore.sh
+</span></span></code></pre></div></li>
+<li>
+<p><strong>配置构建脚本：</strong>
+将生成的配置信息添加到 <code>run-docker-android.sh</code> 中</p>
+</li>
+</ol>
+<p><strong>密钥配置：</strong></p>
+<p>密钥文件：<code>deploy/android/android_release.keystore</code></p>
+<p>配置位置：<code>deploy/docker/run-docker-android.sh</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/project/source/deploy/android/android_release.keystore&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_ALIAS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qgc_release&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_STORE_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;{yourpasswd}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_KEY_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;{yourpasswd}&#34;</span>
+</span></span></code></pre></div><p><strong>密钥管理建议：</strong></p>
+<ul>
+<li>⚠️ 不要丢失密钥文件和密码</li>
+<li>⚠️ 更换密钥将导致应用无法覆盖升级</li>
+<li>⚠️ 生产环境应使用独立的发布密钥</li>
+<li>⚠️ 定期备份密钥库文件</li>
+</ul>
+<h3 id="14-故障排查">1.4 故障排查</h3>
+<p><strong>清理构建缓存：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo rm -rf build/shadow_build_dir
+</span></span></code></pre></div><p><strong>查看构建日志：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps  <span style="color:#8f5902;font-style:italic"># 找到容器 ID</span>
+</span></span><span style="display:flex;"><span>docker logs -f &lt;container_id&gt;
+</span></span></code></pre></div><p><strong>重新构建 Docker 镜像：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker rmi qgc-android-docker
+</span></span><span style="display:flex;"><span>./deploy/docker/run-docker-android.sh
+</span></span></code></pre></div><hr>
+<h2 id="2-ubuntu-构建">2. Ubuntu 构建</h2>
+<h3 id="21-依赖版本">2.1 依赖版本</h3>
+<table>
+  <thead>
+      <tr>
+          <th>组件</th>
+          <th>版本</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>基础镜像</td>
+          <td>Ubuntu 22.04</td>
+      </tr>
+      <tr>
+          <td>Qt</td>
+          <td>6.8.3</td>
+      </tr>
+      <tr>
+          <td>构建工具</td>
+          <td>CMake + Ninja</td>
+      </tr>
+      <tr>
+          <td>时区</td>
+          <td>Asia/Shanghai</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>安装的 Qt 模块：</strong></p>
+<ul>
+<li>qtcharts, qtlocation, qtpositioning, qtspeech, qt5compat</li>
+<li>qtmultimedia, qtserialport, qtimageformats</li>
+<li>qtshadertools, qtconnectivity, qtquick3d, qtsensors</li>
+</ul>
+<h3 id="22-快速开始">2.2 快速开始</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./deploy/docker/run-docker-ubuntu.sh
+</span></span></code></pre></div><p><strong>构建输出：</strong></p>
+<ul>
+<li>路径：<code>build/AppDir/usr/bin/</code></li>
+<li>可执行文件：<code>QGroundControl</code></li>
+</ul>
+<p><strong>运行：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./build/AppDir/usr/bin/QGroundControl
+</span></span></code></pre></div><hr>
+<h2 id="验证编译结果">验证编译结果</h2>
+<p><strong>在每次构建完成后，请务必验证以下信息：</strong></p>
+<h4 id="1-检查版本号">1. 检查版本号</h4>
+<p>构建完成后，在QGroundControl中查看版本信息：</p>
+<ul>
+<li><strong>Android版本：</strong> 设置 → 关于 → 版本信息</li>
+<li><strong>Ubuntu版本：</strong> 帮助 → 关于QGroundControl</li>
+</ul>
+<p><strong>预期版本信息：</strong></p>
+<ul>
+<li>主版本：5.0.6</li>
+<li>构建日期：应与您的构建时间一致</li>
+<li>Git提交：应与您使用的源码版本一致</li>
+</ul>
+<h4 id="2-检查构建时间戳">2. 检查构建时间戳</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Android APK</span>
+</span></span><span style="display:flex;"><span>ls -la build/shadow_build_dir/android-build/build/outputs/apk/release/android-build-release-signed.apk
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Ubuntu可执行文件</span>
+</span></span><span style="display:flex;"><span>ls -la build/AppDir/usr/bin/QGroundControl
+</span></span></code></pre></div><h4 id="3-功能验证清单">3. 功能验证清单</h4>
+<ul>
+<li>应用正常启动</li>
+<li>连接设备功能正常</li>
+<li>航点规划功能可用</li>
+<li>设置界面正常显示</li>
+<li>版本信息正确显示</li>
+</ul>
+<p><strong>如果版本号或构建时间不正确，说明更新内容未实际编译，请重新执行构建流程。</strong></p>
+<hr>
+<h2 id="3-为什么使用-docker">3. 为什么使用 Docker？</h2>
+<ol>
+<li><strong>环境一致性</strong> - 所有依赖预装在镜像中</li>
+<li><strong>简化配置</strong> - 无需手动安装 Qt、SDK、NDK</li>
+<li><strong>隔离构建</strong> - 不污染主机环境</li>
+<li><strong>可重复性</strong> - 任何机器都能获得相同的构建结果</li>
+</ol>
+<h3 id="31-网络优化">3.1 网络优化</h3>
+<p>使用 <code>--network=host</code> 继承主机 DNS 配置，提高下载速度。</p>
+<h3 id="32-构建参数">3.2 构建参数</h3>
+<p>CMake 配置参数：</p>
+<ul>
+<li><code>CMAKE_BUILD_TYPE=Release</code> - 发布版本</li>
+<li><code>QT_ANDROID_BUILD_ALL_ABIS=OFF</code> - 仅构建指定架构</li>
+<li><code>QT_ANDROID_ABIS=&quot;armeabi-v7a;arm64-v8a&quot;</code> - 32位和64位ARM</li>
+<li><code>QT_ANDROID_SIGN_APK=ON</code> - 启用APK签名</li>
+<li><code>ANDROID_PLATFORM=android-28</code> - 最低支持 Android 9</li>
+</ul>
+<hr>
+<h2 id="4-修改版构建脚本">4. 修改版构建脚本</h2>
+<h3 id="41-android-构建脚本">4.1 Android 构建脚本</h3>
+<p>以下是修改版的 Android 构建脚本 <code>run-docker-android.sh</code>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Exit immediately if a command exits with a non-zero status</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ============================================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Android APK Signing Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ============================================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/project/source/deploy/android/android_release.keystore&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_ALIAS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qgc_release&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_STORE_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;{yourpasswd}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_KEYSTORE_KEY_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;{yourpasswd}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ============================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Define variables for better maintainability</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DOCKERFILE_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;./deploy/docker/Dockerfile-build-android&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">IMAGE_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qgc-android-docker&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SOURCE_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span><span style="color:#204a87">pwd</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">BUILD_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/build&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Default values</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QGC_ENABLE_HERELINK</span><span style="color:#ce5c00;font-weight:bold">=</span>OFF
+</span></span><span style="display:flex;"><span><span style="color:#000">QT_ANDROID_SIGN_APK</span><span style="color:#ce5c00;font-weight:bold">=</span>ON
+</span></span><span style="display:flex;"><span><span style="color:#000">REBUILD_IMAGE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">FULL_CLEAN</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Interactive mode for cleanup selection</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;QGroundControl Android 构建选项&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请选择构建模式:&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1) 增量编译 (最快，保留所有缓存) - 日常开发推荐&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2) 完全清理 (删除构建目录和Docker镜像) - 30-60分钟&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;3) 重新构建Docker镜像&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;4) 退出&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">while</span> true<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">read</span> -p <span style="color:#4e9a06">&#34;请输入选择 (1-4): &#34;</span> choice
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">$choice</span> in
+</span></span><span style="display:flex;"><span>        1<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;选择: 增量编译&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        2<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;选择: 完全清理&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">FULL_CLEAN</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">REBUILD_IMAGE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        3<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;选择: 重新构建Docker镜像&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">REBUILD_IMAGE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        4<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;退出脚本&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        *<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;无效选择，请输入 1-4&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Ask about Herelink support</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Herelink 支持配置&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">while</span> true<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">read</span> -p <span style="color:#4e9a06">&#34;是否启用 Herelink 支持? (y/n): &#34;</span> herelink_choice
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">$herelink_choice</span> in
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">[</span>Yy<span style="color:#ce5c00;font-weight:bold">]</span>*<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">QGC_ENABLE_HERELINK</span><span style="color:#ce5c00;font-weight:bold">=</span>ON
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;已启用 Herelink 支持&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">[</span>Nn<span style="color:#ce5c00;font-weight:bold">]</span>*<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">QGC_ENABLE_HERELINK</span><span style="color:#ce5c00;font-weight:bold">=</span>OFF
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;未启用 Herelink 支持&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        *<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请输入 y 或 n&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Handle full clean: delete everything</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FULL_CLEAN</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">true</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;执行完全清理...&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Delete build directory</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -d <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;清理构建目录: </span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        sudo rm -rf <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ 构建目录已清理&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Delete Docker image</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> docker image inspect <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> &gt; /dev/null 2&gt;<span style="color:#000;font-weight:bold">&amp;</span>1<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;删除Docker镜像: </span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        docker rmi <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ Docker镜像已删除&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;完全清理完成！&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create build directory if it doesn&#39;t exist</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Check if Docker image exists, build only if needed</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> ! docker image inspect <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> &gt; /dev/null 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$REBUILD_IMAGE</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">true</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$REBUILD_IMAGE</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">true</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;重新构建Docker镜像...&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;构建Docker镜像...&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    docker build --file <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">DOCKERFILE_PATH</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        --build-arg <span style="color:#000">QGC_ENABLE_HERELINK</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QGC_ENABLE_HERELINK</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        --network<span style="color:#ce5c00;font-weight:bold">=</span>host <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -t <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ Docker镜像构建完成&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run the Docker container with adjusted mount points and DNS configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;启动Docker容器进行构建...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker run --rm <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    --network<span style="color:#ce5c00;font-weight:bold">=</span>host <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -v <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:/project/source&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -v <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:/workspace/build&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -e <span style="color:#000">QT_ANDROID_SIGN_APK</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ANDROID_SIGN_APK</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -e <span style="color:#000">QT_ANDROID_KEYSTORE_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ANDROID_KEYSTORE_PATH</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -e <span style="color:#000">QT_ANDROID_KEYSTORE_ALIAS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ANDROID_KEYSTORE_ALIAS</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -e <span style="color:#000">QT_ANDROID_KEYSTORE_STORE_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ANDROID_KEYSTORE_STORE_PASS</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -e <span style="color:#000">QT_ANDROID_KEYSTORE_KEY_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ANDROID_KEYSTORE_KEY_PASS</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;修复文件权限...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Fix permissions so you can modify build directory without sudo next time</span>
+</span></span><span style="display:flex;"><span>sudo chown -R <span style="color:#204a87;font-weight:bold">$(</span>id -u<span style="color:#204a87;font-weight:bold">)</span>:<span style="color:#204a87;font-weight:bold">$(</span>id -g<span style="color:#204a87;font-weight:bold">)</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ 构建完成！&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;构建输出位置: </span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;版本验证提示&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请验证以下信息确保更新内容已实际编译：&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1. 检查APK版本号：安装后查看 设置→关于→版本信息&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2. 检查构建时间：ls -la </span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/shadow_build_dir/android-build/build/outputs/apk/release/android-build-release-signed.apk&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;3. 确认版本号显示为 5.0.6 且构建时间正确&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span></code></pre></div><p><strong>对应的 Dockerfile：</strong></p>
+<p>以下是 Android 构建使用的 <code>Dockerfile-build-android</code>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">FROM</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">ubuntu:22.04</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">DEBIAN_FRONTEND</span><span style="color:#ce5c00;font-weight:bold">=</span>noninteractive
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">COPY</span> tools/setup/install-dependencies-debian.sh /tmp/qt/<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> chmod +x /tmp/qt/*.sh <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> /tmp/qt/install-dependencies-debian.sh<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Configure DNS for better network connectivity in Docker container</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Note: Docker will override this, but we&#39;ll test with available tools</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Set environment variables for Android SDK, NDK, and paths</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">ANDROID_SDK_ROOT</span><span style="color:#ce5c00;font-weight:bold">=</span>/opt/android-sdk<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">ANDROID_NDK_ROOT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_SDK_ROOT</span>/ndk/25.1.8937393<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">ANDROID_HOME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_SDK_ROOT</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">ANDROID_BUILD_TOOLS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_SDK_ROOT</span>/build-tools/34.0.0<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Set apt-get to non-interactive and configure time zone</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">DEBIAN_FRONTEND</span><span style="color:#ce5c00;font-weight:bold">=</span>noninteractive
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">TZ</span><span style="color:#ce5c00;font-weight:bold">=</span>Asia/Shanghai<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Configure time zone and install dependencies</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Use official Ubuntu sources only</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Verifying DNS configuration ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    cat /etc/resolv.conf <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Updating package lists ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    apt-get update <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    apt-get install -y tzdata <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    ln -fs /usr/share/zoneinfo/<span style="color:#000">$TZ</span> /etc/localtime <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    dpkg-reconfigure --frontend noninteractive tzdata <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    apt-get install -y <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    apt-utils <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    build-essential <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libpulse-dev <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-glx0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-icccm4 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-image0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-keysyms1 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-randr0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-render-util0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-render0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-shape0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-shm0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-sync1 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-util1 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-xfixes0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-xinerama0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb1 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxkbcommon-dev <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxkbcommon-x11-0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    libxcb-xkb-dev <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    python3 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    python3-pip <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    wget <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    unzip <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    git <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    openjdk-17-jdk <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    curl <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    locales <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    ninja-build <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    software-properties-common <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    lsb-release<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Install newer CMake version</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2&gt;/dev/null <span style="color:#000;font-weight:bold">|</span> gpg --dearmor - <span style="color:#000;font-weight:bold">|</span> tee /etc/apt/trusted.gpg.d/kitware.gpg &gt;/dev/null <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    apt-add-repository <span style="color:#4e9a06">&#34;deb https://apt.kitware.com/ubuntu/ </span><span style="color:#204a87;font-weight:bold">$(</span>lsb_release -cs<span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06"> main&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    apt-get update <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    apt-get install -y cmake<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Set JAVA_HOME and update PATH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">JAVA_HOME</span><span style="color:#ce5c00;font-weight:bold">=</span>/usr/lib/jvm/java-17-openjdk-amd64<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Install Android SDK and NDK</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> mkdir -p <span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools/latest <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    wget https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip -O /opt/cmdline-tools.zip <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    unzip /opt/cmdline-tools.zip -d <span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    mv <span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools/cmdline-tools/* <span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools/latest/ <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    rm -rf <span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools/cmdline-tools <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    rm /opt/cmdline-tools.zip <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    yes <span style="color:#000;font-weight:bold">|</span> <span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools/latest/bin/sdkmanager --sdk_root<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_SDK_ROOT</span> --licenses <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools/latest/bin/sdkmanager --sdk_root<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_SDK_ROOT</span> <span style="color:#4e9a06">&#34;platform-tools&#34;</span> <span style="color:#4e9a06">&#34;platforms;android-34&#34;</span> <span style="color:#4e9a06">&#34;build-tools;34.0.0&#34;</span> <span style="color:#4e9a06">&#34;ndk;25.1.8937393&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Build arguments for Qt version selection</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ARG</span> <span style="color:#000">QGC_ENABLE_HERELINK</span><span style="color:#ce5c00;font-weight:bold">=</span>OFF
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">ARG</span> <span style="color:#000">QT_VERSION_6_6_3</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;6.6.3&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Qt setup and environment variables</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Use Qt 6.6.3 as default (known to work)</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_VERSION</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;6.6.3&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/opt/Qt&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_HOST</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;linux&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_HOST_ARCH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;gcc_64&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_HOST_ARCH_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;linux_gcc_64&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_TARGET</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;android&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_TARGET_ARCH_ARMV7</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;android_armv7&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_TARGET_ARCH_ARM64</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;android_arm64_v8a&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_MODULES</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qtcharts qtpositioning qtspeech qt5compat qtmultimedia qtserialport qtimageformats qtshadertools qtconnectivity qtquick3d qtsensors qtlocation&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Install aqtinstall</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> python3 -m pip install setuptools wheel py7zr aqtinstall <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    mkdir -p <span style="color:#000">$QT_PATH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Install Qt desktop version with retry logic (split into separate RUN for better caching)</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> <span style="color:#204a87">export</span> <span style="color:#000">QT_VERSION</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$QT_VERSION_6_6_3</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Installing Qt Desktop </span><span style="color:#000">$QT_VERSION</span><span style="color:#4e9a06"> ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87;font-weight:bold">for</span> i in <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">2</span> 3<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Attempt </span><span style="color:#000">$i</span><span style="color:#4e9a06"> of 3...&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        aqt install-qt <span style="color:#000">$QT_HOST</span> desktop <span style="color:#000">$QT_VERSION</span> <span style="color:#000">$QT_HOST_ARCH</span> -O <span style="color:#000">$QT_PATH</span> -m <span style="color:#000">$QT_MODULES</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">break</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#000">$i</span> -eq <span style="color:#0000cf;font-weight:bold">3</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: Failed to install Qt desktop version after 3 attempts&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Retrying in 5 seconds...&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> sleep 5<span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">fi</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87;font-weight:bold">done</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Install Qt Android ARMv7 version with retry logic</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> <span style="color:#204a87">export</span> <span style="color:#000">QT_VERSION</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$QT_VERSION_6_6_3</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Installing Qt Android ARMv7 </span><span style="color:#000">$QT_VERSION</span><span style="color:#4e9a06"> ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87;font-weight:bold">for</span> i in <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">2</span> 3<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Attempt </span><span style="color:#000">$i</span><span style="color:#4e9a06"> of 3...&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        aqt install-qt <span style="color:#000">$QT_HOST</span> <span style="color:#000">$QT_TARGET</span> <span style="color:#000">$QT_VERSION</span> <span style="color:#000">$QT_TARGET_ARCH_ARMV7</span> -O <span style="color:#000">$QT_PATH</span> -m <span style="color:#000">$QT_MODULES</span> --autodesktop <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">break</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#000">$i</span> -eq <span style="color:#0000cf;font-weight:bold">3</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: Failed to install Qt Android ARMv7 version after 3 attempts&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Retrying in 5 seconds...&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> sleep 5<span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">fi</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87;font-weight:bold">done</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Install Qt Android ARM64 version with retry logic</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> <span style="color:#204a87">export</span> <span style="color:#000">QT_VERSION</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$QT_VERSION_6_6_3</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Installing Qt Android ARM64 </span><span style="color:#000">$QT_VERSION</span><span style="color:#4e9a06"> ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87;font-weight:bold">for</span> i in <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">2</span> 3<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Attempt </span><span style="color:#000">$i</span><span style="color:#4e9a06"> of 3...&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        aqt install-qt <span style="color:#000">$QT_HOST</span> <span style="color:#000">$QT_TARGET</span> <span style="color:#000">$QT_VERSION</span> <span style="color:#000">$QT_TARGET_ARCH_ARM64</span> -O <span style="color:#000">$QT_PATH</span> -m <span style="color:#000">$QT_MODULES</span> --autodesktop <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">break</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#000">$i</span> -eq <span style="color:#0000cf;font-weight:bold">3</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: Failed to install Qt Android ARM64 version after 3 attempts&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Retrying in 5 seconds...&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> sleep 5<span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        <span style="color:#204a87;font-weight:bold">fi</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87;font-weight:bold">done</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Qt installation completed successfully ===&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Set Qt-related environment variables for ARMv7 and ARM64 architectures</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Using Qt 6.6.3</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> <span style="color:#204a87">export</span> <span style="color:#000">QT_VERSION</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$QT_VERSION_6_6_3</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;export QT_ROOT_DIR_ARMV7=</span><span style="color:#000">$QT_PATH</span><span style="color:#4e9a06">/</span><span style="color:#000">$QT_VERSION</span><span style="color:#4e9a06">/</span><span style="color:#000">$QT_TARGET_ARCH_ARMV7</span><span style="color:#4e9a06">&#34;</span> &gt;&gt; /etc/environment <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;export QT_ROOT_DIR_ARM64=</span><span style="color:#000">$QT_PATH</span><span style="color:#4e9a06">/</span><span style="color:#000">$QT_VERSION</span><span style="color:#4e9a06">/</span><span style="color:#000">$QT_TARGET_ARCH_ARM64</span><span style="color:#4e9a06">&#34;</span> &gt;&gt; /etc/environment <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;export QT_HOST_PATH=</span><span style="color:#000">$QT_PATH</span><span style="color:#4e9a06">/</span><span style="color:#000">$QT_VERSION</span><span style="color:#4e9a06">/</span><span style="color:#000">$QT_HOST_ARCH</span><span style="color:#4e9a06">&#34;</span> &gt;&gt; /etc/environment<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Set default values (will be overridden by the RUN command above)</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_ROOT_DIR_ARMV7</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_PATH</span>/6.6.3/<span style="color:#000">$QT_TARGET_ARCH_ARMV7</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_ROOT_DIR_ARM64</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_PATH</span>/6.6.3/<span style="color:#000">$QT_TARGET_ARCH_ARM64</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_HOST_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_PATH</span>/6.6.3/<span style="color:#000">$QT_HOST_ARCH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_PLUGIN_PATH_ARMV7</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARMV7</span>/plugins<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QT_PLUGIN_PATH_ARM64</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARM64</span>/plugins<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QML2_IMPORT_PATH_ARMV7</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARMV7</span>/qml<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">QML2_IMPORT_PATH_ARM64</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARM64</span>/qml<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">PKG_CONFIG_PATH_ARMV7</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARMV7</span>/lib/pkgconfig:<span style="color:#000">$PKG_CONFIG_PATH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">PKG_CONFIG_PATH_ARM64</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARM64</span>/lib/pkgconfig:<span style="color:#000">$PKG_CONFIG_PATH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">LD_LIBRARY_PATH_ARMV7</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARMV7</span>/lib:<span style="color:#000">$LD_LIBRARY_PATH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">LD_LIBRARY_PATH_ARM64</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_ROOT_DIR_ARM64</span>/lib:<span style="color:#000">$LD_LIBRARY_PATH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Consolidate PATH settings</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> <span style="color:#000">PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$JAVA_HOME</span>/bin:/usr/lib/ccache:<span style="color:#000">$QT_HOST_PATH</span>/bin:<span style="color:#000">$QT_ROOT_DIR_ARMV7</span>/bin:<span style="color:#000">$QT_ROOT_DIR_ARM64</span>/bin:<span style="color:#000">$PATH</span>:<span style="color:#000">$ANDROID_SDK_ROOT</span>/tools:<span style="color:#000">$ANDROID_SDK_ROOT</span>/platform-tools:<span style="color:#000">$ANDROID_SDK_ROOT</span>/cmdline-tools/latest/bin:<span style="color:#000">$ANDROID_BUILD_TOOLS</span>:<span style="color:#000">$ANDROID_NDK_ROOT</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> locale-gen en_US.UTF-8 <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> update-locale <span style="color:#000">LANG</span><span style="color:#ce5c00;font-weight:bold">=</span>en_US.UTF-8<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> git config --global --add safe.directory /project/source<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Set working directory</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">WORKDIR</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">/project/build</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902;font-style:italic"># Build the project</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">CMD</span> <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Build Environment Verification ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;QGC_ENABLE_HERELINK: </span><span style="color:#000">$QGC_ENABLE_HERELINK</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Android SDK: </span><span style="color:#000">$ANDROID_SDK_ROOT</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Android NDK: </span><span style="color:#000">$ANDROID_NDK_ROOT</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Qt Host Path: </span><span style="color:#000">$QT_HOST_PATH</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    ls -la <span style="color:#000">$ANDROID_SDK_ROOT</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: Android SDK not found&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    ls -la <span style="color:#000">$ANDROID_NDK_ROOT</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: Android NDK not found&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    ls -la <span style="color:#000">$QT_HOST_PATH</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: Qt host installation not found&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Creating build directory ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    mkdir -p /workspace/build/shadow_build_dir <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">cd</span> /workspace/build/shadow_build_dir <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Running CMake configuration ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    qt-cmake -S /project/source -G Ninja <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DCMAKE_BUILD_TYPE<span style="color:#ce5c00;font-weight:bold">=</span>Release <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DQT_HOST_PATH<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QT_HOST_PATH</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DQT_ANDROID_BUILD_ALL_ABIS<span style="color:#ce5c00;font-weight:bold">=</span>OFF <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DQT_ANDROID_ABIS<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;armeabi-v7a;arm64-v8a&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DQT_DEBUG_FIND_PACKAGE<span style="color:#ce5c00;font-weight:bold">=</span>ON <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DANDROID_PLATFORM<span style="color:#ce5c00;font-weight:bold">=</span>android-28 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DANDROID_BUILD_TOOLS<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_SDK_ROOT</span>/build-tools/34.0.0 <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DANDROID_SDK_ROOT<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_SDK_ROOT</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DQT_ANDROID_SIGN_APK<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">QT_ANDROID_SIGN_APK</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">ON</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DQGC_ENABLE_HERELINK<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$QGC_ENABLE_HERELINK</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>        -DCMAKE_TOOLCHAIN_FILE<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ANDROID_NDK_ROOT</span>/build/cmake/android.toolchain.cmake <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: CMake configuration failed&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Starting build process ===&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    cmake --build . --target all --config Release <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ERROR: Build failed&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">exit</span> 1<span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;=== Build completed successfully ===&#34;</span><span style="color:#a40000">
+</span></span></span></code></pre></div><p><strong>脚本特点：</strong></p>
+<ul>
+<li>交互式构建模式选择（增量编译/完全清理/重新构建镜像）</li>
+<li>自动配置 APK 签名参数</li>
+<li>Herelink 支持可选配置</li>
+<li>智能缓存管理</li>
+<li>自动权限修复</li>
+</ul>
+<h3 id="42-ubuntu-构建脚本">4.2 Ubuntu 构建脚本</h3>
+<p>以下是修改版的 Ubuntu 构建脚本 <code>run-docker-ubuntu.sh</code>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Exit immediately if a command exits with a non-zero status</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Define variables for better maintainability</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DOCKERFILE_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;./deploy/docker/Dockerfile-build-ubuntu&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">IMAGE_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qgc-ubuntu-docker&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SOURCE_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span><span style="color:#204a87">pwd</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">BUILD_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/build&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CCACHE_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/.ccache&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CMAKE_CACHE_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/.cmake-cache&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Default values</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">REBUILD_IMAGE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CLEAN_BUILD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">FULL_CLEAN</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Interactive mode for cleanup selection</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;QGroundControl Ubuntu 构建选项&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请选择构建模式:&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1) 增量编译 (最快，保留所有缓存) - 日常开发推荐&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2) 完全清理 (删除构建、缓存、Docker镜像) - 30-60分钟&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;3) 重新构建Docker镜像&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;4) 退出&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">while</span> true<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">read</span> -p <span style="color:#4e9a06">&#34;请输入选择 (1-4): &#34;</span> choice
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">$choice</span> in
+</span></span><span style="display:flex;"><span>        1<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;选择: 增量编译&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        2<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;选择: 完全清理&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">FULL_CLEAN</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">CLEAN_BUILD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">REBUILD_IMAGE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        3<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;选择: 重新构建Docker镜像&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">REBUILD_IMAGE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        4<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;退出脚本&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>        *<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;无效选择，请输入 1-4&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">;;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Handle full clean: delete everything</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FULL_CLEAN</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">true</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;执行完全清理...&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Delete build directory</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -d <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;清理构建目录: </span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        sudo rm -rf <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ 构建目录已清理&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Delete ccache</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -d <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CCACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;清理ccache缓存: </span><span style="color:#4e9a06">${</span><span style="color:#000">CCACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        sudo rm -rf <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CCACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ ccache缓存已清理&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Delete cmake cache</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -d <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CMAKE_CACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;清理cmake缓存: </span><span style="color:#4e9a06">${</span><span style="color:#000">CMAKE_CACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        sudo rm -rf <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CMAKE_CACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ cmake缓存已清理&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Delete Docker image</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> docker image inspect <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> &gt; /dev/null 2&gt;<span style="color:#000;font-weight:bold">&amp;</span>1<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;删除Docker镜像: </span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>        docker rmi <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ Docker镜像已删除&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;完全清理完成！&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create cache directories if they don&#39;t exist</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CCACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CMAKE_CACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Check if Docker image exists, build only if needed</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> ! docker image inspect <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> &gt; /dev/null 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$REBUILD_IMAGE</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">true</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$REBUILD_IMAGE</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">true</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;重新构建Docker镜像...&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;构建Docker镜像...&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    docker build --file <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">DOCKERFILE_PATH</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> -t <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ Docker镜像构建完成&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Clean build artifacts only if requested or for QML changes</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$CLEAN_BUILD</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">true</span> <span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FULL_CLEAN</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">false</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;清理构建目录...&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    sudo rm -rf <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>/* 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ 构建目录已清理&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[</span> -d <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$FULL_CLEAN</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">false</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Only clean QML-related artifacts for incremental builds</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;清理QML相关文件...&#34;</span>
+</span></span><span style="display:flex;"><span>    sudo rm -rf <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/qml/&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>                <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>/*.qrc <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>                <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>/*_autogen/ <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>                <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/qgroundcontrol.qrc&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ QML相关文件已清理&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Stop any running QGroundControl instances before building</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">QGC_PROCESSES</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>pgrep -f <span style="color:#4e9a06">&#34;QGroundControl|qgroundcontrol&#34;</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span><span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -n <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">QGC_PROCESSES</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;停止运行中的QGroundControl进程...&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Try graceful shutdown first (SIGTERM)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;发送优雅关闭信号...&#34;</span>
+</span></span><span style="display:flex;"><span>    pkill -TERM -f <span style="color:#4e9a06">&#34;QGroundControl|qgroundcontrol&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Wait up to 5 seconds for graceful shutdown</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;等待进程优雅关闭...&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> i in <span style="color:#ce5c00;font-weight:bold">{</span>1..5<span style="color:#ce5c00;font-weight:bold">}</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> ! pgrep -f <span style="color:#4e9a06">&#34;QGroundControl|qgroundcontrol&#34;</span> &gt; /dev/null 2&gt;<span style="color:#000;font-weight:bold">&amp;</span>1<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ 进程已优雅关闭&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87">break</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;等待中... (</span><span style="color:#000">$i</span><span style="color:#4e9a06">/5)&#34;</span>
+</span></span><span style="display:flex;"><span>        sleep <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Force kill if still running</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> pgrep -f <span style="color:#4e9a06">&#34;QGroundControl|qgroundcontrol&#34;</span> &gt; /dev/null 2&gt;<span style="color:#000;font-weight:bold">&amp;</span>1<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;强制终止进程...&#34;</span>
+</span></span><span style="display:flex;"><span>        pkill -KILL -f <span style="color:#4e9a06">&#34;QGroundControl|qgroundcontrol&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>        sleep <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ 进程已强制终止&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run the Docker container with necessary permissions and volume mounts</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;启动Docker容器进行构建...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker run <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --rm <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --cap-add SYS_ADMIN <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --device /dev/fuse <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --security-opt apparmor:unconfined <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  -v <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOURCE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:/project/source&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  -v <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:/project/build&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  -v <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CCACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:/ccache&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  -v <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CMAKE_CACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">:/cmake-cache&#34;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  -e <span style="color:#000">CCACHE_DIR</span><span style="color:#ce5c00;font-weight:bold">=</span>/ccache <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;修复文件权限...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Fix permissions so you can modify build directory without sudo next time</span>
+</span></span><span style="display:flex;"><span>sudo chown -R <span style="color:#204a87;font-weight:bold">$(</span>id -u<span style="color:#204a87;font-weight:bold">)</span>:<span style="color:#204a87;font-weight:bold">$(</span>id -g<span style="color:#204a87;font-weight:bold">)</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CCACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CMAKE_CACHE_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> 2&gt;/dev/null <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#204a87">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;✓ 构建完成！&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;构建输出位置: </span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;版本验证提示&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;请验证以下信息确保更新内容已实际编译：&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;1. 检查版本号：运行 ./</span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/AppDir/usr/bin/QGroundControl 后查看 帮助→关于QGroundControl&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;2. 检查构建时间：ls -la </span><span style="color:#4e9a06">${</span><span style="color:#000">BUILD_DIR</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/AppDir/usr/bin/QGroundControl&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;3. 确认版本号显示为 5.0.6 且构建时间正确&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;============================================&#34;</span>
+</span></span></code></pre></div><p><strong>对应的 Dockerfile：</strong></p>
+<p>以下是 Ubuntu 构建使用的 <code>Dockerfile-build-ubuntu</code>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">FROM</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">ubuntu:22.04</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ARG</span> <span style="color:#000">QT_VERSION</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">6</span>.8.3<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ARG</span> <span style="color:#000">QT_MODULES</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qtcharts qtlocation qtpositioning qtspeech qt5compat qtmultimedia qtserialport qtimageformats qtshadertools qtconnectivity qtquick3d qtsensors&#34;</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> DEBIAN_FRONTEND noninteractive<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> DISPLAY :99<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> QT_PATH /opt/Qt<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> QT_DESKTOP <span style="color:#000">$QT_PATH</span>/<span style="color:#4e9a06">${</span><span style="color:#000">QT_VERSION</span><span style="color:#4e9a06">}</span>/gcc_64<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">ENV</span> PATH /usr/lib/ccache:<span style="color:#000">$QT_DESKTOP</span>/bin:<span style="color:#000">$PATH</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">COPY</span> tools/setup/install-dependencies-debian.sh /tmp/qt/<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> /tmp/qt/install-dependencies-debian.sh<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">COPY</span> tools/setup/install-qt-debian.sh /tmp/qt/<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> /tmp/qt/install-qt-debian.sh<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> locale-gen en_US.UTF-8 <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> dpkg-reconfigure locales<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">RUN</span> git config --global --add safe.directory /project/source<span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">WORKDIR</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">/project/build</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87;font-weight:bold">CMD</span> cmake -S /project/source -B . -G Ninja <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -DCMAKE_BUILD_TYPE<span style="color:#ce5c00;font-weight:bold">=</span>Release <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -DCMAKE_C_COMPILER_LAUNCHER<span style="color:#ce5c00;font-weight:bold">=</span>ccache <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    -DCMAKE_CXX_COMPILER_LAUNCHER<span style="color:#ce5c00;font-weight:bold">=</span>ccache <span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    cmake --build . --target all --config Release <span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>    cmake --install . --config Release<span style="color:#a40000">
+</span></span></span></code></pre></div><p><strong>脚本特点：</strong></p>
+<ul>
+<li>交互式构建模式选择</li>
+<li>智能缓存管理（ccache + cmake cache）</li>
+<li>自动进程管理（优雅关闭运行中的QGC）</li>
+<li>QML文件增量清理</li>
+<li>完整的权限修复</li>
+</ul>
+<h3 id="43-脚本使用说明">4.3 脚本使用说明</h3>
+<p><strong>Android 脚本使用：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 给脚本执行权限</span>
+</span></span><span style="display:flex;"><span>chmod +x run-docker-android.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 运行脚本</span>
+</span></span><span style="display:flex;"><span>./run-docker-android.sh
+</span></span></code></pre></div><p><strong>Ubuntu 脚本使用：</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 给脚本执行权限</span>
+</span></span><span style="display:flex;"><span>chmod +x run-docker-ubuntu.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 运行脚本</span>
+</span></span><span style="display:flex;"><span>./run-docker-ubuntu.sh
+</span></span></code></pre></div><hr>
+<h2 id="5-参考文档">5. 参考文档</h2>
+<ul>
+<li><a href="https://docs.qgroundcontrol.com/Stable_V5.0/zh/qgc-dev-guide/getting_started/container.html">QGC 官方容器构建指南</a></li>
+<li><a href="https://developer.android.com/studio/build/building-cmdline">Android 开发者文档</a></li>
+<li><a href="https://doc.qt.io/qt-6/android-getting-started.html">Qt for Android 文档</a></li>
+</ul>
+
+  
+  
+</div>
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Mail" aria-label="Mail">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Mail">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wechat" aria-label="Wechat">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="Wechat">
+      <i class="fab fa-weixin"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="QQ" aria-label="QQ">
+    <a target="_blank" rel="noopener" href="/about/" aria-label="QQ">
+      <i class="fab fa-qq"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Wallhaven" aria-label="Wallhaven">
+    <a target="_blank" rel="noopener" href="https://wallhaven.cc/user/pinyinjj/favorites/1954116" aria-label="Wallhaven">
+      <i class="fa fa-image"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Docsy &amp; Template" aria-label="Docsy &amp; Template">
+    <a target="_blank" rel="noopener" href="https://github.com/google/docsy" aria-label="Docsy &amp; Template">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2018&ndash;2025
+    <span class="td-footer__authors">Docsy Authors | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/Docsy/js/main.min.82a76d84ad7dfed9e08be53d2fd3eecc4f8379825944028e9e65df3e85ad29ca.js" integrity="sha256-gqdthK19/tngi&#43;U9L9PuzE&#43;DeYJZRAKOnmXfPoWtKco=" crossorigin="anonymous"></script>
+<script defer src="/Docsy/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/Docsy/js/tabpane-persist.js'></script>
+
+  </body>
+</html>
