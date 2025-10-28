@@ -27,12 +27,6 @@ weight: 10
 
 ## 2. Termux 安装和配置
 
-执行环境约定：
-
-- [Termux] 表示在手机 Termux 终端中执行
-- [PC] 表示在电脑侧执行（Linux/macOS/Windows 任一均可）
-- 未特别标注的命令，默认在 [Termux] 中执行
-
 ### 安装 Termux
 
 **方法一：通过应用商店**
@@ -54,10 +48,11 @@ adb install -r termux.apk
 adb shell pm list packages | grep termux
 ```
 
-### ADB 连接与 scrcpy 远程桌面（[PC] 执行）
+### ADB 连接与 scrcpy 远程桌面
 
 **USB 连接（推荐）**
 ```bash
+# 在开发机上执行
 # 1. 使用 USB 线连接设备
 # 2. 在设备上启用 USB 调试
 # 3. 检查连接
@@ -71,6 +66,7 @@ scrcpy
 **无线 ADB 连接**
 
 ```bash
+# 在开发机上执行
 # 1. 确保两个设备在同一网段下，通过 USB 连接并启用无线调试
 adb tcpip 5555
 
@@ -83,10 +79,11 @@ adb devices
 scrcpy
 ```
 
-### 基础环境配置（[Termux] 执行）
+### 基础环境配置
 
 #### 1. 更新包管理器
 ```bash
+# 在 Termux 中
 # 更新包列表和系统
 pkg update && pkg upgrade
 
@@ -96,6 +93,7 @@ pkg clean
 
 #### 2. 一键安装所有依赖
 ```bash
+# 在 Termux 中
 # 安装核心依赖（纯 Python 项目，无需编译工具）
 pkg install -y python python-pip git curl wget openssh iproute2 net-tools htop procps rsync tree neofetch android-tools rust clang make pkg-config
 
@@ -103,21 +101,23 @@ pkg install -y python python-pip git curl wget openssh iproute2 net-tools htop p
 
 ## 3. 项目部署
 
-### 克隆项目（[Termux] 执行）
+### 克隆项目
 ```bash
 # 在 Termux 中
 git clone url-to-project
 cd url-to-project
 ```
 
-### 安装依赖（[Termux] 执行）
+### 安装依赖
 ```bash
+# 在 Termux 中
 # 安装 Python 依赖
 pip install -r requirements.txt
 ```
 
-### 运行项目（[Termux] 执行）
+### 运行项目
 ```bash
+# 在 Termux 中
 # 后台运行
 nohup python start_backend.py > drone.log 2>&1 &
 
@@ -126,8 +126,9 @@ ps aux | grep python
 curl http://localhost:8000/health
 ```
 
-### 文件传输（[PC] 执行）
+### 文件传输
 ```bash
+# 在开发机上执行
 # 通过 ADB 传输文件
 adb push local_file.txt /data/data/com.termux/files/home/
 
