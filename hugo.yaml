@@ -67,6 +67,8 @@ languages:
     contentDir: content/en
     params:
       description: Technical sharing and experience recording.
+      time_format_default: "January 2, 2006"
+      time_format_blog: "January 2, 2006"
 
 markup:
   goldmark:
