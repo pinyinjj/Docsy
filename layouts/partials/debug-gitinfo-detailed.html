@@ -1,0 +1,48 @@
+<!-- Detailed GitInfo Debug Information -->
+<div style="border: 3px solid #007bff; padding: 20px; margin: 20px 0; background: #f8f9fa; color: #000;">
+  <h3 style="color: #007bff; margin-top: 0;">🔍 GitInfo 详细调试信息</h3>
+  
+  <div style="background: white; padding: 15px; margin: 10px 0; border-left: 4px solid #28a745;">
+    <h4 style="margin-top: 0;">基本信息</h4>
+    <p><strong>文件路径:</strong> {{ .File.Path }}</p>
+    <p><strong>GitInfo 对象存在:</strong> {{ if .GitInfo }}<span style="color: green; font-weight: bold;">✅ YES</span>{{ else }}<span style="color: red; font-weight: bold;">❌ NO</span>{{ end }}</p>
+    <p><strong>Lastmod 值:</strong> {{ .Lastmod }}</p>
+    <p><strong>Page Meta 条件检查:</strong> {{ if or .GitInfo .Lastmod .Params.lastmod }}<span style="color: green;">✅ TRUE</span>{{ else }}<span style="color: red;">❌ FALSE</span>{{ end }}</p>
+  </div>
+
+  {{ if .GitInfo }}
+  <div style="background: white; padding: 15px; margin: 10px 0; border-left: 4px solid #28a745;">
+    <h4 style="margin-top: 0;">Git 提交信息（自动获取）</h4>
+    <p><strong>完整哈希:</strong> <code>{{ .GitInfo.Hash }}</code></p>
+    <p><strong>缩写哈希:</strong> <code>{{ .GitInfo.AbbreviatedHash }}</code></p>
+    <p><strong>提交消息:</strong> {{ .GitInfo.Subject }}</p>
+    <p><strong>作者日期:</strong> {{ .GitInfo.AuthorDate }}</p>
+    <p><strong>提交者名称:</strong> {{ .GitInfo.AuthorName }}</p>
+    <p><strong>提交者邮箱:</strong> {{ .GitInfo.AuthorEmail }}</p>
+    
+    {{ $commit_url := printf "%s/commit/%s" .Site.Params.github_repo .GitInfo.Hash }}
+    <p><strong>GitHub链接:</strong> <a href="{{ $commit_url }}" target="_blank" style="color: #007bff;">{{ $commit_url }}</a></p>
+  </div>
+  {{ else }}
+  <div style="background: #fff3cd; padding: 15px; margin: 10px 0; border-left: 4px solid #ffc107;">
+    <h4 style="margin-top: 0;">⚠️ GitInfo 未获取</h4>
+    <p>可能的原因：</p>
+    <ul>
+      <li>Hugo 未使用 <code>--enableGitInfo</code> 参数</li>
+      <li>不在 Git 仓库中运行</li>
+      <li>文件未被 Git 追踪</li>
+      <li>Git 历史未获取（需要 fetch-depth: 0）</li>
+    </ul>
+  </div>
+  {{ end }}
+
+  <div style="background: white; padding: 15px; margin: 10px 0; border-left: 4px solid #6c757d;">
+    <h4 style="margin-top: 0;">配置信息</h4>
+    <p><strong>GitHub 仓库:</strong> {{ .Site.Params.github_repo }}</p>
+    <p><strong>GitHub 分支:</strong> {{ .Site.Params.github_branch | default "main" }}</p>
+    <p><strong>日期格式:</strong> {{ .Site.Params.time_format_default | default "January 2, 2006" }}</p>
+    <p><strong>Hugo 版本:</strong> {{ hugo.Version }}</p>
+    <p><strong>构建环境:</strong> {{ hugo.Environment }}</p>
+  </div>
+</div>
+

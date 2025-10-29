@@ -62,6 +62,9 @@ body::before {
 
   <hr class="my-4">
   
+  {{ if eq .File.BaseFileName "test-gitinfo" }}
+    {{ partial "debug-gitinfo-detailed.html" . }}
+  {{ end }}
 
   
   {{ with .Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
