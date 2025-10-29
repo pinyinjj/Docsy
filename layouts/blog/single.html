@@ -62,7 +62,7 @@ body::before {
 
   <hr class="my-4">
   
-  {{ if eq .File.BaseFileName "test-gitinfo" }}
+  {{ if or (eq .File.BaseFileName "test-gitinfo") (eq .File.BaseFileName "test-gitinfo-subfolder") }}
     {{ partial "debug-gitinfo-detailed.html" . }}
   {{ end }}
 
