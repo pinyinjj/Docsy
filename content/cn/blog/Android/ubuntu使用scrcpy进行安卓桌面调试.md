@@ -739,5 +739,3 @@ scrcpy --encoder h264
 - [scrcpy官方文档](https://github.com/Genymobile/scrcpy)
 - [Android ADB官方文档](https://developer.android.com/studio/command-line/adb)
 - [Ubuntu Android开发环境配置](https://developer.android.com/studio/install)
-
-

@@ -220,5 +220,3 @@ Markdown 报告包含：总体评分 / 指标表格 / 问题文件 / 改进建�
 - [fuck-u-code GitHub 仓库](https://github.com/Done-0/fuck-u-code)
 - [Go 语言官方文档](https://golang.org/doc/)
 - [Docker 官方文档](https://docs.docker.com/)
-
-

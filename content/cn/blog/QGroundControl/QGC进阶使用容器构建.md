@@ -1041,4 +1041,3 @@ chmod +x run-docker-ubuntu.sh
 - [QGC 官方容器构建指南](https://docs.qgroundcontrol.com/Stable_V5.0/zh/qgc-dev-guide/getting_started/container.html)
 - [Android 开发者文档](https://developer.android.com/studio/build/building-cmdline)
 - [Qt for Android 文档](https://doc.qt.io/qt-6/android-getting-started.html)
-
