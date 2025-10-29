@@ -7,8 +7,6 @@ categories: ["技术文档"]
 weight: 10
 ---
 
-# 在Ubuntu使用scrcpy进行Android桌面调试
-
 scrcpy是一个开源的Android屏幕镜像工具，允许用户通过USB或WiFi将Android设备屏幕镜像到Ubuntu桌面，并支持鼠标键盘控制、文件传输、剪贴板同步等功能。
 
 ## 1. 环境准备

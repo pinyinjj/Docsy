@@ -7,8 +7,6 @@ categories: ["技术文档"]
 weight: 10
 ---
 
-# 使用 Termux 在 Android 运行 Python 源码
-
 ## 1. 为什么是 Termux
 
 - 构建原生 Android App 成本高：需要完整的 SDK/NDK、Gradle、签名、打包与多 ABI 适配，调试周期长。
@@ -160,6 +158,8 @@ Termius 是一款跨平台的 SSH 客户端，适合管理 Termux 主机：
 3) 使用 SFTP：
    - 直接进入 `~/path-to-project/`，上传/下载 `requirements.txt`、`log.log` 等文件。
    - 可视化查看目录结构，便于排查路径与权限问题。
+
+---
 
 ## 参考文档
 
