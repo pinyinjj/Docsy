@@ -60,8 +60,8 @@ draft: false
   - MAVLink
 
 ### 文件命名与 slug
-- 文件名尽量使用 ASCII 或稳定中文 slug，保持简洁；避免空格与特殊字符。
-- 若使用中文 slug，确保站点已有适配逻辑（本项目有 `layouts/partials/chinese-slug.html`）。
+- 文件名必须使用英文 ASCII，保持简洁；禁止空格与特殊字符；禁止中文。
+- 推荐使用英文小写-kebab-case 命名（仅 ASCII，使用 `-` 连接，禁止空格）。
 
 ### 日期与权重
 - `date` 使用文档首发日期；需要列表排序时使用 `weight`，数值越小越靠前。
