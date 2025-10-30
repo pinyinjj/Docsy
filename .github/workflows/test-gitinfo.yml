@@ -1,0 +1,70 @@
+name: Test GitInfo
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-gitinfo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整Git历史
+      
+      - name: Check Git repository
+        run: |
+          echo "=== Current Branch ==="
+          git branch
+          echo ""
+          echo "=== Last 5 commits ==="
+          git log --oneline -5
+          echo ""
+          echo "=== Test specific file ==="
+          git log --format="%H %ai %s" -1 "content/cn/blog/MAVLink/MAVLink-基于Pymavlink的任务规划实现.md"
+          echo ""
+          echo "=== Git status ==="
+          git status
+      
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.146.0'
+          extended: true
+      
+      - name: Check Hugo version
+        run: hugo version
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build with GitInfo
+        run: |
+          echo "=== Building with --enableGitInfo ==="
+          hugo --enableGitInfo --verbose 2>&1 | head -50
+          echo ""
+          echo "=== Checking generated files ==="
+          ls -la public/ | head -10
+      
+      - name: Check GitInfo in HTML
+        run: |
+          echo "=== Searching for GitInfo status ==="
+          echo "Files with GitInfo=YES:"
+          grep -r "GitInfo=YES" public/ | wc -l
+          grep -r "GitInfo=YES" public/ | head -3
+          echo ""
+          echo "Files with GitInfo=NO:"
+          grep -r "GitInfo=NO" public/ | wc -l
+          grep -r "GitInfo=NO" public/ | head -3
+          echo ""
+          echo "=== Sample MAVLink article ==="
+          find public/ -name "*mavlink*任务规划*" -o -name "*mavlink*pymavlink*" | head -1 | xargs grep -A 2 "GitInfo=" || echo "File not found"
+
