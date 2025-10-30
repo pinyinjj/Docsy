@@ -1,0 +1,26 @@
+{{/* Last modified block with Git commit link. Fallback to front matter .Params.gitinfo.hash when .GitInfo is missing. */}}
+{{ $hasGit := .GitInfo }}
+{{ $fmGit := .Params.gitinfo }}
+{{ if or $hasGit $fmGit.hash }}
+<div class="last-modified my-2">
+  <small>
+    {{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006/01/02" }} :
+    {{ if $hasGit }}
+      {{ with site.Params.github_repo }}
+        <a href="{{ . }}/commit/{{ $.GitInfo.Hash }}" target="_blank" rel="noopener">{{ slicestr $.GitInfo.Hash 0 7 }}</a>
+      {{ else }}
+        {{ slicestr $.GitInfo.Hash 0 7 }}
+      {{ end }}
+    {{ else if $fmGit.hash }}
+      {{ $hash := $fmGit.hash }}
+      {{ with site.Params.github_repo }}
+        <a href="{{ . }}/commit/{{ $hash }}" target="_blank" rel="noopener">{{ slicestr $hash 0 7 }}</a>
+      {{ else }}
+        {{ slicestr $hash 0 7 }}
+      {{ end }}
+    {{ end }}
+  </small>
+  </div>
+{{ end }}
+
+
