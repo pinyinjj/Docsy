@@ -44,8 +44,11 @@ jobs:
           echo "Branch: $(git rev-parse --abbrev-ref HEAD)"
           git log -1 --pretty=oneline
           git describe --always --dirty --tags || true
+          echo "Check content file commit (if tracked):"
+          git log -1 --pretty=oneline -- ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
+          git status --porcelain ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
       
-      - run: hugo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
+      - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify --log --verbose
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
