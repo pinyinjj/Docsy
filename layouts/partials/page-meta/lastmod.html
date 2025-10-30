@@ -3,23 +3,24 @@
 {{ $fmGit := .Params.gitinfo }}
 {{ if or $hasGit $fmGit.hash }}
 <div class="last-modified my-2">
-  <small>
+  
     {{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006/01/02" }} :
     {{ if $hasGit }}
       {{ with site.Params.github_repo }}
-        <a href="{{ . }}/commit/{{ $.GitInfo.Hash }}" target="_blank" rel="noopener">{{ slicestr $.GitInfo.Hash 0 7 }}</a>
+        <a href="{{ . }}/commit/{{ $.GitInfo.Hash }}" target="_blank" rel="noopener">{{ $.GitInfo.Subject }}</a>
       {{ else }}
-        {{ slicestr $.GitInfo.Hash 0 7 }}
+        {{ $.GitInfo.Subject }}
       {{ end }}
     {{ else if $fmGit.hash }}
       {{ $hash := $fmGit.hash }}
+      {{ $message := $fmGit.message }}
       {{ with site.Params.github_repo }}
-        <a href="{{ . }}/commit/{{ $hash }}" target="_blank" rel="noopener">{{ slicestr $hash 0 7 }}</a>
+        <a href="{{ . }}/commit/{{ $hash }}" target="_blank" rel="noopener">{{ if $message }}{{ $message }}{{ else }}{{ slicestr $hash 0 7 }}{{ end }}</a>
       {{ else }}
-        {{ slicestr $hash 0 7 }}
+        {{ if $message }}{{ $message }}{{ else }}{{ slicestr $hash 0 7 }}{{ end }}
       {{ end }}
     {{ end }}
-  </small>
+  
   </div>
 {{ else }}
 <!-- lastmod: no GitInfo and no front matter gitinfo -->

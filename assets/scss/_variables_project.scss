@@ -785,8 +785,7 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
 .taxonomy-title,
 h5.taxonomy-title,
 .td-content .taxonomy-title {
-    border-bottom: $consistent-white-border !important;
-    color: white !important;
+    color: rgba(0, 0, 0, 0.622) !important;
     font-weight: 700;
     padding-bottom: 1rem; /* consistent spacing */
     margin-bottom: 1rem;
@@ -918,6 +917,11 @@ h5.taxonomy-title,
     padding-top: 0 !important;
     border-top: none !important;
     color: inherit !important;
+}
+
+/* Hide page meta block globally (view/edit/child/issue/print) */
+.td-page-meta {
+    display: none !important;
 }
 
 .td-content .td-page-meta__lastmod,
