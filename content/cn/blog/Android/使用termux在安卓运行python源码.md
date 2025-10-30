@@ -19,7 +19,7 @@ weight: 10
 - 环境差异：Termux 基于 Android/Linux 用户空间，和标准 Linux 发行版存在差异，某些系统调用/路径不可用。
 - Python 包兼容性：依赖原生扩展（C/C++/Fortran）的包在 Termux 上可能无法编译或运行（如依赖特定 glibc/系统接口）。
   - 优先选择纯 Python 包或提供 aarch64 预编译 wheels 的发行版。
-  - 必要时安装 `clang`、`rust`、`make`、`pkg-config` 再尝试编译，但仍可能失败。
+  - 必要时安装 `clang`,`rust`,`make`,`pkg-config` 再尝试编译，但仍可能失败。
 - 官方不保证兼容：部分上游项目明确不支持 Termux/Android 平台，出现问题时官方可能不修复。
 - 版本固定：建议在 `requirements.txt` 固定依赖版本，避免因上游升级导致不可预期的构建/运行失败。
 
