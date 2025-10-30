@@ -7,8 +7,6 @@ categories: ["技术文档"]
 weight: 10
 ---
 
-
-
 ## 1. 概述
 
 本文档使用MAVLink协议和pymavlink库进行航点发送，具有以下特点：
