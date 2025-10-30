@@ -112,25 +112,7 @@ client.enableApiControl(False)
 ### 1.4 视觉感知与图像采集
 
 - 相机与类型
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID "0"~"4").
-=======
-  - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID `"0"~"4"`)。
->>>>>>> Stashed changes
-=======
-  - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID `"0"~"4"`)。
->>>>>>> Stashed changes
-=======
-  - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID `"0"~"4"`)。
->>>>>>> Stashed changes
-=======
-  - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID `"0"~"4"`)。
->>>>>>> Stashed changes
-
   - 类型：`Scene`、`DepthPlanar`、`DepthPerspective`、`DepthVis`、`Segmentation`、`SurfaceNormals`、`Infrared` 等。
 
 - 采集示例（OpenCV + Matplotlib）
@@ -169,39 +151,11 @@ client.armDisarm(False); client.enableApiControl(False)
 
     - Windows：`C:\Users\<用户名>\Documents\AirSim\settings.json`
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    - 重启模拟器生效。
-=======
   - 重启模拟器生效。
->>>>>>> Stashed changes
-=======
-  - 重启模拟器生效。
->>>>>>> Stashed changes
-=======
-  - 重启模拟器生效。
->>>>>>> Stashed changes
-=======
-  - 重启模拟器生效。
->>>>>>> Stashed changes
 
 - 控制要点
 
   - 在 API 调用中通过 `vehicle_name="UAV1"`（或 `"UAV2"`, `"UAV3"`）区分不同无人机。
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
   - 示例（并发起飞/定高）：
 
 ```python
@@ -220,16 +174,7 @@ for i in range(3):
 - 注意事项
 
   - 名称需与 `settings.json` 保持一致；多机并发建议为每机建立独立控制流程。
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
  
 ### 1.6 快速上手流程
 
@@ -248,20 +193,4 @@ for i in range(3):
 
 ## 2. 指令封装和OpenAI SDK调用
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 ...（内容同原文，略） ...
-=======
-...（内容同原文，略） ...
->>>>>>> Stashed changes
-=======
-...（内容同原文，略） ...
->>>>>>> Stashed changes
-=======
-...（内容同原文，略） ...
->>>>>>> Stashed changes
-=======
-...（内容同原文，略） ...
->>>>>>> Stashed changes
