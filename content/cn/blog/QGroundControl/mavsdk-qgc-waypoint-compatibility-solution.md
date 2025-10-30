@@ -68,8 +68,11 @@ MAVSDK-Python 的 MissionItem 数据结构与 QGC 的航点解析机制之间存
 ### 2.1 MAVSDK-Python MissionItem 数据结构
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ...（大段内容略，与本地一致） ...
 =======
+=======
+>>>>>>> Stashed changes
 MAVSDK-Python 的 MissionItem 是航点任务的核心数据结构，包含了无人机执行任务所需的所有信息：
 
 #### 核心字段
@@ -533,4 +536,7 @@ def validate_parameters(self, item: MissionItem) -> MissionItem:
     
     return item
 ```
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
