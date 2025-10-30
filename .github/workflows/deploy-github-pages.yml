@@ -38,8 +38,25 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
+      - name: Debug Git Info
+        run: |
+          echo "=== Git Status ==="
+          git status
+          echo "=== Git Log (last 3 commits) ==="
+          git log --oneline -3
+          echo "=== Test file Git info ==="
+          git log --format="%H %ai %s" -1 "content/cn/blog/MAVLink/MAVLink-基于Pymavlink的任务规划实现.md" || echo "File not found or no history"
+      
       - run: npm install
-      - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
+      
+      - name: Build with Hugo
+        run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify --verbose 2>&1 | tee hugo-build.log
+      
+      - name: Check GitInfo in build
+        run: |
+          echo "=== Checking for GitInfo in generated HTML ==="
+          grep -r "GitInfo=YES" public/ | head -5 || echo "No GitInfo=YES found"
+          grep -r "GitInfo=NO" public/ | head -5 || echo "No GitInfo=NO found"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
