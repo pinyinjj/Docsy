@@ -30,27 +30,28 @@ weight: 10
 - **多航点批量上传**: 一次性上传多个航点，具有原子性
 
 ### 2.3 端口兼容性
-- **完全兼容**: 可以与MAVSDK-Python同时使用14540端口
-- **标准端口**: 14540是MAVLink标准UDP端口
-- **多应用支持**: QGC、MAVSDK-Python、pymavlink可以同时连接
+- **一端口一应用**: 一个UDP端口通常只能被一个应用独占接收使用
+- **多应用并行**: 为每个应用分配不同端口，例如14540、14550，或自定义UDP/TCP端口
+- **示例建议**: 将`QGroundControl`使用一个端口，`MAVSDK-Python`与`pymavlink`分别使用其他端口
 
 #### 连接配置
 ```python
-# MAVSDK-Python 连接
-System().connect(system_address="udp://:14540")
+# QGroundControl 通常使用一个端口（示例：14540）
+# MAVSDK-Python 连接使用另一个端口（示例：14550）
+System().connect(system_address="udp://:14550")
 
-# pymavlink 连接 (与MAVSDK-Python共用)
+# pymavlink 再使用第三个端口（示例：14600，或任意未占用端口）
 PyMAVLinkWrapper("drone1")
 
-# 两者可以同时工作！
+# 关键点：不同应用使用不同UDP/TCP端口，避免端口冲突
 ```
 
 #### 实际使用场景
 ```bash
-PX4飞控 ←→ 14540端口 ←→ 多个应用
-                    ├── QGroundControl
-                    ├── MAVSDK-Python应用  
-                    └── pymavlink应用
+PX4飞控
+  ├─ 14540/udp ←→ QGroundControl
+  ├─ 14550/udp ←→ MAVSDK-Python应用
+  └─ 14600/udp ←→ pymavlink应用（或用户自定义端口/使用tcp）
 ```
 
 ## 3. MAVLink 协议流程
@@ -314,6 +315,7 @@ pip install pymavlink
 10. **原子性**: 多航点上传具有原子性，全部成功或全部失败
 11. **性能**: 多航点上传比单航点上传更高效
 12. **连接字符串**: 默认使用`udp:127.0.0.1:14540`，可根据需要修改
+13. **端口独占**: 一个UDP端口通常只能被一个应用接收使用；多应用并行时请为每个应用分配不同端口（例如：QGC→14540，MAVSDK→14550，pymavlink→14600），或为其中一部分应用使用TCP端口。
 
 ## 10. 与 QGC 兼容性
 
@@ -343,3 +345,13 @@ pip install pymavlink
 | 1 | `MAV_FRAME_LOCAL_NED` | 本地NED任务 |
 | 6 | `MAV_FRAME_GLOBAL_INT` | 高精度全球任务 |
 | 7 | `MAV_FRAME_GLOBAL_RELATIVE_ALT_INT` | 高精度相对高度任务 |
+
+
+---
+
+## 参考文档
+
+- [PX4 MAVLink 通信概述（MAVLink on PX4）](https://docs.px4.io/main/en/flight_stack/communications/mavlink.html)
+- [QGroundControl 通信设置（UDP 连接）](https://docs.qgroundcontrol.com/master/en/SettingsView/CommLinks.html)
+- [MAVSDK 连接URL格式（System.connect）](https://mavsdk.mavlink.io/main/en/cpp/api_reference/classmavsdk_1_1_system.html#a2fc7c7d1f2a6b6baa5d2b9ed8a16b9c9)
+- [pymavlink 文档与连接示例](https://www.ardusub.com/developers/pymavlink.html)
