@@ -62,6 +62,14 @@ body::before {
 
   <hr class="my-4">
   
+  <!-- 临时调试：显示所有页面的GitInfo状态 -->
+  <div style="background: #fff3cd; padding: 10px; margin: 10px 0; border: 2px solid #ffc107;">
+    <strong>调试:</strong> GitInfo={{ if .GitInfo }}YES{{ else }}NO{{ end }} | 
+    Lastmod={{ .Lastmod.Format "2006-01-02 15:04:05" }} | 
+    File={{ .File.Path }}
+    {{ if .GitInfo }}| Hash={{ .GitInfo.AbbreviatedHash }}{{ end }}
+  </div>
+  
   {{ if or (eq .File.BaseFileName "test-gitinfo") (eq .File.BaseFileName "test-gitinfo-subfolder") }}
     {{ partial "debug-gitinfo-detailed.html" . }}
   {{ end }}
