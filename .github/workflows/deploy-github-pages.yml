@@ -48,7 +48,7 @@ jobs:
           git log -1 --pretty=oneline -- ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
           git status --porcelain ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
       
-      - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify --log --verbose
+      - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
