@@ -22,6 +22,8 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -45,6 +47,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }} # <-- specify same branch as above here
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
           force_orphan: true
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
