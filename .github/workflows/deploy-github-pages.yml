@@ -39,6 +39,11 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       
       - run: npm install
+      - name: Show latest commit and branch
+        run: |
+          echo "Branch: $(git rev-parse --abbrev-ref HEAD)"
+          git log -1 --pretty=oneline
+          git describe --always --dirty --tags || true
       
       - run: hugo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
 
