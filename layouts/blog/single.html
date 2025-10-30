@@ -59,6 +59,21 @@ body::before {
     </header>
   {{ end }}
 
+  {{ if or .GitInfo }}
+  <div class="last-modified my-2">
+    <small>
+      {{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006/01/02" }} :
+      {{ if .GitInfo }}
+        {{ with site.Params.github_repo }}
+          <a href="{{ . }}/commit/{{ $.GitInfo.Hash }}" target="_blank" rel="noopener">{{ slicestr $.GitInfo.Hash 0 7 }}</a>
+        {{ else }}
+          {{ slicestr $.GitInfo.Hash 0 7 }}
+        {{ end }}
+      {{ end }}
+    </small>
+  </div>
+  {{ end }}
+
   <hr class="my-4">
   
   {{ with .Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
