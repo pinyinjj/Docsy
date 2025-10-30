@@ -106,6 +106,8 @@ client.enableApiControl(False)
 - 注意事项
 
   - 异步 API 多为 `...Async()`，需 `.join()` 串联确保动作顺序。
+
+  - 坐标系为 NED：`moveToZAsync(-3, ...)` 表示上升到 3 米（Z 取负）。
   
 ### 1.4 视觉感知与图像采集
 
@@ -141,6 +143,8 @@ client.armDisarm(False); client.enableApiControl(False)
 
   - 并发：多线程/多进程均可，但每个线程/进程需独立创建 `MultirotorClient`，不可共享。
   
+  - 显示：Notebook 用 Matplotlib；桌面窗口显示可用 `a_cv2_imshow_thread`。
+  
 ### 1.5 多无人机控制
 
 - 多机配置
@@ -149,30 +153,11 @@ client.armDisarm(False); client.enableApiControl(False)
 
     - Windows：`C:\Users\<用户名>\Documents\AirSim\settings.json`
 
-  - 重启模拟器生效。
+    - 重启模拟器生效。
 
 - 控制要点
 
   - 在 API 调用中通过 `vehicle_name="UAV1"`（或 `"UAV2"`, `"UAV3"`）区分不同无人机。
-  
-  - 示例（并发起飞/定高）：
-
-```python
-client = airsim.MultirotorClient()
-for i in range(3):
-    name = f"UAV{i+1}"
-    client.enableApiControl(True, name)
-    client.armDisarm(True, name)
-    client.takeoffAsync(vehicle_name=name)
-
-for i in range(3):
-    name = f"UAV{i+1}"
-    client.moveToZAsync(-3, 1, vehicle_name=name)
-```
-
-- 注意事项
-
-  - 名称需与 `settings.json` 保持一致；多机并发建议为每机建立独立控制流程。
  
 ### 1.6 快速上手流程
 
