@@ -437,19 +437,6 @@ adb start-server
 ls -la /dev/bus/usb/
 ```
 
-**问题2：权限被拒绝**
-```bash
-# 添加udev规则
-sudo nano /etc/udev/rules.d/51-android.rules
-
-# 添加以下内容（替换VENDOR_ID）
-SUBSYSTEM=="usb", ATTR{idVendor}=="VENDOR_ID", MODE="0666", GROUP="plugdev"
-
-# 重新加载规则
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-```
-
 #### WiFi连接问题
 
 **问题1：无法发现设备**
@@ -646,19 +633,6 @@ adb start-server
 
 # 检查设备权限
 ls -la /dev/bus/usb/
-```
-
-**问题2：权限被拒绝**
-```bash
-# 添加udev规则
-sudo nano /etc/udev/rules.d/51-android.rules
-
-# 添加以下内容（替换VENDOR_ID）
-SUBSYSTEM=="usb", ATTR{idVendor}=="VENDOR_ID", MODE="0666", GROUP="plugdev"
-
-# 重新加载规则
-sudo udevadm control --reload-rules
-sudo udevadm trigger
 ```
 
 **问题3：scrcpy启动失败**

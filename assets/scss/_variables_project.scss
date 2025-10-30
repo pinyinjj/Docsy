@@ -147,6 +147,57 @@ body::before {
     border-radius: 4px !important;
 }
 
+/* Blog posts: glider-like highlight for current reading ToC item */
+.td-page.td-blog .td-toc #TableOfContents a {
+    position: relative;
+    border-radius: 99px;
+    padding: 0.2rem 0.5rem;
+}
+
+.td-page.td-blog .td-toc #TableOfContents a.active,
+.td-page.td-blog .td-toc #TableOfContents li.active > a,
+.td-page.td-blog .td-toc #TableOfContents a[aria-current="true"] {
+    color: #185ee0 !important;
+    background-color: transparent !important; /* remove default background, glider handles highlight */
+}
+
+.td-page.td-blog .td-toc #TableOfContents a,
+.td-page.td-blog .td-toc #TableOfContents a.active {
+    transition: color 0.15s ease-in, background-color 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+
+/* Nested items slightly smaller but same highlight behavior */
+.td-page.td-blog .td-toc #TableOfContents ul ul a {
+    font-size: 0.9em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 99px;
+}
+
+/* Glider container and element */
+.td-page.td-blog .td-toc {
+    position: relative;
+}
+
+.td-page.td-blog .td-toc .toc-glider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px; /* will be updated by JS */
+    background-color: #e6eef9;
+    border-radius: 99px;
+    box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+    transition: transform 0.25s ease-out, height 0.15s ease-out;
+    z-index: 1;
+}
+
+/* Ensure ToC links sit above the glider */
+.td-page.td-blog .td-toc #TableOfContents a {
+    position: relative;
+    z-index: 2;
+    background: transparent !important;
+}
+
 /* Force white text for right TOC on non-blog pages */
 .td-page:not(.td-blog) .td-toc,
 .td-page:not(.td-blog) .td-toc *,
