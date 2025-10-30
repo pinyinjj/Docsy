@@ -67,4 +67,470 @@ MAVSDK-Python 的 MissionItem 数据结构与 QGC 的航点解析机制之间存
 
 ### 2.1 MAVSDK-Python MissionItem 数据结构
 
+<<<<<<< Updated upstream
 ...（大段内容略，与本地一致） ...
+=======
+MAVSDK-Python 的 MissionItem 是航点任务的核心数据结构，包含了无人机执行任务所需的所有信息：
+
+#### 核心字段
+
+```python
+class MissionItem:
+    # 位置信息
+    latitude_deg: float          # 纬度（度，范围：-90 到 +90）
+    longitude_deg: float        # 经度（度，范围：-180 到 +180）
+    relative_altitude_m: float  # 相对起飞高度（米）
+    
+    # 飞行参数
+    speed_m_s: float           # 飞行速度（米/秒）
+    is_fly_through: bool       # 是否飞越航点（True=飞越，False=停留）
+    acceptance_radius_m: float # 航点接受半径（米）
+    yaw_deg: float            # 偏航角（度）
+    
+    # 云台控制
+    gimbal_pitch_deg: float   # 云台俯仰角（度）
+    gimbal_yaw_deg: float     # 云台偏航角（度）
+    
+    # 相机控制
+    camera_action: CameraAction           # 相机动作
+    camera_photo_interval_s: float       # 拍照间隔（秒）
+    camera_photo_distance_m: float       # 拍照距离（米）
+    
+    # 飞行控制
+    vehicle_action: VehicleAction        # 飞行器动作
+    loiter_time_s: float                 # 盘旋时间（秒）
+```
+
+#### 枚举类型
+
+```python
+class CameraAction(Enum):
+    NONE = "NONE"                    # 无动作
+    TAKE_PHOTO = "TAKE_PHOTO"        # 拍照
+    START_VIDEO = "START_VIDEO"      # 开始录像
+    STOP_VIDEO = "STOP_VIDEO"        # 停止录像
+    START_PHOTO_INTERVAL = "START_PHOTO_INTERVAL"  # 开始定时拍照
+    STOP_PHOTO_INTERVAL = "STOP_PHOTO_INTERVAL"    # 停止定时拍照
+    START_PHOTO_DISTANCE = "START_PHOTO_DISTANCE"  # 开始距离拍照
+    STOP_PHOTO_DISTANCE = "STOP_PHOTO_DISTANCE"    # 停止距离拍照
+
+class VehicleAction(Enum):
+    NONE = "NONE"                    # 无动作
+    TAKEOFF = "TAKEOFF"              # 起飞
+    LAND = "LAND"                    # 降落
+    HOLD = "HOLD"                    # 悬停
+    RETURN_TO_LAUNCH = "RETURN_TO_LAUNCH"  # 返航
+    TRANSITION_TO_FW = "TRANSITION_TO_FW"  # 切换到固定翼模式
+    TRANSITION_TO_MC = "TRANSITION_TO_MC"  # 切换到多旋翼模式
+```
+
+### 2.2 MissionRaw 与 Mission 接口的区别
+
+MAVSDK-Python 提供了两个不同的任务接口，它们在数据格式和用途上有重要区别：
+
+#### Mission 接口（高层接口）
+
+```python
+# 使用 Mission 接口
+from mavsdk.mission import MissionItem, MissionPlan
+
+# 创建航点
+mission_item = MissionItem(
+    latitude_deg=47.641627578463165,
+    longitude_deg=122.14016532897949,
+    relative_altitude_m=10.0,
+    speed_m_s=5.0,
+    is_fly_through=True,
+    # ... 其他参数
+)
+
+# 创建任务计划
+mission_plan = MissionPlan([mission_item])
+
+# 上传任务
+await drone.mission.upload_mission(mission_plan)
+```
+
+**特点：**
+- 使用高层数据结构
+- 自动处理数据转换
+- 适合简单的航点任务
+- 与 QGC 兼容性较差
+
+#### MissionRaw 接口（底层接口）
+
+```python
+# 使用 MissionRaw 接口
+from mavsdk.mission_raw import MissionItem as RawMissionItem
+
+# 创建原始航点
+raw_item = RawMissionItem(
+    seq=0,                                    # 序列号
+    frame=6,                                  # 坐标系（MAV_FRAME_GLOBAL_RELATIVE_ALT_INT）
+    command=16,                               # 命令（MAV_CMD_NAV_WAYPOINT）
+    current=1,                                # 当前航点标志
+    autocontinue=1,                           # 自动继续标志
+    param1=0.0,                              # 参数1（盘旋时间）
+    param2=5.0,                              # 参数2（接受半径）
+    param3=0.0,                              # 参数3（未使用）
+    param4=0.0,                              # 参数4（偏航角）
+    x=476416275,                             # 纬度（度*1e7）
+    y=1221401653,                            # 经度（度*1e7）
+    z=10.0,                                  # 高度（米）
+    mission_type=0                           # 任务类型
+)
+
+# 上传原始任务
+await drone.mission_raw.upload_mission([raw_item])
+```
+
+**特点：**
+- 直接使用 MAVLink 消息格式
+- 完全控制数据格式
+- 与 QGC 兼容性更好
+- 需要手动处理数据转换
+
+### 2.3 QGC 航点解析机制
+
+QGroundControl 5.0.6 的航点解析机制存在一些已知问题：
+
+#### 解析流程
+
+```python
+# QGC 接收 MISSION_ITEM_INT 消息
+def parse_mission_item(message):
+    seq = message.seq
+    frame = message.frame
+    command = message.command
+    # ... 解析其他字段
+```
+
+```python
+# QGC 的数据验证逻辑（存在问题）
+if command == MAV_CMD_NAV_WAYPOINT:
+    # 错误：某些条件下会创建额外航点
+    if param1 > 0:  # 问题条件
+        create_additional_waypoint()
+```
+
+- 将解析的航点添加到任务列表
+- 更新界面显示
+- 存储到本地数据库
+
+#### 已知问题
+
+1. **自动航点生成**
+   - QGC 5.0.6 在某些条件下会自动生成额外航点
+   - 这些航点没有正确的序列号
+   - 导致任务执行异常
+
+2. **参数解析错误**
+   - 某些参数被错误解释
+   - 导致航点属性不正确
+   - 影响任务执行逻辑
+
+3. **坐标系转换问题**
+   - 经纬度精度处理不当
+   - 坐标系转换算法错误
+   - 导致航点位置偏移
+
+### 2.4 MAVLink 协议层面的兼容性
+
+#### MISSION_ITEM_INT 消息格式
+
+```python
+# MAVLink MISSION_ITEM_INT 消息结构
+class MissionItemInt:
+    target_system: int      # 目标系统ID
+    target_component: int   # 目标组件ID
+    seq: int               # 序列号
+    frame: int             # 坐标系
+    command: int           # 命令类型
+    current: int           # 当前航点标志
+    autocontinue: int      # 自动继续标志
+    param1: float          # 参数1
+    param2: float          # 参数2
+    param3: float          # 参数3
+    param4: float          # 参数4
+    x: int                 # 纬度（度*1e7）
+    y: int                 # 经度（度*1e7）
+    z: float               # 高度（米）
+    mission_type: int      # 任务类型
+```
+
+#### 关键参数说明
+
+1. **坐标系 (frame)**
+   - `MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6`
+   - 使用相对高度的全球坐标系
+   - 经纬度精度为 1e7
+
+2. **命令类型 (command)**
+   - `MAV_CMD_NAV_WAYPOINT = 16`：普通航点
+   - `MAV_CMD_NAV_TAKEOFF = 22`：起飞命令
+   - `MAV_CMD_NAV_LAND = 21`：降落命令
+
+3. **参数含义**
+   - `param1`：盘旋时间（秒）
+   - `param2`：接受半径（米）
+   - `param3`：未使用
+   - `param4`：偏航角（度）
+
+#### 兼容性要求
+
+1. **序列号连续性**
+   - 航点序列号必须连续
+   - 从0开始递增
+   - 不能有重复或跳跃
+
+2. **参数范围**
+   - 经纬度范围：-90 到 +90（纬度），-180 到 +180（经度）
+   - 高度范围：0 到 1000 米
+   - 速度范围：0.1 到 50 米/秒
+
+3. **命令兼容性**
+   - 使用标准的 MAVLink 命令
+   - 避免使用非标准命令
+   - 确保命令参数正确
+
+## 3. 解决方案架构
+
+### 3.1 双层数据转换架构
+
+本解决方案采用双层数据转换架构，将高层 MissionItem 数据转换为底层 MissionRaw 格式，确保与 QGC 5.0.6 的完美兼容：
+
+#### 架构组件
+
+```mermaid
+graph TD
+    A[User Data Input] --> B[Field Validation & Mapping]
+    B --> C[MissionItem Construction]
+    C --> D[Enum Type Conversion]
+    D --> E[MissionRaw Conversion]
+    E --> F[Flight Controller Upload]
+    F --> G[QGC Display]
+```
+
+#### 第一层：高层 MissionItem 数据组织
+
+```python
+# 高层 MissionItem 数据构造
+class MissionItemConstructor:
+    def __init__(self):
+        self.required_fields = [
+            'latitude_deg', 'longitude_deg', 'relative_altitude_m',
+            'speed_m_s', 'is_fly_through'
+        ]
+        self.optional_fields = [
+            'gimbal_pitch_deg', 'gimbal_yaw_deg', 'camera_action',
+            'loiter_time_s', 'camera_photo_interval_s', 'acceptance_radius_m',
+            'yaw_deg', 'camera_photo_distance_m', 'vehicle_action'
+        ]
+    
+    def validate_and_construct(self, waypoint_data: dict) -> MissionItem:
+        """验证并构造 MissionItem 对象"""
+        # 字段验证
+        self._validate_required_fields(waypoint_data)
+        
+        # 数据类型转换
+        converted_data = self._convert_data_types(waypoint_data)
+        
+        # 枚举类型转换
+        converted_data = self._convert_enums(converted_data)
+        
+        # 构造 MissionItem
+        return MissionItem(**converted_data)
+    
+    def validate_mission_data(self, mission_data: dict) -> List[MissionItem]:
+        """验证并构造多个 MissionItem 对象"""
+        mission_items = []
+        for waypoint_data in mission_data['waypoints']:
+            mission_item = self.validate_and_construct(waypoint_data)
+            mission_items.append(mission_item)
+        return mission_items
+```
+
+#### 第二层：底层 MissionRaw 转换器
+
+```python
+# 底层 MissionRaw 转换器
+class MissionRawConverter:
+    def __init__(self):
+        self.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6
+        self.MAV_CMD_NAV_WAYPOINT = 16
+        self.MAV_CMD_NAV_TAKEOFF = 22
+        self.MAV_CMD_NAV_LAND = 21
+    
+    def convert_items_to_raw(self, items: List[MissionItem]) -> List[RawMissionItem]:
+        """将 MissionItem 列表转换为 RawMissionItem 列表"""
+        raw_items = []
+        seq_counter = 0
+        
+        for item in items:
+            # 处理特殊命令（TAKEOFF/LAND）
+            if item.vehicle_action == VehicleAction.TAKEOFF:
+                raw_items.append(self._create_takeoff_item(item, seq_counter))
+                seq_counter += 1
+            elif item.vehicle_action == VehicleAction.LAND:
+                raw_items.append(self._create_land_item(item, seq_counter))
+                seq_counter += 1
+                continue  # LAND 后不再添加 NAV_WAYPOINT
+            
+            # 创建普通航点
+            raw_items.append(self._create_waypoint_item(item, seq_counter))
+            seq_counter += 1
+        
+        return raw_items
+```
+
+### 3.2 数据流程设计
+
+#### 完整数据流程
+
+```python
+# 用户代码数据输入示例（符合航点输出协议）
+mission_data = {
+    "selected_drone_id": "drone_001",
+    "waypoints": [
+        {
+            "latitude_deg": 47.39804,
+            "longitude_deg": 8.54557,
+            "relative_altitude_m": 30.0,
+            "speed_m_s": 5.0,
+            "is_fly_through": True,
+            "gimbal_pitch_deg": 0.0,
+            "gimbal_yaw_deg": 0.0,
+            "camera_action": "NONE",
+            "loiter_time_s": 0.0,
+            "camera_photo_interval_s": 0.0,
+            "acceptance_radius_m": 5.0,
+            "yaw_deg": 0.0,
+            "camera_photo_distance_m": 0.0,
+            "vehicle_action": "NONE"
+        }
+    ]
+}
+```
+
+```python
+# 字段验证
+def validate_mission_data(data: dict) -> dict:
+    # 检查必填字段
+    if 'selected_drone_id' not in data:
+        raise ValueError("Missing required field: selected_drone_id")
+    if 'waypoints' not in data:
+        raise ValueError("Missing required field: waypoints")
+    
+    # 验证航点数据
+    for i, waypoint in enumerate(data['waypoints']):
+        required_fields = ['latitude_deg', 'longitude_deg', 'relative_altitude_m', 'speed_m_s']
+        for field in required_fields:
+            if field not in waypoint:
+                raise ValueError(f"Missing required field in waypoint {i}: {field}")
+        
+        # 数据类型验证
+        waypoint['latitude_deg'] = float(waypoint['latitude_deg'])
+        waypoint['longitude_deg'] = float(waypoint['longitude_deg'])
+        # ... 其他字段验证
+    
+    return data
+```
+
+```python
+# MissionItem 构造
+mission_items = []
+for waypoint_data in mission_data['waypoints']:
+    mission_item = MissionItem(
+        latitude_deg=waypoint_data['latitude_deg'],
+        longitude_deg=waypoint_data['longitude_deg'],
+        relative_altitude_m=waypoint_data['relative_altitude_m'],
+        speed_m_s=waypoint_data['speed_m_s'],
+        is_fly_through=waypoint_data.get('is_fly_through', True),
+        gimbal_pitch_deg=waypoint_data.get('gimbal_pitch_deg', 0.0),
+        gimbal_yaw_deg=waypoint_data.get('gimbal_yaw_deg', 0.0),
+        camera_action=CameraAction(waypoint_data.get('camera_action', 'NONE')),
+        loiter_time_s=waypoint_data.get('loiter_time_s', 0.0),
+        camera_photo_interval_s=waypoint_data.get('camera_photo_interval_s', 0.0),
+        acceptance_radius_m=waypoint_data.get('acceptance_radius_m', 5.0),
+        yaw_deg=waypoint_data.get('yaw_deg', 0.0),
+        camera_photo_distance_m=waypoint_data.get('camera_photo_distance_m', 0.0),
+        vehicle_action=VehicleAction(waypoint_data.get('vehicle_action', 'NONE'))
+    )
+    mission_items.append(mission_item)
+```
+
+```python
+# 转换为 MissionRaw 格式
+raw_items = []
+for i, mission_item in enumerate(mission_items):
+    raw_item = RawMissionItem(
+        seq=i,
+        frame=6,  # MAV_FRAME_GLOBAL_RELATIVE_ALT_INT
+        command=16,  # MAV_CMD_NAV_WAYPOINT
+        current=1 if i == 0 else 0,
+        autocontinue=1 if mission_item.is_fly_through else 0,
+        param1=mission_item.loiter_time_s,  # 盘旋时间
+        param2=mission_item.acceptance_radius_m,  # 接受半径
+        param3=0.0,  # 未使用
+        param4=mission_item.yaw_deg,  # 偏航角
+        x=int(mission_item.latitude_deg * 1e7),  # 纬度*1e7
+        y=int(mission_item.longitude_deg * 1e7),  # 经度*1e7
+        z=mission_item.relative_altitude_m,  # 高度
+        mission_type=0
+    )
+    raw_items.append(raw_item)
+```
+
+```python
+# 上传到飞行控制器
+await drone.mission_raw.clear_mission()  # 清除旧任务
+await drone.mission_raw.upload_mission(raw_items)  # 上传新任务
+```
+
+### 3.3 兼容性保证机制
+
+#### QGC 兼容性保证
+
+1. **使用 MissionRaw 接口**
+   - 直接使用 `MISSION_ITEM_INT` 消息格式
+   - 避免 QGC 的自动解析和优化
+   - 确保航点数据的一致性
+
+2. **正确的任务清除**
+
+```python
+# 上传前清除旧任务
+async def upload_mission_with_clear(self, items: List[MissionItem]):
+    # 清除旧任务
+    await self.drone.mission_raw.clear_mission()
+    
+    # 等待清除完成
+    await asyncio.sleep(0.5)
+    
+    # 转换并上传新任务
+    raw_items = self._convert_items_to_raw(items)
+    await self.drone.mission_raw.upload_mission(raw_items)
+```
+
+3. **参数范围控制**
+
+```python
+# 确保参数在 QGC 兼容范围内
+def validate_parameters(self, item: MissionItem) -> MissionItem:
+    # 经纬度范围检查
+    if not (-90 <= item.latitude_deg <= 90):
+        raise ValueError("Latitude out of range")
+    if not (-180 <= item.longitude_deg <= 180):
+        raise ValueError("Longitude out of range")
+    
+    # 高度范围检查
+    if not (0 <= item.relative_altitude_m <= 1000):
+        raise ValueError("Altitude out of range")
+    
+    # 速度范围检查
+    if not (0.1 <= item.speed_m_s <= 50):
+        raise ValueError("Speed out of range")
+    
+    return item
+```
+>>>>>>> Stashed changes

@@ -135,7 +135,11 @@ waypoint = {
 | 3 | `MAV_FRAME_GLOBAL_RELATIVE_ALT` | 全球坐标系(相对高度) | 推荐使用 |
 | 4 | `MAV_FRAME_LOCAL_ENU` | 本地ENU坐标系 | 本地任务 |
 | 6 | `MAV_FRAME_GLOBAL_INT` | 全球坐标系(整数格式) | 高精度任务 |
+<<<<<<< Updated upstream
 | 7 | `MAV_FRAME_GLOBAL_RELATIVE_ALT_INT` | 高精度相对高度 |
+=======
+| 7 | `MAV_FRAME_GLOBAL_RELATIVE_ALT_INT` | 全球坐标系(相对高度整数) | 高精度相对高度 |
+>>>>>>> Stashed changes
 
 ## 6. 使用示例
 
