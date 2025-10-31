@@ -7,13 +7,10 @@ categories: ["技术文档", "学习笔记"]
 draft: false
 ---
 
-
-# MAVROS 与 MAVProxy：APM 平台上的使用场景、差异与取舍
-
 本文围绕 ArduPilot/APM 飞控平台，系统梳理 MAVROS 与 MAVProxy 的定位、工作原理、典型使用场景、差异点与组合策略，并评估在不同任务形态下它们的必要性以及可替代方案。
 
 ```mermaid
-flowchart LR
+flowchart TB
   A["APM/ArduPilot 飞控<br/>(MAVLink)"] --> RP["MAVProxy（路由/桥接）"]
   P["PX4 飞控<br/>(MAVLink)"] --> RR["MAVLink Router（路由）"]
   RP --> O("MAVLink 扇出")
