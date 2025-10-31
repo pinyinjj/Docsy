@@ -173,6 +173,11 @@ body::before {
     border-radius: 99px;
 }
 
+/* Disable hover box for ToC links on blog pages */
+.td-page.td-blog .td-toc #TableOfContents a:hover {
+    background-color: transparent !important;
+}
+
 /* Glider container and element */
 .td-page.td-blog .td-toc {
     position: relative;
@@ -191,12 +196,20 @@ body::before {
     z-index: 1;
 }
 
+.td-page.td-blog .td-toc.is-hovering .toc-glider {
+    background-color: #e6eef9;
+}
+
 /* Ensure ToC links sit above the glider */
 .td-page.td-blog .td-toc #TableOfContents a {
     position: relative;
     z-index: 2;
     background: transparent !important;
 }
+
+/* No special link color on hover while hovering; glider alone indicates focus */
+
+/* During hover freeze, keep active link default (no outline box) */
 
 /* Force white text for right TOC on non-blog pages */
 .td-page:not(.td-blog) .td-toc,

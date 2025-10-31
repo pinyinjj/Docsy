@@ -1115,3 +1115,16 @@ process_text2mp3(final_report_text)
 print("语音指令流程结束。")
 
 ```
+---
+
+## 参考文档
+
+- [Microsoft AirSim 官方仓库](https://github.com/microsoft/AirSim)
+- [AirSim 官方文档](https://microsoft.github.io/AirSim/)
+- [AirSim Releases](https://github.com/microsoft/AirSim/releases)
+- [PromptCraft-Robotics（论文与环境）](https://github.com/microsoft/PromptCraft-Robotics)
+- [PromptCraft-Robotics 场景下载 v1.0.0](https://github.com/microsoft/PromptCraft-Robotics/releases/tag/1.0.0)
+- [AirSim Agent 示例实现](https://github.com/maris205/airsim_agent)
+- [OpenAI Python SDK（协议兼容用法参考）](https://github.com/openai/openai-python)
+- [火山方舟 Ark OpenAI 兼容接口](https://www.volcengine.com/docs/82379/1264390)
+- [Docsy 用户指南（站点构建相关）](https://www.docsy.dev/docs/)
