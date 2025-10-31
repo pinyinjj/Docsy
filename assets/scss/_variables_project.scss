@@ -157,7 +157,7 @@ body::before {
 .td-page.td-blog .td-toc #TableOfContents a.active,
 .td-page.td-blog .td-toc #TableOfContents li.active > a,
 .td-page.td-blog .td-toc #TableOfContents a[aria-current="true"] {
-    color: #185ee0 !important;
+    color: #8b001a !important;
     background-color: transparent !important; /* remove default background, glider handles highlight */
 }
 
@@ -189,15 +189,15 @@ body::before {
     left: 0;
     width: 100%;
     height: 30px; /* will be updated by JS */
-    background-color: #e6eef9;
+    background-color: #f6c6ce;
     border-radius: 99px;
-    box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
     transition: transform 0.25s ease-out, height 0.15s ease-out;
     z-index: 1;
 }
 
 .td-page.td-blog .td-toc.is-hovering .toc-glider {
-    background-color: #e6eef9;
+    background-color: #f6c6ce;
 }
 
 /* Ensure ToC links sit above the glider */
