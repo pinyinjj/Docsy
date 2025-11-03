@@ -59,30 +59,56 @@ body {
     {{ $paginator := .Paginate .Pages }}
     {{ if gt (len $paginator.Pages) 0 }}
       {{ range $paginator.Pages }}
-        <a href="{{ .RelPermalink }}" class="blog-post-item mb-4">
-          <h3>{{ .Title }}</h3>
-          <div class="blog-post-meta text-muted mb-2">
-            <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006-01-02" }}</time>
-            {{ if .Params.categories }}
-              {{ range .Params.categories }}
-                <span class="badge bg-primary ms-2">{{ . }}</span>
+        <a href="{{ .RelPermalink }}" class="blog-post-container mb-4 noselect">
+          <div class="blog-post-canvas">
+            <div class="blog-post-tracker tr-1"></div>
+            <div class="blog-post-tracker tr-2"></div>
+            <div class="blog-post-tracker tr-3"></div>
+            <div class="blog-post-tracker tr-4"></div>
+            <div class="blog-post-tracker tr-5"></div>
+            <div class="blog-post-tracker tr-6"></div>
+            <div class="blog-post-tracker tr-7"></div>
+            <div class="blog-post-tracker tr-8"></div>
+            <div class="blog-post-tracker tr-9"></div>
+            <div class="blog-post-tracker tr-10"></div>
+            <div class="blog-post-tracker tr-11"></div>
+            <div class="blog-post-tracker tr-12"></div>
+            <div class="blog-post-tracker tr-13"></div>
+            <div class="blog-post-tracker tr-14"></div>
+            <div class="blog-post-tracker tr-15"></div>
+            <div class="blog-post-tracker tr-16"></div>
+            <div class="blog-post-tracker tr-17"></div>
+            <div class="blog-post-tracker tr-18"></div>
+            <div class="blog-post-tracker tr-19"></div>
+            <div class="blog-post-tracker tr-20"></div>
+            <div class="blog-post-tracker tr-21"></div>
+            <div class="blog-post-tracker tr-22"></div>
+            <div class="blog-post-tracker tr-23"></div>
+            <div class="blog-post-tracker tr-24"></div>
+            <div class="blog-post-tracker tr-25"></div>
+            <div class="blog-post-item" id="blog-card">
+              <h3>{{ .Title }}</h3>
+              <div class="blog-post-meta text-muted mb-2">
+                <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006-01-02" }}</time>
+                {{ if .Params.tags }}
+                  {{ range first 8 .Params.tags }}
+                    <span class="badge bg-secondary ms-1">{{ . }}</span>
+                  {{ end }}
+                {{ end }}
+              </div>
+              {{ if eq .Kind "section" }}
+              <p>
+                {{ if .Params.summary }}
+                  {{ .Params.summary }}
+                {{ else if .Params.description }}
+                  {{ .Params.description }}
+                {{ else }}
+                  {{ .Summary }}
+                {{ end }}
+              </p>
               {{ end }}
-            {{ end }}
-            {{ if .Params.tags }}
-              {{ range first 3 .Params.tags }}
-                <span class="badge bg-secondary ms-1">{{ . }}</span>
-              {{ end }}
-            {{ end }}
+            </div>
           </div>
-          <p>
-            {{ if .Params.summary }}
-              {{ .Params.summary }}
-            {{ else if .Params.description }}
-              {{ .Params.description }}
-            {{ else }}
-              {{ .Summary }}
-            {{ end }}
-          </p>
         </a>
       {{ end }}
 

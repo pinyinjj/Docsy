@@ -697,42 +697,261 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
     display: none !important;
 }
 
-/* Blog post items styling */
-.blog-page .blog-post-item {
-    background: $consistent-bg;
-    backdrop-filter: $consistent-blur;
-    border: $consistent-border;
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    transition: all 0.3s ease;
+/* Blog post container - 3D card effect container */
+.blog-page .blog-post-container {
     position: relative;
-    overflow: hidden;
-    cursor: pointer;
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    transition: 200ms;
+    margin-bottom: 2rem;
     display: block;
     text-decoration: none;
     color: inherit;
 }
 
-.breadcrumb-item.active {
-    display: none;
-}
-
-.blog-page .blog-post-item a {
-    text-decoration: none;
-    color: inherit;
+/* Blur glow effect on container - not affected by card rotation */
+.blog-page .blog-post-container::before {
+    content: '';
+    background: linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%);
+    filter: blur(2rem);
+    opacity: 30%;
+    position: absolute;
+    inset: -20px;
+    z-index: -1;
+    transition: opacity 200ms;
+    border-radius: 20px;
     pointer-events: none;
 }
 
-/* Simplify blog-post-item styling: remove gradient top border */
-.blog-page .blog-post-item::before {
-    display: none !important;
+/* Enhanced blur on hover */
+.blog-page .blog-post-container:hover::before {
+    opacity:60%;
+    transition: opacity 200ms;
 }
 
-.blog-page .blog-post-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+/* Active state for container - slight scale down on click for feedback */
+.blog-page .blog-post-container:active {
+    transform: scale(0.98);
+    transition: 100ms;
+}
+
+/* Canvas for tracker grid */
+.blog-page .blog-post-canvas {
+    perspective: 800px;
+    inset: 0;
+    z-index: 200;
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0px;
+    grid-template-areas: 
+        "tr-1 tr-2 tr-3 tr-4 tr-5"
+        "tr-6 tr-7 tr-8 tr-9 tr-10"
+        "tr-11 tr-12 tr-13 tr-14 tr-15"
+        "tr-16 tr-17 tr-18 tr-19 tr-20"
+        "tr-21 tr-22 tr-23 tr-24 tr-25";
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+}
+
+/* Tracker elements - use pointer-events to allow hover but pass through clicks */
+.blog-page .blog-post-tracker {
+    position: relative;
+    z-index: 200;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+}
+
+/* Make trackers pass through clicks but still detect hover */
+.blog-page .blog-post-canvas {
+    pointer-events: none;
+}
+
+.blog-page .blog-post-tracker {
+    pointer-events: auto;
+}
+
+.blog-page .blog-post-item {
+    pointer-events: auto;
+}
+
+/* Tracker grid area assignments */
+.blog-page .blog-post-tracker.tr-1 { grid-area: tr-1; }
+.blog-page .blog-post-tracker.tr-2 { grid-area: tr-2; }
+.blog-page .blog-post-tracker.tr-3 { grid-area: tr-3; }
+.blog-page .blog-post-tracker.tr-4 { grid-area: tr-4; }
+.blog-page .blog-post-tracker.tr-5 { grid-area: tr-5; }
+.blog-page .blog-post-tracker.tr-6 { grid-area: tr-6; }
+.blog-page .blog-post-tracker.tr-7 { grid-area: tr-7; }
+.blog-page .blog-post-tracker.tr-8 { grid-area: tr-8; }
+.blog-page .blog-post-tracker.tr-9 { grid-area: tr-9; }
+.blog-page .blog-post-tracker.tr-10 { grid-area: tr-10; }
+.blog-page .blog-post-tracker.tr-11 { grid-area: tr-11; }
+.blog-page .blog-post-tracker.tr-12 { grid-area: tr-12; }
+.blog-page .blog-post-tracker.tr-13 { grid-area: tr-13; }
+.blog-page .blog-post-tracker.tr-14 { grid-area: tr-14; }
+.blog-page .blog-post-tracker.tr-15 { grid-area: tr-15; }
+.blog-page .blog-post-tracker.tr-16 { grid-area: tr-16; }
+.blog-page .blog-post-tracker.tr-17 { grid-area: tr-17; }
+.blog-page .blog-post-tracker.tr-18 { grid-area: tr-18; }
+.blog-page .blog-post-tracker.tr-19 { grid-area: tr-19; }
+.blog-page .blog-post-tracker.tr-20 { grid-area: tr-20; }
+.blog-page .blog-post-tracker.tr-21 { grid-area: tr-21; }
+.blog-page .blog-post-tracker.tr-22 { grid-area: tr-22; }
+.blog-page .blog-post-tracker.tr-23 { grid-area: tr-23; }
+.blog-page .blog-post-tracker.tr-24 { grid-area: tr-24; }
+.blog-page .blog-post-tracker.tr-25 { grid-area: tr-25; }
+
+/* Tracker hover cursor */
+.blog-page .blog-post-tracker:hover {
+    cursor: pointer;
+}
+
+/* Blog post items styling - 3D card */
+.blog-page .blog-post-item {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 16px;
+    transition: 700ms;
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    overflow: visible;
+    pointer-events: auto;
+}
+
+
+/* Brightness effect on hover */
+.blog-page .blog-post-tracker:hover ~ .blog-post-item {
+    transition: 300ms;
+    filter: brightness(1.1);
+}
+
+/* 3D rotation transforms for each tracker region */
+/* Top row */
+.blog-page .blog-post-tracker.tr-1:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-2:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-3:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-4:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-5:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Second row */
+.blog-page .blog-post-tracker.tr-6:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-7:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-8:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-9:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-10:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Middle row */
+.blog-page .blog-post-tracker.tr-11:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-12:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-13:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-14:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-15:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Fourth row */
+.blog-page .blog-post-tracker.tr-16:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-17:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-18:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-19:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-20:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Bottom row */
+.blog-page .blog-post-tracker.tr-21:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-22:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-23:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-24:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-25:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(10deg) rotateZ(0deg);
+}
+
+.breadcrumb-item.active {
+    display: none;
 }
 
 .blog-page .blog-post-item h3 {
@@ -740,6 +959,7 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
     font-size: 1.4rem;
     font-weight: 600;
     color: white;
+    min-height: 4.5rem; /* 固定标题高度，使不同长度的标题对齐 tags 位置 */
 }
 
 .blog-page .blog-post-item h3 a {
@@ -1017,8 +1237,43 @@ h5.taxonomy-title,
    14. RESPONSIVE DESIGN
    ========================================================================== */
 
+/* User select utility */
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
+    /* Disable 3D effects on mobile for better performance and UX */
+    .blog-page .blog-post-canvas {
+        display: none;
+    }
+    
+    .blog-page .blog-post-item {
+        position: relative;
+        transform: none !important;
+        transition: all 0.3s ease;
+    }
+    
+    /* Disable glow effect on mobile */
+    .blog-page .blog-post-container::before {
+        display: none;
+    }
+    
+    .blog-page .blog-post-container:hover .blog-post-item {
+        filter: none;
+    }
+    
+    /* Restore simple hover effect for mobile */
+    .blog-page .blog-post-item:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
     /* Button adjustments */
     .btn-transparent {
         margin: 5px !important;
