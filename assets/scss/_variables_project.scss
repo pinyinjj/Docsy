@@ -1057,7 +1057,7 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
 .taxonomy-terms-cloud .taxonomy-title {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start; /* 文本在左 */
     width: 100%;
     font-size: 1rem;
     font-weight: 700;
@@ -1108,12 +1108,12 @@ h5.taxonomy-title,
     opacity: 1;
 }
 
-/* 现代化的箭头按钮样式 */
+/* 现代化的箭头按钮样式（固定在最右侧） */
 .taxonomy-toggle-arrow {
     background: none;
     border: none;
     padding: 0;
-    margin-left: 0.5rem;
+    margin-left: auto; /* 将箭头推到最右边 */
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -1157,6 +1157,39 @@ h5.taxonomy-title,
 .taxonomy-terms-cloud .taxonomy-title {
     gap: 0.5rem;
     text-align: left;
+}
+
+/* 让整个标题区域可点击，提高可用性 */
+.taxonomy-title-clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 低调现代化高亮：与右侧目录一致的淡红系（参考 #f6c6ce） */
+.taxonomy-title-clickable {
+    border-radius: .375rem; /* 6px */
+    padding: .25rem .5rem;
+    transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+.taxonomy-title-clickable:hover,
+.taxonomy-title-clickable:focus-visible {
+    /* 与右侧目录 glider 一致的淡红高亮 */
+    background-color: #f6c6ce;
+    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
+}
+
+/* 箭头在高亮时同步变色 */
+.taxonomy-title-clickable:hover .taxonomy-toggle-arrow,
+.taxonomy-title-clickable:focus-visible .taxonomy-toggle-arrow {
+    color: rgba(139, 0, 26, 0.9);
+}
+
+/* 非博客页面（白字主题）下，确保对比度 */
+.td-page:not(.td-blog) .taxonomy-title-clickable:hover,
+.td-page:not(.td-blog) .taxonomy-title-clickable:focus-visible {
+    background-color: #f6c6ce;
+    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
 }
 
 /* 博客页面特定样式 */

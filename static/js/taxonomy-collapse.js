@@ -79,28 +79,45 @@
             
             // 将箭头按钮插入到title中（作为最后一个子元素）
             title.appendChild(arrowButton);
-            
+
+            // 让标题本身也成为点击区域（除箭头按钮外）
+            title.setAttribute('role', 'button');
+            title.setAttribute('tabindex', '0');
+            title.classList.add('taxonomy-title-clickable');
+
+            function toggleCloud(e) {
+                if (e) e.preventDefault();
+                if (cloud.dataset.animating === 'true') return;
+                const isCollapsed = cloud.classList.contains('taxonomy-collapsed');
+                if (isCollapsed) {
+                    expandTaxonomy(cloud, termsList, arrowButton);
+                } else {
+                    collapseTaxonomy(cloud, termsList, arrowButton);
+                }
+            }
+
+            title.addEventListener('click', function(e) {
+                if (e.target.closest('.taxonomy-toggle-arrow')) return;
+                toggleCloud(e);
+            });
+            title.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    toggleCloud(e);
+                }
+            });
+
             // 初始状态：收起（不占用空间）
             cloud.classList.add('taxonomy-collapsed');
             termsList.style.display = 'none';
-            
+
             // 排序：按数量从高到低排序
             sortTermsByCount(termsList);
-            
+
             // 点击箭头按钮切换展开/收起
             arrowButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                const isCollapsed = cloud.classList.contains('taxonomy-collapsed');
-                
-                if (isCollapsed) {
-                    // 展开：显示内容并添加展开动画
-                    expandTaxonomy(cloud, termsList, arrowButton);
-                } else {
-                    // 收起：隐藏内容
-                    collapseTaxonomy(cloud, termsList, arrowButton);
-                }
+                toggleCloud(e);
             });
         });
     }
