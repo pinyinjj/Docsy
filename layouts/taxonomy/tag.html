@@ -21,8 +21,9 @@ body {
     {{ end }}
 
     <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">{{ i18n "ui_all_tags" | default "All Tags" }}</h5>
       <ul class="taxonomy-terms">
-        {{ range .Data.Terms.Alphabetical }}
+        {{ range .Data.Terms.ByCount }}
           <li><a class="taxonomy-term" href="{{ .Page.RelPermalink }}" data-taxonomy-term="{{ .Page.Title }}"><span class="taxonomy-label">{{ .Page.Title }}</span><span class="taxonomy-count">{{ .Count }}</span></a></li>
         {{ end }}
       </ul>
@@ -76,4 +77,5 @@ body {
   {{ end }}
 </div>
 <script defer src="{{ .Site.BaseURL }}js/custom-scrollbar.js"></script>
+<script defer src="{{ .Site.BaseURL }}js/taxonomy-collapse.js"></script>
 {{ end }}

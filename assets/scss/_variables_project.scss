@@ -975,7 +975,7 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
 
 .blog-page .blog-post-meta {
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 1rem;
+    margin-bottom: -2rem !important; /* 负边距让博客页面的summary文本往上移动 */
 }
 
 .blog-page .blog-post-meta time {
@@ -1055,7 +1055,9 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
    ========================================================================== */
 
 .taxonomy-terms-cloud .taxonomy-title {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     font-size: 1rem;
     font-weight: 700;
@@ -1089,6 +1091,98 @@ h5.taxonomy-title,
     border-bottom: 1px solid $black !important;
 }
 
+/* Taxonomy collapse/expand styles */
+.taxonomy-terms-cloud {
+    position: relative;
+}
+
+.taxonomy-terms-cloud.taxonomy-collapsed .taxonomy-terms {
+    /* 不立即隐藏，用于收纳动画；隐藏由JS在动画结束后设置 */
+    max-height: 0; /* 去掉 !important 以便动画时内联样式接管 */
+    opacity: 0;
+    overflow: hidden;
+}
+
+.taxonomy-terms-cloud.taxonomy-expanded .taxonomy-terms {
+    display: block;
+    opacity: 1;
+}
+
+/* 现代化的箭头按钮样式 */
+.taxonomy-toggle-arrow {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: inherit;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+
+.taxonomy-toggle-arrow:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.taxonomy-toggle-arrow:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.taxonomy-toggle-arrow svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+/* 展开状态：箭头向上（表示可以收起） */
+.taxonomy-toggle-arrow.expanded svg {
+    transform: rotate(180deg);
+}
+
+/* 收起状态：箭头向下（默认，表示可以展开） */
+.taxonomy-toggle-arrow:not(.expanded) svg {
+    transform: rotate(0deg);
+}
+
+/* title文本内容样式 - flex布局确保文本在左，箭头在右 */
+.taxonomy-terms-cloud .taxonomy-title {
+    gap: 0.5rem;
+    text-align: left;
+}
+
+/* 博客页面特定样式 */
+.td-page.td-blog .taxonomy-toggle-arrow {
+    color: rgba(0, 0, 0, 0.622);
+}
+
+.td-page:not(.td-blog) .taxonomy-toggle-arrow {
+    color: white;
+}
+
+/* 动画效果优化 */
+.taxonomy-terms-cloud .taxonomy-terms {
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+    will-change: max-height, opacity;
+}
+
+/* 确保收起时完全不占用空间 */
+.taxonomy-terms-cloud.taxonomy-collapsed {
+    margin-bottom: 0;
+}
+
+.taxonomy-terms-cloud.taxonomy-collapsed .taxonomy-terms {
+    margin: 0;
+    padding: 0;
+}
 
 /* ==========================================================================
    12. FOOTER STYLES
