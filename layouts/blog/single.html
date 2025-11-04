@@ -70,6 +70,24 @@ body::before {
   {{ end }}
   
   {{ .Content }}
+
+  <hr class="my-4">
+  <section class="donate-section">
+    <h3>{{ i18n "donate_title" | default "Buy me a coffee" }}</h3>
+    <p>{{ i18n "donate_desc" | default "If this article helped you, consider supporting the author." }}</p>
+    {{ $coffeeDir := "static/images/coffee" }}
+    {{ $files := readDir $coffeeDir }}
+    <div class="donate-images" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+      {{ range $files }}
+        {{ if not .IsDir }}
+          {{ $name := .Name }}
+          {{ $encoded := replace $name " " "%20" }}
+          {{ $path := printf "images/coffee/%s" $encoded }}
+          <img src="{{ $path | absURL }}" alt="donation {{$name}}" loading="lazy" style="max-height:260px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);" />
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
   
   {{ if (.Site.Params.comments) | and (ne .Params.commentable false) | and (.Site.Params.comments_opts.commentable) }}
     {{ template "_internal/disqus.html" . }}

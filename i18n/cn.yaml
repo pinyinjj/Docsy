@@ -176,3 +176,10 @@
 
 - id: "no_posts_found"
   translation: "没有找到文章"
+
+# 打赏
+- id: "donate_title"
+  translation: "请我喝杯咖啡"
+
+- id: "donate_desc"
+  translation: "如果本文对你有帮助，欢迎打赏支持作者。"

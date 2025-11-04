@@ -128,3 +128,10 @@
 
 - id: "no_posts_found"
   translation: "No posts found"
+
+# Donation
+- id: "donate_title"
+  translation: "Buy me a coffee"
+
+- id: "donate_desc"
+  translation: "If this article helped you, consider supporting the author."
