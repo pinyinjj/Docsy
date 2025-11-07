@@ -2,7 +2,7 @@
 title: "MAVLink-基于Pymavlink的任务规划实现"
 date: 2025-09-30
 summary: "使用MAVLink协议和pymavlink库进行任务规划航点发送的完整方案，支持与QGroundControl完全兼容，提供多航点批量上传、异步操作等功能。"
-tags: ["MAVLink", "pymavlink", "任务规划", "QGroundControl", "无人机", "地面站", "技术文档"]
+tags: ["MAVLink", "pymavlink", "任务规划", "QGroundControl", "无人机", "地面站"]
 categories: ["技术文档"]
 weight: 10
 ---

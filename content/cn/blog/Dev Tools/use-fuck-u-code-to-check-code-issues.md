@@ -2,7 +2,7 @@
 title: "使用fuck-u-code优化代码质量"
 date: 2025-10-28
 summary: "使用fuck-u-code工具进行代码质量分析，评估代码的“屎山等级”并生成报告。支持多语言检测、七维度分析、彩色终端输出和Markdown报告生成。"
-tags: ["技术文档", "前端", "后端", "Python", "C++", "JavaScript"]
+tags: ["前端", "后端", "Python", "C++", "JavaScript"]
 categories: ["技术文档"]
 weight: 10
 ---

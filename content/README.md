@@ -19,7 +19,7 @@
 title: "示例标题"
 date: 2025-09-30
 summary: "一句话或一段话概述本文的核心内容。"
-tags: ["MAVLink", "QGroundControl", "无人机", "技术文档"]
+tags: ["MAVLink", "QGroundControl", "无人机"]
 categories: ["技术文档"]
 weight: 10
 draft: false
@@ -36,7 +36,7 @@ draft: false
 
 ### 标签与分类
 - 仅可从“标签tags列表/分类cats列表”中选择；禁止私自新增或拼写变体。
-- 优先选择通用与主轴类标签（如：`无人机`、`地面站`、`技术文档`、`前端`）。
+- 优先选择通用与主轴类标签（如：`无人机`、`地面站`、`前端`）。
 - 如需新标签，按“总体工作流”第 3 步执行。
 
 ### 图片与资源路径
@@ -83,6 +83,7 @@ draft: false
 ## 标签与分类（唯一来源）
 
 ### 有效的标签tags列表
+- 通信
 - FastDDS
 - ROS
 - ROS 2

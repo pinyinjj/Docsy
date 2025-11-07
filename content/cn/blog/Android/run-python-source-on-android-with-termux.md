@@ -2,7 +2,7 @@
 title: "使用 Termux 在 Android 运行 Python 源码"
 date: 2025-10-28
 summary: "在真机用 Termux 运行/调试 Python：安装配置、ADB/scrcpy、部署与 SSH 管理，并提示常见兼容性注意事项。"
-tags: ["Android", "Python", "技术文档"]
+tags: ["Android", "Python"]
 categories: ["技术文档"]
 weight: 10
 ---

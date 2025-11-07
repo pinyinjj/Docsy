@@ -2,7 +2,7 @@
 title: "QGroundControl Docker 进阶构建指南"
 date: 2025-10-28
 summary: "使用Docker容器构建QGroundControl Android APK和Ubuntu的完整指南，包括环境配置、构建流程、签名管理、密钥生成和故障排查。提供交互式构建脚本和完整的Dockerfile配置。"
-tags: ["QGroundControl", "Docker", "容器化", "Qt", "CMake", "编译", "技术文档", "地面站", "Android", "Ubuntu"]
+tags: ["QGroundControl", "Docker", "容器化", "Qt", "CMake", "编译", "地面站", "Android", "Ubuntu"]
 categories: ["技术文档"]
 weight: 10
 ---
