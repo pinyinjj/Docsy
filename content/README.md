@@ -74,7 +74,7 @@ draft: false
 
 ## 标签与分类（唯一来源）
 
-### 标签tags列表
+### 有效的标签tags列表
 - FastDDS
 - ROS
 - ROS 2
@@ -115,7 +115,7 @@ draft: false
 - 后端
 
 
-### 分类cats列表
+### 有效的分类cats列表
 - 技术文档
 - 踩坑记录
 - 学习笔记
