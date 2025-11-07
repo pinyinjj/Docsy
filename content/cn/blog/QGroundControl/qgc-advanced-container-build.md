@@ -75,7 +75,7 @@ weight: 10
 ### 1.2 构建说明
 
 **构建输出：**
-```
+```text
 build/shadow_build_dir/android-build/build/outputs/apk/release/android-build-release.apk
 ```
 

@@ -178,7 +178,7 @@ ros2 pkg executables turtlesim
 
 如果显示以下内容，说明安装成功：
 
-```
+```text
 turtlesim draw_square
 turtlesim mimic
 turtlesim turtle_teleop_key

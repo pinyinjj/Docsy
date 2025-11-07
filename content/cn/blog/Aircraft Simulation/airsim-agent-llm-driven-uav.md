@@ -371,7 +371,6 @@ aw.fly_to([x,y,z])；aw.get_position(object_name)->[x,y,z]；aw.set_yaw(yaw_deg)
 使用 NED；向上飞 Z 减小；YZ 平面相对位移可用三角函数计算
 
 输出格式：
-```
 
 ```python
 aw.takeoff()

@@ -132,7 +132,7 @@ ros2 topic list -t
 
 输出示例：
 
-```
+```bash
 /chatter [std_msgs/msg/String]
 /parameter_events [rcl_interfaces/msg/ParameterEvent]
 /rosout [rcl_interfaces/msg/Log]
@@ -150,7 +150,7 @@ ros2 topic info /chatter
 
 返回示例：
 
-```
+```bash
 Type: std_msgs/msg/String
 Publisher count: 1
 Subscription count: 1
@@ -190,7 +190,7 @@ ros2 interface show std_msgs/msg/String
 
 返回：
 
-```
+```text
 # This was originally provided as an example message.
 # It is deprecated as of Foxy
 # It is recommended to create your own semantically meaningful message.
@@ -259,7 +259,7 @@ ros2 topic hz /chatter
 
 在检测后会返回：
 
-```
+```bash
 average rate: 1.000 
 min: 1.000s max: 1.000s std dev: 0.00021s window: 3
 ```
@@ -280,7 +280,7 @@ ros2 topic bw /chatter
 
 输出示例：
 
-```
+```bash
 Subscribed to [/chatter]
 49 B/s from 2 messages
 Message size mean: 28 B min: 28 B max: 28 B
@@ -308,7 +308,7 @@ ros2 topic find std_msgs/msg/String
 
 输出：
 
-```
+```bash
 /chatter
 ```
 
