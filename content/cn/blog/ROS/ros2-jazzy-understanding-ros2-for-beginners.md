@@ -8,7 +8,7 @@ weight: 20
 draft: false
 ---
 
-## 理解 node
+## 1. 理解 node
 
 node 是 ROS 2 实现模块化的基本组件。ROS 中的每个 node 都应负责单一的模块化功能，例如控制车轮电机或发布来自激光测距仪的传感器数据。每个 node 都可以通过 topic、服务、动作或参数与其他 node 发送和接收数据。
 
@@ -18,7 +18,7 @@ node 是 ROS 2 实现模块化的基本组件。ROS 中的每个 node 都应负�
 
 上图展示了两个 ROS 2 node 是如何交互的。
 
-### ROS 2 启动命令
+### 1.1 ROS 2 启动命令
 
 使用以下命令启动 node：
 
@@ -34,7 +34,7 @@ ros2 run demo_nodes_cpp talker
 
 其中 `demo_nodes_cpp` 是包名字，`talker` 是可执行文件名。
 
-### 查看 node 列表
+### 1.2 查看 node 列表
 
 node 名称可以使用以下命令查找：
 
@@ -46,7 +46,7 @@ ros2 node list
 
 可以看到 `/talker` 已经显示出来了。
 
-### node 名称重映射（Remapping）
+### 1.3 node 名称重映射（Remapping）
 
 通过 `--remap` 参数可以重映射 node 名称：
 
@@ -56,7 +56,7 @@ ros2 run turtlesim turtlesim_node --ros-args --remap __node:=my_turtle
 
 上述命令中 `--remap __node:=my_turtle` 将 node 名称定义为 `my_turtle`，通过 `ros2 node list` 应该也可以看到这个新建的实例 `/my_turtle`。
 
-### 查看 node 信息
+### 1.4 查看 node 信息
 
 使用以下命令查看 node 的详细信息：
 
@@ -74,7 +74,7 @@ ros2 node info /talker
 
 ![ROS 2 node 信息](/Docsy/images/ros2-node-info.png)
 
-## 理解 topic
+## 2. 理解 topic
 
 在上个章节的图片中，我们已经可以看到，publisher node 通过 topic 将信息发送给 subscriber 的过程，只要一个 node 订阅了 topic，就可以收到对应的消息。
 
@@ -88,7 +88,7 @@ ROS 2 将复杂的系统分解为许多模块化 node。topic 是 ROS 图的重�
 
 topic 是在 node 之间以及系统不同部分之间移动数据的主要方式之一。
 
-### 使用 rqt_graph 检查通信状态
+### 2.1 使用 rqt_graph 检查通信状态
 
 通过 `rqt_graph` 可以可视化检查当前 ROS 2 系统的通信状态：
 
@@ -116,7 +116,7 @@ ros2 run rqt_graph rqt_graph
 
 ![rqt_graph 可视化](/Docsy/images/rqt_gragh.png)
 
-### 查看 topic 列表
+### 2.2 查看 topic 列表
 
 在新终端中运行以下命令将返回系统中当前活动的所有 topic 的列表：
 
@@ -139,8 +139,7 @@ ros2 topic list -t
 ```
 topic 类型是本文档的重要内容，后续对 topic 的命令行应用都基于类型进行。
 
-
-### 查看 topic 信息
+### 2.3 查看 topic 信息
 
 topic 不必只是一对一的交流；它们可以是一对多、多对一或多对多。通过以下命令来查看当前订阅数量：
 
@@ -156,7 +155,7 @@ Publisher count: 1
 Subscription count: 1
 ```
 
-### 查看 topic 数据
+### 2.4 查看 topic 数据
 
 使用以下命令查看正在发布的 topic 数据：
 
@@ -178,7 +177,7 @@ ros2 topic echo /chatter
 
 ![rqt_graph 取消 debug](/Docsy/images/ros2-rqt-graph-ubdebug.png)
 
-### 查看接口/数据结构
+### 2.5 查看接口/数据结构
 
 在前面运行过了 `ros2 topic list -t` 后，得知了 `/chatter` 的接口为 `[std_msgs/msg/String]`。
 
@@ -201,7 +200,7 @@ string data
 
 可以得知为字符串数据结构，字段为 `data`。
 
-### 发布 topic 消息
+### 2.6 发布 topic 消息
 
 得知消息结构后，通过以下命令可以直接从终端发送命令数据到 topic 中：
 
@@ -243,7 +242,7 @@ ros2 topic pub /chatter std_msgs/msg/String "{header: \"auto\", data: 'Hello fro
 
 此时会报错，因为 `std_msgs/msg/String` 类型没有 header 字段。
 
-### 查询 topic 发布频率
+### 2.7 查询 topic 发布频率
 
 使用以下命令来得知对应 topic 的发布频率：
 
@@ -264,7 +263,7 @@ average rate: 1.000
 min: 1.000s max: 1.000s std dev: 0.00021s window: 3
 ```
 
-### 查询 topic 带宽
+### 2.8 查询 topic 带宽
 
 使用以下命令查询 topic 的带宽使用情况：
 
@@ -290,7 +289,7 @@ Message size mean: 28 B min: 28 B max: 28 B
 
 返回带宽利用率和发布到 topic 的消息数量。
 
-### 查询指定类型的 topic
+### 2.9 查询指定类型的 topic
 
 列出给定类型的可用 topic 列表：
 
@@ -312,13 +311,13 @@ ros2 topic find std_msgs/msg/String
 /chatter
 ```
 
-## 总结
+## 3. 总结
 
 node 通过 topic 发布信息，允许任意数量的其他 node 订阅和访问该信息。笔记中使用 `rqt_graph` 和命令行工具检查了 topic 上多个 node 之间的连接。由此，可以初步理解数据如何在 ROS 2 系统中移动。
 
 ---
 
-## 参考文档
+## 4. 参考文档
 
 - [Understanding ROS 2 nodes](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html)
 - [Understanding ROS 2 topics](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html)
