@@ -1,5 +1,5 @@
 ---
-title: "自定义NiceGUI中Leaflet的marker样式和旋转"
+title: "自定义 NiceGUI 中 Leaflet 的 marker 样式和旋转"
 date: 2025-08-25
 summary: "在 NiceGUI 框架中实现 JavaScript Bridge 架构，通过 Python 封装 JavaScript 代码，实现对 Leaflet 地图插件的样式定制和功能扩展。涵盖架构设计、核心实现、使用示例、扩展性设计等完整技术方案。"
 tags: ["NiceGUI", "JavaScript", "Leaflet", "无人机", "地面站", "Python", "前端"]
