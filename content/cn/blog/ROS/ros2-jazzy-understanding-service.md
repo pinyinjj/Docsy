@@ -1,5 +1,5 @@
 ---
-title: "理解 ROS 2 的 Services、Params 和 Actions"
+title: "理解 ROS 2 的 Services, Params 和 Actions"
 date: 2025-01-30
 summary: "根据 ROS 2 Jazzy，介绍服务（Services）、参数（Parameters）和动作（Actions）的概念与使用方法，包括服务调用、参数管理、动作执行等命令行工具的使用，帮助理解 ROS 2 中不同的通信机制和配置方式。"
 tags: ["ROS", "ROS 2", "Linux", "Ubuntu", "仿真", "无人机"]
