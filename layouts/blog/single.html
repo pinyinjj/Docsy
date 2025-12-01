@@ -83,7 +83,7 @@ body::before {
           {{ $name := .Name }}
           {{ $encoded := replace $name " " "%20" }}
           {{ $path := printf "images/coffee/%s" $encoded }}
-          <img src="{{ $path | absURL }}" alt="donation {{$name}}" loading="lazy" style="max-height:260px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);" />
+          <img src="{{ $path | absURL }}" alt="donation {{$name}}" loading="lazy" style="max-height:500px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);" />
         {{ end }}
       {{ end }}
     </div>
