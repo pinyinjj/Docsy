@@ -115,7 +115,7 @@ client.enableApiControl(False)
 
   - 位置：`front_center`/`front_right`/`front_left`/`bottom_center`/`back_center`（兼容旧 ID `"0"~"4"`)。
 
-  - 类型：`Scene`、`DepthPlanar`、`DepthPerspective`、`DepthVis`、`Segmentation`、`SurfaceNormals`、`Infrared` 等。
+  - 类型：`Scene`，`DepthPlanar`，`DepthPerspective`，`DepthVis`，`Segmentation`，`SurfaceNormals`，`Infrared` 等。
 
 - 采集示例（OpenCV + Matplotlib）
 
@@ -204,9 +204,9 @@ for i in range(3):
 
   - **语义化接口**：内部隐藏 **NED 坐标** 转换，对外使用直观语义（如 `fly_to([x,y,正高度])` 自动处理 Z 符号）
 
-  - **功能原子化**：每个方法只做一件事（如 `takeoff`、`land`、`set_yaw`、`fly_to`）
+  - **功能原子化**：每个方法只做一件事（如 `takeoff`，`land`，`set_yaw`，`fly_to`）
 
-  - **参数/返回标准化**：统一使用简单类型（如 `get_drone_position()->[x,y,z]`、`get_yaw()->角度`）
+  - **参数/返回标准化**：统一使用简单类型（如 `get_drone_position()->[x,y,z]`，`get_yaw()->角度`）
 
   - **异步转同步**：统一 `.join()`，保证顺序执行，减少并发不确定性
 
@@ -345,7 +345,7 @@ aw.get_position(object_name) -> [x,y,z]
 
 - **内容关键点**
 
-  - **角色设定**：仅输出 Python 代码块；允许 `math`、`numpy`；使用已定义的 `aw` 对象
+  - **角色设定**：仅输出 Python 代码块；允许 `math`，`numpy`；使用已定义的 `aw` 对象
 
   - **函数白名单**：列出 `aw.takeoff/land/fly_to/get_position/get_drone_position/set_yaw/...` 的参数与返回
 
@@ -605,7 +605,7 @@ result = {"name": "target", "distance": float(d_cam), "angle_deg": float(angle)}
 ```
 
 **双目定位原理**
-尽管 AirSim 提供了捷径，了解传统的双目定位原理依然重要，因为它在真实世界的机器人中广泛应用。其核心是模拟人类双眼，通过两个有固定间距（**基线 Baseline**）的相机拍摄同一场景。同一物体在左右图像中的水平像素位置差称为**视差 (Disparity)**。物体越近，视差越大。根据相机**焦距 (Focal Length)**、基线和测得的视差，利用公式 `深度 = (焦距 * 基线) / 视差` 即可计算深度。
+尽管 AirSim 提供了捷径，了解传统的双目定位原理依然重要，因为它在真实世界的机器人中广泛应用。其核心是模拟人类双眼，通过两个有固定间距（**基线 Baseline**）的相机拍摄同一场景。同一物体在左右图像中的水平像素位置差称为 **视差 (Disparity)**。物体越近，视差越大。根据相机 **焦距 (Focal Length)**、基线和测得的视差，利用公式 `深度 = (焦距 * 基线) / 视差` 即可计算深度。
 
 ```python
 # 视觉：双目定位（Stereo Localization）
@@ -894,7 +894,7 @@ if __name__ == "__main__":
 
 - **机器的视角**：功能框架与知识库只接受精确、结构化的函数调用。
 
-  - **精确指令示例**：`aw.fly_to([10.5, -3.2, -5.0])`、`aw.detect("duck")`。
+  - **精确指令示例**：`aw.fly_to([10.5, -3.2, -5.0])`，`aw.detect("duck")`。
 
 - **核心矛盾**：如何将用户的模糊意图，自动翻译并分解为一系列精确、有序的原子操作（函数调用）集合。
 
@@ -908,7 +908,7 @@ if __name__ == "__main__":
 
   2. **知识库查询与工具选择**：基于识别出的意图和实体，在知识库中检索最匹配的可用函数/工具。
 
-     - “查找” → 匹配到 `look()`、`detect()`、`ob_objects()`
+     - “查找” → 匹配到 `look()`，`detect()`，`ob_objects()`
 
      - “小鸭子” → 匹配到对象映射 `小鸭子: airsim_duck`
 
@@ -1022,7 +1022,7 @@ print("已完成对风力发电机1的环绕检查。")
 
 - **动态适应性**：通过**观察-规划-执行**的闭环，Agent 能根据环境变化和执行结果调整策略，表现出更高的智能和鲁棒性。
 
-- **框架支持**：`smol-agents`、`LangChain`、`AutoGen` 等框架为此类智能体的构建提供了强大的工程支持，包括工具注册（如 `@tool`）、规划逻辑和执行循环。
+- **框架支持**：`smol-agents`，`LangChain`，`AutoGen` 等框架为此类智能体的构建提供了强大的工程支持，包括工具注册（如 `@tool`），规划逻辑和执行循环。
 
 ## 8. 语音指令
 ### 8.1 必要性
@@ -1037,7 +1037,7 @@ print("已完成对风力发电机1的环绕检查。")
 
 ### 8.3 实现原理与架构
 
-语音指令的端到端实现，是一个整合了**语音处理**、**语言理解**、**任务规划**和**代码执行**的完整链路。本项目核心架构如下：
+语音指令的端到端实现，是一个整合了 **语音处理**，**语言理解**，**任务规划** 和 **代码执行** 的完整链路。本项目核心架构如下：
 
 1.  **语音识别 (ASR - Audio Speech Recognition)**：将用户的原始语音流转换成文本字符串。
 

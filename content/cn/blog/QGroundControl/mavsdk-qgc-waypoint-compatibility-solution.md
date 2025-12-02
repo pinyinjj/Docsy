@@ -51,7 +51,7 @@ QGroundControl (QGC) 5.0.6 稳定版在航点管理方面存在一些已知问�
 
 ### 1.2 MAVSDK-Python MissionItem 与 QGC 兼容性问题
 
-MAVSDK-Python 的 MissionItem 数据结构与 QGC 的航点解析机制之间存在兼容性问题，主要体现在数据结构差异和协议层面问题两个方面。在数据结构方面，MAVSDK-Python 使用 `latitude_deg`、`longitude_deg` 字段格式，而 QGC 期望 `lat`、`lng` 格式，同时 MAVSDK-Python 使用枚举类型（如 `CameraAction`、`VehicleAction`），而 QGC 期望字符串或数值，导致类型转换失败和解析错误。此外，MAVSDK-Python 的参数范围与 QGC 期望不匹配，超出范围的参数被 QGC 忽略或错误处理。
+MAVSDK-Python 的 MissionItem 数据结构与 QGC 的航点解析机制之间存在兼容性问题，主要体现在数据结构差异和协议层面问题两个方面。在数据结构方面，MAVSDK-Python 使用 `latitude_deg`，`longitude_deg` 字段格式，而 QGC 期望 `lat`，`lng` 格式，同时 MAVSDK-Python 使用枚举类型（如 `CameraAction`，`VehicleAction`），而 QGC 期望字符串或数值，导致类型转换失败和解析错误。此外，MAVSDK-Python 的参数范围与 QGC 期望不匹配，超出范围的参数被 QGC 忽略或错误处理。
 
 在协议层面，MAVSDK-Python 使用 `MISSION_ITEM_INT` 消息格式，但 QGC 5.0.6 对某些字段处理不当，存在消息序列号管理问题。同时，经纬度精度处理存在差异，高度参考系统不一致，坐标系转换错误导致航点位置计算偏差。
 

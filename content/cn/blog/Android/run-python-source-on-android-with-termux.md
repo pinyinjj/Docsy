@@ -156,7 +156,7 @@ Termius 是一款跨平台的 SSH 客户端，适合管理 Termux 主机：
    - 重启服务：`pkill -f "python start_backend.py" && nohup python ~/path-to-project/start_backend.py > ~/path-to-project/log.log 2>&1 &`
 
 3) 使用 SFTP：
-   - 直接进入 `~/path-to-project/`，上传/下载 `requirements.txt`、`log.log` 等文件。
+   - 直接进入 `~/path-to-project/`，上传/下载 `requirements.txt`，`log.log` 等文件。
    - 可视化查看目录结构，便于排查路径与权限问题。
 
 ---

@@ -1,6 +1,6 @@
 ---
 title: "在 QGC 和 大模型 FastAPI 后端实现的端到端无人机语音指令框架"
-date: 2025-12-01
+date: 2025-12-02
 summary: "基于 QGroundControl、FastAPI 与大模型构建无人机语音指令链路，从前端录音到后端智能体控制的完整实现说明。"
 tags: ["QGroundControl", "MAVLink", "地面站", "大模型", "Python", "前端", "后端", "C++", "Qt", "无人机", "任务规划"]
 categories: ["技术文档"]

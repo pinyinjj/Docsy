@@ -145,8 +145,8 @@ fuck-u-code analyze --markdown --top 10 --lang en-US > report.md
 
 ### 默认排除路径
 
-- **前端**: `node_modules`、`dist`、`build`、`*.min.js` 等
-- **后端**: `vendor`、`bin`、`target`、`logs`、`migrations` 等
+- **前端**: `node_modules`，`dist`，`build`，`*.min.js` 等
+- **后端**: `vendor`，`bin`，`target`，`logs`，`migrations` 等
 
 ## 疑难解答
 

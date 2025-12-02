@@ -252,7 +252,7 @@ ros2 param set /introspection_client client_configure_introspection contents
 ros2 service echo --flow-style /add_two_ints
 ```
 
-可以看到 `introspection_client` 和 `introspection_service` 的通信情况，`REQUEST_SENT`、`REQUEST_RECEIVED`、`RESPONSE_SENT`、`RESPONSE_RECEIVED` 都被展示出来了：
+可以看到 `introspection_client` 和 `introspection_service` 的通信情况，`REQUEST_SENT`，`REQUEST_RECEIVED`，`RESPONSE_SENT`，`RESPONSE_RECEIVED` 都被展示出来了：
 
 ```text
 ---
