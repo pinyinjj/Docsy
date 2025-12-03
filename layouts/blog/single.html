@@ -97,6 +97,7 @@ body::before {
     {{ template "_internal/disqus.html" . }}
   {{ end }}
 </div>
+{{ partial "math.html" . }}
 <script defer src="{{ .Site.BaseURL }}js/toc-glider.js"></script>
 <script defer src="{{ .Site.BaseURL }}js/custom-scrollbar.js"></script>
 <script defer src="{{ .Site.BaseURL }}js/taxonomy-collapse.js"></script>
