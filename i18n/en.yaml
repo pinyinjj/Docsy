@@ -135,3 +135,7 @@
 
 - id: "donate_desc"
   translation: "If this article helped you, consider supporting the author."
+
+# Original Statement
+- id: "original_statement"
+  translation: "Original Statement: This is an original work by the author, licensed under an open license that permits free use, modification, distribution, and commercial application without additional authorization."

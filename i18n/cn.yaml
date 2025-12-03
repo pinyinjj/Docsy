@@ -183,3 +183,7 @@
 
 - id: "donate_desc"
   translation: "如果本文对你有帮助，欢迎打赏支持作者。"
+
+# 原创声明
+- id: "original_statement"
+  translation: "原创声明：本文为作者原创作品，采用开放许可，允许自由使用、修改、分发及商业应用，无需额外授权。"

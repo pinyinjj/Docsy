@@ -126,6 +126,8 @@ draft: false
 ## 标签与分类（唯一来源）
 
 ### 有效的标签tags列表
+- Gazebo
+- 飞控
 - 通信
 - FastDDS
 - ROS

@@ -61,6 +61,10 @@ body::before {
 
   {{ partial "page-meta/lastmod.html" . }}
 
+  <div class="original-statement my-3" style="font-size: 0.9em; color: #666; font-style: italic; border-left: 3px solid #007bff; padding-left: 12px;">
+    {{ i18n "original_statement" | default "Original Statement: This is an original work by the author, licensed under an open license that permits free use, modification, distribution, and commercial application without additional authorization." }}
+  </div>
+
   <hr class="my-4">
   
   {{ with .Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
