@@ -164,9 +164,7 @@ sudo apt install mavlink-router
 
 如果在 Ubuntu Focal 等版本中遇到以下错误：
 
-```text
-E: Unable to locate package mavlink-router
-```
+<pre style="color: red;"><code>E: Unable to locate package mavlink-router</code></pre>
 
 则需要从源码编译安装。
 
