@@ -1,7 +1,7 @@
 ---
-title: "基于Pymavlink的任务规划实现"
+title: "基于 Pymavlink 的任务规划实现"
 date: 2025-09-30
-summary: "使用MAVLink协议和pymavlink库进行任务规划航点发送的完整方案，支持与QGroundControl完全兼容，提供多航点批量上传、异步操作等功能。"
+summary: "使用 MAVLink 协议和 pymavlink 库进行任务规划航点发送的完整方案，支持与QGroundControl完全兼容，提供多航点批量上传、异步操作等功能。"
 tags: ["MAVLink", "pymavlink", "任务规划", "QGroundControl", "无人机", "地面站"]
 categories: ["技术文档"]
 weight: 10
@@ -14,7 +14,7 @@ weight: 10
 - **直接通信**: 直接使用MAVLink协议，与QGC完全一致
 - **灵活控制**: 可以精确控制消息发送和错误处理
 - **高效稳定**: 直接通信，性能更好，减少潜在问题
-- **完全兼容**: 支持与QGroundControl、MAVSDK-Python等应用同时使用
+- **完全兼容**: 支持与QGroundControl, MAVSDK-Python等应用同时使用
 
 ## 2. 主要功能
 
@@ -101,10 +101,17 @@ waypoint = {
 
 ## 5. MAVLink 命令说明
 
-### 5.1 常用导航命令
+### 5.1 MAVLink 命令参考
 
-| 命令值 | 命令名称 | 说明 | 参数说明 |
-|--------|----------|------|----------|
+| 命令值 | 命令名称 | 说明 | 参数说明/使用场景 |
+|--------|----------|------|-------------------|
+| 0 | `MAV_CMD_NAV_WAYPOINT` | 空命令 | 占位符 |
+| 1 | `MAV_CMD_NAV_LOITER_UNLIM` | 无限盘旋 | 待机、观察 |
+| 2 | `MAV_CMD_NAV_LOITER_TURNS` | 指定圈数盘旋 | 精确盘旋 |
+| 3 | `MAV_CMD_NAV_LOITER_TIME` | 指定时间盘旋 | 定时盘旋 |
+| 4 | `MAV_CMD_NAV_RETURN_TO_LAUNCH` | 返回起飞点 | 紧急返航 |
+| 5 | `MAV_CMD_NAV_LAND` | 降落 | 任务结束 |
+| 6 | `MAV_CMD_NAV_TAKEOFF` | 起飞 | 任务开始 |
 | 16 | `MAV_CMD_NAV_WAYPOINT` | 导航到航点 | param1: 停留时间, param2: 接受半径, param3: 飞越半径, param4: 航向角 |
 | 20 | `MAV_CMD_NAV_RETURN_TO_LAUNCH` | 返回起飞点 | param1: 高度, param2: 空, param3: 空, param4: 空 |
 | 21 | `MAV_CMD_NAV_LAND` | 降落 | param1: 中止高度, param2: 降落方向, param3: 空, param4: 空 |
@@ -114,19 +121,7 @@ waypoint = {
 | 85 | `MAV_CMD_NAV_LOITER_TURNS` | 指定圈数盘旋 | param1: 圈数, param2: 半径, param3: 空, param4: 空 |
 | 86 | `MAV_CMD_NAV_LOITER_TIME` | 指定时间盘旋 | param1: 时间(秒), param2: 半径, param3: 空, param4: 空 |
 
-### 5.2 特殊命令
-
-| 命令值 | 命令名称 | 说明 | 使用场景 |
-|--------|----------|------|----------|
-| 0 | `MAV_CMD_NAV_WAYPOINT` | 空命令 | 占位符 |
-| 1 | `MAV_CMD_NAV_LOITER_UNLIM` | 无限盘旋 | 待机、观察 |
-| 2 | `MAV_CMD_NAV_LOITER_TURNS` | 指定圈数盘旋 | 精确盘旋 |
-| 3 | `MAV_CMD_NAV_LOITER_TIME` | 指定时间盘旋 | 定时盘旋 |
-| 4 | `MAV_CMD_NAV_RETURN_TO_LAUNCH` | 返回起飞点 | 紧急返航 |
-| 5 | `MAV_CMD_NAV_LAND` | 降落 | 任务结束 |
-| 6 | `MAV_CMD_NAV_TAKEOFF` | 起飞 | 任务开始 |
-
-### 5.3 坐标系说明
+### 5.2 坐标系说明
 
 | 坐标系值 | 坐标系名称 | 说明 | 使用场景 |
 |----------|------------|------|----------|
@@ -140,7 +135,15 @@ waypoint = {
 
 ## 6. 使用示例
 
-### 6.1 基本使用 - 创建航点任务
+### 6.1 安装依赖
+
+首先需要安装pymavlink库：
+
+```bash
+pip install pymavlink
+```
+
+### 6.2 基本使用 - 创建航点任务
 ```python
 # 创建发送器
 sender = PyMAVLinkWrapper("drone1")
@@ -165,7 +168,7 @@ sender.add_waypoint(base_lat, base_lon + side_length, base_alt)
 success = await sender.send_mission()
 ```
 
-### 6.2 关键特性
+### 6.3 关键特性
 - **异步操作**: 支持异步连接和任务发送
 - **双格式支持**: 自动处理MISSION_REQUEST和MISSION_REQUEST_INT消息
 - **系统ID处理**: 自动检测和设置系统ID和组件ID
@@ -175,7 +178,7 @@ success = await sender.send_mission()
 - **QGC兼容**: 与QGroundControl完全兼容
 - **灵活配置**: 支持所有MAVLink航点参数
 
-### 6.3 高级配置
+### 6.4 高级配置
 
 #### 自定义航点参数
 ```python
@@ -295,13 +298,7 @@ for wp in survey_waypoints:
 success = await sender.send_mission()
 ```
 
-## 8. 依赖要求
-
-```bash
-pip install pymavlink
-```
-
-## 9. 注意事项
+## 7. 注意事项
 
 1. 确保无人机已连接并GPS定位正常
 2. 检查MAVLink连接参数
@@ -317,34 +314,6 @@ pip install pymavlink
 12. **连接字符串**: 默认使用`udp:127.0.0.1:14540`，可根据需要修改
 13. **端口独占**: 一个UDP端口通常只能被一个应用接收使用；多应用并行时请为每个应用分配不同端口（例如：QGC→14540，MAVSDK→14550，pymavlink→14600），或为其中一部分应用使用TCP端口。
 
-## 10. 与 QGC 兼容性
-
-本实现完全兼容QGroundControl：
-- 使用相同的MAVLink消息格式
-- 支持相同的航点参数
-- 可以相互导入导出任务文件
-- 实时同步任务状态
-
-## 11. 命令参考表
-
-### 11.1 快速参考
-
-| 命令值 | 命令名称 | 常用场景 | 关键参数 |
-|--------|----------|----------|----------|
-| 16 | `MAV_CMD_NAV_WAYPOINT` | 标准航点导航 | param2: 接受半径 |
-| 20 | `MAV_CMD_NAV_RETURN_TO_LAUNCH` | 紧急返航 | 无关键参数 |
-| 21 | `MAV_CMD_NAV_LAND` | 降落 | param1: 中止高度 |
-| 22 | `MAV_CMD_NAV_TAKEOFF` | 起飞 | param1: 俯仰角, param4: 偏航角 |
-
-### 11.2 坐标系快速参考
-
-| 坐标系值 | 坐标系名称 | 推荐使用场景 |
-|----------|------------|--------------|
-| 3 | `MAV_FRAME_GLOBAL_RELATIVE_ALT` | 标准任务（推荐） |
-| 0 | `MAV_FRAME_GLOBAL` | 全球绝对高度任务 |
-| 1 | `MAV_FRAME_LOCAL_NED` | 本地NED任务 |
-| 6 | `MAV_FRAME_GLOBAL_INT` | 高精度全球任务 |
-| 7 | `MAV_FRAME_GLOBAL_RELATIVE_ALT_INT` | 高精度相对高度任务 |
 
 
 ---
