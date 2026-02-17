@@ -208,6 +208,8 @@ draft: false
 - MAVSDK
 - MAVSDK-Python
 - Linux
+- lua
+- 二次开发
 - Ubuntu
 - Android
 - QGroundControl
@@ -239,7 +241,7 @@ draft: false
 - 技术文档
 - 踩坑记录
 - 学习笔记
-- Paradox Mods
+- 游戏插件
 
 ## 使用说明（如何让章节规则生效）
 - 当你的文档章节名与本 README 中某一“章节→强制规则映射表”的标题完全一致时，生成与审校流程必须严格执行该章节下的所有规则。
