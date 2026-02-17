@@ -3,7 +3,7 @@ title: "维多利亚3 战争赔款恶名优化mod"
 summary: "适用于《维多利亚3》（v1.9.8）的模组，为战争赔款提供可调节的恶名机制，允许玩家自定义恶名获取，并加快衰减速度、提高阈值。"
 date: 2025-09-14
 tags:
-categories: ["Paradox Mods"]
+categories: ["游戏插件"]
 weight: 10
 ---
 

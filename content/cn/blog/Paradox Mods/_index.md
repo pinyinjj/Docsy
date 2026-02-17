@@ -1,6 +1,6 @@
 ---
-title: "Paradox Mods"
-description: "针对Paradox系列游戏MOD开发的全面参考，包括Mod结构、脚本编写、资源管理及部署流程。"
+title: "游戏插件"
+description: "针对电子游戏插件开发的全面参考，包括Mod结构、脚本编写、二次开发实践、资源管理及部署流程。"
 weight: 10
 ---
 
