@@ -25,7 +25,7 @@ body {
     {{ if $subsections }}
       <div class="blog-collections mt-4">
         <div class="row">
-          {{ range $subsections.ByWeight }}
+          {{ range $i, $e := $subsections.ByWeight }}
             <div class="col-md-6 col-lg-4 mb-4">
               <div class="blog-collection-card">
                 <div class="blog-collection-content">
@@ -58,7 +58,7 @@ body {
   <div class="blog-posts mt-4">
     {{ $paginator := .Paginate .Pages }}
     {{ if gt (len $paginator.Pages) 0 }}
-      {{ range $paginator.Pages }}
+      {{ range $i, $e := $paginator.Pages }}
         <a href="{{ .RelPermalink }}" class="blog-post-container mb-4 noselect">
           <div class="blog-post-canvas">
             <div class="blog-post-tracker tr-1"></div>
@@ -87,16 +87,22 @@ body {
             <div class="blog-post-tracker tr-24"></div>
             <div class="blog-post-tracker tr-25"></div>
             <div class="blog-post-item" id="blog-card">
-              <h3>{{ .Title }}</h3>
-              <div class="blog-post-meta text-muted mb-2">
-                <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006-01-02" }}</time>
-                {{ if .Params.tags }}
-                  {{ range first 8 .Params.tags }}
-                    <span class="badge bg-secondary ms-1">{{ . }}</span>
+              <div class="blog-post-header">
+                <h3>{{ .Title }}</h3>
+                <div class="blog-post-meta text-muted mb-2">
+                  <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "last_updated" | default "Updated" }} {{ .Lastmod.Format "2006-01-02" }}</time>
+                  {{ if .Params.categories }}
+                    {{ range .Params.categories }}
+                      <span class="badge bg-primary ms-1">{{ . }}</span>
+                    {{ end }}
                   {{ end }}
-                {{ end }}
+                  {{ if .Params.tags }}
+                    {{ range first 8 .Params.tags }}
+                      <span class="badge bg-secondary ms-1">{{ . }}</span>
+                    {{ end }}
+                  {{ end }}
+                </div>
               </div>
-              {{ if eq .Kind "section" }}
               <p>
                 {{ if .Params.summary }}
                   {{ .Params.summary }}
@@ -106,7 +112,6 @@ body {
                   {{ .Summary }}
                 {{ end }}
               </p>
-              {{ end }}
             </div>
           </div>
         </a>

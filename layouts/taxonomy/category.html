@@ -41,7 +41,7 @@ body {
     <div class="blog-posts mt-4">
       {{ $paginator := .Paginate .Pages }}
       {{ if gt (len $paginator.Pages) 0 }}
-        {{ range $paginator.Pages }}
+        {{ range $i, $e := $paginator.Pages }}
           <article class="blog-post-item mb-4">
             <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
             <div class="blog-post-meta text-muted mb-2">
