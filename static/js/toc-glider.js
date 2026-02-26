@@ -107,38 +107,47 @@
     if (!tocItems || tocItems.length === 0) return;
 
     var topThreshold = offset || 0;
-    var quarterThreshold = window.innerHeight * 0.25; // 25% from top
-    var middleThreshold = window.innerHeight * 0.5;  // 50% from top
+    var quarterThreshold = window.innerHeight * 0.25;
+    var middleThreshold = window.innerHeight * 0.5;
+    
+    var minLevel = 99;
+    for (var k = 0; k < tocItems.length; k++) {
+      if (tocItems[k].level < minLevel) minLevel = tocItems[k].level;
+    }
+
     var activeIndex = 0;
 
     for (var i = 0; i < tocItems.length; i++) {
       var item = tocItems[i];
       var rect = item.heading.getBoundingClientRect();
+      var isTopLevel = item.level <= minLevel;
       
-      var prevItem = i > 0 ? tocItems[i-1] : null;
-      var prevRect = prevItem ? prevItem.heading.getBoundingClientRect() : null;
+      // 1. Is this heading already "Gone" (scrolled past the navbar)?
+      // We use a -20px buffer to ensure the title is well hidden before switching.
+      var isGone = rect.top < topThreshold - 20;
       
-      var passedTop = rect.top <= topThreshold + 5;
-      var passedQuarter = rect.top <= quarterThreshold;
-      var passedMiddle = rect.top <= middleThreshold;
-      
-      var prevOffScreen = prevRect ? (prevRect.top < topThreshold - 5) : true;
-
-      var isTopLevel = item.level === 0;
-      var shouldActivate = passedTop;
-
-      if (!shouldActivate && prevOffScreen) {
-        // Top-level headings (H2) are more responsive (50% threshold)
-        // Sub-headings (H3, H4) stay active longer (25% threshold)
-        // This ensures siblings like 5.1 and 5.2 don't fight for focus too early
-        shouldActivate = isTopLevel ? passedMiddle : passedQuarter;
+      if (isGone) {
+        // If it's gone, it's the current best activeIndex, but we keep looking 
+        // to see if the NEXT one is also gone or ready to activate.
+        activeIndex = i;
+        continue;
       }
-
-      if (shouldActivate) {
+      
+      // 2. This is the FIRST heading that is still visible or just arriving.
+      // It is the ONLY candidate that can claim the glider now.
+      var threshold = isTopLevel ? middleThreshold : quarterThreshold;
+      
+      if (rect.top <= threshold) {
+        // It reached its trigger line, it becomes active.
         activeIndex = i;
       } else {
-        break;
+        // It hasn't reached its trigger line yet.
+        // The glider will stay on the previous heading (already set in activeIndex).
       }
+      
+      // 3. CRITICAL: Once we've handled the "Front Line" heading, we STOP.
+      // This prevents further headings (like 2.2) from activating while 2.1 is still the primary focus.
+      break;
     }
 
     var current = tocItems[activeIndex];
