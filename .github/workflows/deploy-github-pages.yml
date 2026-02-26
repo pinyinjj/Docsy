@@ -45,11 +45,6 @@ jobs:
           git log -1 --pretty=oneline
           git describe --always --dirty --tags || true
           echo "Is shallow? $(git rev-parse --is-shallow-repository)"
-          echo "Tracked file?" && git ls-files -- ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
-          echo "Recent history for file:" && git log -3 --name-status -- ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
-          echo "Check content file commit (if tracked):"
-          git log -1 --pretty=oneline -- ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
-          git status --porcelain ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
       
       - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
 
