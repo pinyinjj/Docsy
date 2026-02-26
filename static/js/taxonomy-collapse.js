@@ -106,9 +106,22 @@
                 }
             });
 
-            // 初始状态：收起（不占用空间）
-            cloud.classList.add('taxonomy-collapsed');
-            termsList.style.display = 'none';
+            // 初始状态判断：博客列表页、分类/标签列表页默认展开，文章详情页默认收起
+            const isBlogList = document.querySelector('.blog-page') !== null;
+            const isTaxonomyList = document.body.classList.contains('td-taxonomy');
+            const isSection = document.body.classList.contains('td-section');
+            
+            // 如果是列表类页面，则默认展开
+            if (isBlogList || isTaxonomyList || isSection) {
+                cloud.classList.add('taxonomy-expanded');
+                arrowButton.setAttribute('aria-expanded', 'true');
+                arrowButton.classList.add('expanded');
+                termsList.style.display = 'block';
+            } else {
+                // 默认收起（详情页等）
+                cloud.classList.add('taxonomy-collapsed');
+                termsList.style.display = 'none';
+            }
 
             // 排序：按数量从高到低排序
             sortTermsByCount(termsList);
