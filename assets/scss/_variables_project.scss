@@ -1138,9 +1138,19 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
     font-size: 1rem;
     font-weight: 700;
     color: white !important;
-    border-bottom: $consistent-white-border !important;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+    border-bottom: none !important;
+    padding: 0 !important;
+    margin-bottom: 0.5rem !important; /* 从 0.2rem 增加到 0.5rem */
+}
+
+.taxonomy-terms-cloud .taxonomy-terms {
+    margin-top: 0 !important;
+    list-style: none;
+    padding-left: 0;
+}
+
+.taxonomy-terms-cloud .taxonomy-terms li {
+    margin-bottom: 0.1rem !important; /* 缩小列表项之间的垂直间距 */
 }
 
 /* Additional taxonomy title styles for consistency */
@@ -1149,22 +1159,22 @@ h5.taxonomy-title,
 .td-content .taxonomy-title {
     color: rgba(0, 0, 0, 0.622) !important;
     font-weight: 700;
-    padding-bottom: 1rem; /* consistent spacing */
-    margin-bottom: 1rem;
+    padding-bottom: 0;
+    margin-bottom: 0.5rem;
 }
 /* Taxonomy tags and categories: white on non-blog pages, default on single blog pages */
 .td-page:not(.td-blog) .taxonomy-terms-cloud.taxo-tags .taxonomy-title,
 .td-page:not(.td-blog) .taxonomy-terms-cloud.taxo-categories .taxonomy-title {
     color: white !important;
-    border-bottom: $consistent-white-border !important;
+    border-bottom: none !important;
 }
 .td-page.td-blog .taxonomy-terms-cloud.taxo-tags .taxonomy-title {
     color: initial !important;
-    border-bottom: 1px solid $black !important;
+    border-bottom: none !important;
 }
 .td-page.td-blog .taxonomy-terms-cloud.taxo-categories .taxonomy-title {
     color: initial !important;
-    border-bottom: 1px solid $black !important;
+    border-bottom: none !important;
 }
 
 /* Taxonomy collapse/expand styles */
@@ -1250,22 +1260,22 @@ h5.taxonomy-title,
 
 .taxonomy-title-clickable:hover,
 .taxonomy-title-clickable:focus-visible {
-    /* 与右侧目录 glider 一致的淡红高亮 */
-    background-color: #f6c6ce;
-    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
+    /* 浅白色高亮 */
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* 箭头在高亮时同步变色 */
 .taxonomy-title-clickable:hover .taxonomy-toggle-arrow,
 .taxonomy-title-clickable:focus-visible .taxonomy-toggle-arrow {
-    color: rgba(139, 0, 26, 0.9);
+    color: currentColor;
 }
 
 /* 非博客页面（白字主题）下，确保对比度 */
 .td-page:not(.td-blog) .taxonomy-title-clickable:hover,
 .td-page:not(.td-blog) .taxonomy-title-clickable:focus-visible {
-    background-color: #f6c6ce;
-    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* 博客页面特定样式 */

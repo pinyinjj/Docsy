@@ -27,7 +27,7 @@
                 title.className = 'taxonomy-title';
                 // 根据容器类型设置标题
                 if (cloud.classList.contains('taxo-tags')) {
-                    title.textContent = 'Tag Cloud';
+                    title.textContent = 'Tags';
                 } else if (cloud.classList.contains('taxo-categories')) {
                     title.textContent = 'Categories';
                 } else {
