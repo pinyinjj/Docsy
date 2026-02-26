@@ -118,30 +118,20 @@
       var prevItem = i > 0 ? tocItems[i-1] : null;
       var prevRect = prevItem ? prevItem.heading.getBoundingClientRect() : null;
       
-      var isSubHeading = prevItem ? (item.level > prevItem.level) : false;
-      var isSiblingOrHigher = !isSubHeading;
-
-      // New Activation Rules:
-      // 1. Always active if it hits the Top (+ navbar offset)
       var passedTop = rect.top <= topThreshold + 5;
-      
-      // 2. Sub-headings (e.g., 3.1) activate early at 25% screen height
       var passedQuarter = rect.top <= quarterThreshold;
-      
-      // 3. Siblings/Higher (e.g., 3.2 or 4) activate at 50% screen height
       var passedMiddle = rect.top <= middleThreshold;
       
       var prevOffScreen = prevRect ? (prevRect.top < topThreshold - 5) : true;
 
-      var shouldActivate = false;
-      if (passedTop) {
-        shouldActivate = true;
-      } else if (prevOffScreen) {
-        if (isSubHeading && passedQuarter) {
-          shouldActivate = true;
-        } else if (isSiblingOrHigher && passedMiddle) {
-          shouldActivate = true;
-        }
+      var isTopLevel = item.level === 0;
+      var shouldActivate = passedTop;
+
+      if (!shouldActivate && prevOffScreen) {
+        // Top-level headings (H2) are more responsive (50% threshold)
+        // Sub-headings (H3, H4) stay active longer (25% threshold)
+        // This ensures siblings like 5.1 and 5.2 don't fight for focus too early
+        shouldActivate = isTopLevel ? passedMiddle : passedQuarter;
       }
 
       if (shouldActivate) {
