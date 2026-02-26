@@ -52,10 +52,12 @@
 
   var hoveredLink = null;
   var isHovering = false;
+  var lockedLink = null;
+  var lockTimer = null;
 
   function updateGlider() {
-    // NEVER update glider during hover - it should be frozen
-    if (isHovering) return;
+    // NEVER update glider during hover or click-lock - it should be frozen
+    if (isHovering || lockedLink) return;
     
     var tocContainer = select('.td-page.td-blog .td-sidebar-toc .td-toc') || select('.td-page.td-blog .td-toc');
     var tocNav = select('#TableOfContents', tocContainer);
@@ -86,7 +88,14 @@
       var id = decodeURIComponent(hash.slice(1));
       var heading = document.getElementById(id);
       if (heading) {
-        items.push({ link: link, heading: heading });
+        // Determine level by counting parent ULs
+        var level = 0;
+        var p = link.parentElement;
+        while (p && p.id !== 'TableOfContents') {
+          if (p.tagName === 'UL') level++;
+          p = p.parentElement;
+        }
+        items.push({ link: link, heading: heading, level: level });
       }
     });
     return items;
@@ -94,21 +103,55 @@
 
   // Determine active heading by scroll position and update ToC active class
   function setActiveByScroll(tocItems, offset) {
-    if (isHovering) return;
+    if (isHovering || lockedLink) return;
     if (!tocItems || tocItems.length === 0) return;
-    var scrollPos = window.pageYOffset || document.documentElement.scrollTop || 0;
-    var threshold = scrollPos + (offset || 0) + 1; // +1 to bias to current section
 
-    var current = tocItems[0];
+    var topThreshold = offset || 0;
+    var quarterThreshold = window.innerHeight * 0.25; // 25% from top
+    var middleThreshold = window.innerHeight * 0.5;  // 50% from top
+    var activeIndex = 0;
+
     for (var i = 0; i < tocItems.length; i++) {
-      var rect = tocItems[i].heading.getBoundingClientRect();
-      var top = rect.top + scrollPos; // heading absolute top
-      if (top <= threshold) {
-        current = tocItems[i];
+      var item = tocItems[i];
+      var rect = item.heading.getBoundingClientRect();
+      
+      var prevItem = i > 0 ? tocItems[i-1] : null;
+      var prevRect = prevItem ? prevItem.heading.getBoundingClientRect() : null;
+      
+      var isSubHeading = prevItem ? (item.level > prevItem.level) : false;
+      var isSiblingOrHigher = !isSubHeading;
+
+      // New Activation Rules:
+      // 1. Always active if it hits the Top (+ navbar offset)
+      var passedTop = rect.top <= topThreshold + 5;
+      
+      // 2. Sub-headings (e.g., 3.1) activate early at 25% screen height
+      var passedQuarter = rect.top <= quarterThreshold;
+      
+      // 3. Siblings/Higher (e.g., 3.2 or 4) activate at 50% screen height
+      var passedMiddle = rect.top <= middleThreshold;
+      
+      var prevOffScreen = prevRect ? (prevRect.top < topThreshold - 5) : true;
+
+      var shouldActivate = false;
+      if (passedTop) {
+        shouldActivate = true;
+      } else if (prevOffScreen) {
+        if (isSubHeading && passedQuarter) {
+          shouldActivate = true;
+        } else if (isSiblingOrHigher && passedMiddle) {
+          shouldActivate = true;
+        }
+      }
+
+      if (shouldActivate) {
+        activeIndex = i;
       } else {
         break;
       }
     }
+
+    var current = tocItems[activeIndex];
 
     // Update classes
     selectAll('.td-page.td-blog .td-toc #TableOfContents a.active').forEach(function (a) { a.classList.remove('active'); });
@@ -118,6 +161,7 @@
   }
 
   function onScrollSpyActivate() {
+    if (lockedLink) return;
     // Debounce a bit to let classes settle
     window.requestAnimationFrame(updateGlider);
   }
@@ -155,13 +199,34 @@
       headerOffset = Math.max(0, nbcr2.height || 0) + 8;
     }
 
+    // Add click listeners to ToC links to "lock" the glider
+    selectAll('.td-page.td-blog .td-toc #TableOfContents a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (lockTimer) window.clearTimeout(lockTimer);
+        lockedLink = link;
+
+        // Force active class and update glider immediately
+        selectAll('.td-page.td-blog .td-toc #TableOfContents a.active').forEach(function (a) { 
+          a.classList.remove('active'); 
+        });
+        link.classList.add('active');
+        
+        moveGliderToLink(link, false);
+
+        // Release lock after scroll completes (approx 1s)
+        lockTimer = window.setTimeout(function () {
+          lockedLink = null;
+        }, 1000);
+      });
+    });
+
     // Set initial active by scroll and position glider
     setActiveByScroll(tocItems, headerOffset);
     updateGlider();
 
     // Bootstrap ScrollSpy event (ignored while hovering)
     document.addEventListener('activate.bs.scrollspy', function (e) {
-      if (isHovering) return;
+      if (isHovering || lockedLink) return;
       onScrollSpyActivate(e);
     });
 
@@ -169,7 +234,7 @@
     var tocNav = select('.td-page.td-blog .td-toc #TableOfContents');
     if (tocNav && window.MutationObserver) {
       var observer = new MutationObserver(function () {
-        if (isHovering) return;
+        if (isHovering || lockedLink) return;
         updateGlider();
       });
       observer.observe(tocNav, { subtree: true, attributes: true, attributeFilter: ['class', 'aria-current'] });
@@ -177,7 +242,7 @@
 
     // Also update on scroll to keep glider responsive even if ScrollSpy doesn't emit yet
     window.addEventListener('scroll', function () {
-      if (isHovering) return;
+      if (isHovering || lockedLink) return;
       window.requestAnimationFrame(function () {
         setActiveByScroll(tocItems, headerOffset);
         updateGlider();
@@ -186,7 +251,7 @@
 
     // Update on resize to keep alignment
     window.addEventListener('resize', function () {
-      if (isHovering) return;
+      if (isHovering || lockedLink) return;
       // Recalculate offset and positions on resize
       var nb = select('.td-navbar');
       if (nb) {
