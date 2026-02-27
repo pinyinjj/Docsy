@@ -75,10 +75,12 @@ body::before {
     text-decoration: none;
 }
 /* Dark hover on single blog pages */
-.td-page.td-blog .td-sidebar__inner a:hover {
-    background: $global-hover-bg-dark !important;
+.td-page.td-blog .td-sidebar__inner a:hover,
+.td-page.td-blog .td-sidebar-link.active {
+    background: #f6c6ce !important;
     border-radius: 4px !important;
     text-decoration: none;
+    color: #8b001a !important; /* Match ToC active text color */
 }
 // Reset sidebar link color to default on single blog pages
 .td-page.td-blog .td-sidebar__inner a {
@@ -154,7 +156,7 @@ body::before {
 /* Blog posts: glider-like highlight for current reading ToC item */
 .td-page.td-blog .td-toc #TableOfContents a {
     position: relative;
-    border-radius: 99px;
+    border-radius: 4px;
     padding: 0.2rem 0.5rem;
 }
 
@@ -174,7 +176,7 @@ body::before {
 .td-page.td-blog .td-toc #TableOfContents ul ul a {
     font-size: 0.9em;
     padding: 0.15rem 0.45rem;
-    border-radius: 99px;
+    border-radius: 4px;
 }
 
 /* Disable hover box for ToC links on blog pages */
@@ -194,8 +196,8 @@ body::before {
     width: 100%;
     height: 30px; /* will be updated by JS */
     background-color: #f6c6ce;
-    border-radius: 99px;
-    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
+    border-radius: 4px;
+    box-shadow: none;
     transition: transform 0.25s ease-out, height 0.15s ease-out;
     z-index: 1;
 }
@@ -1333,7 +1335,8 @@ h5.taxonomy-title,
 }
 
 .td-page.td-blog .td-sidebar-link.taxonomy-title-clickable:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #f6c6ce !important;
+    color: #8b001a !important;
 }
 
 /* Ensure arrow button doesn't trigger parent link color changes unnecessarily */

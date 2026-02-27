@@ -110,10 +110,10 @@
                 display: none !important;
             }
 
-            /* 仅保留我们自定义的、位于标题下方的分类列表滚动条 */
+            /* 仅保留我们自定义的、位于标题下方的分类列表滚动条，但完全隐藏其视觉显示 */
             .td-sidebar-nav .ul-1 {
-                scrollbar-width: thin;
-                scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;     /* Firefox */
                 overflow-y: auto !important;
                 overflow-x: hidden !important;
                 max-height: calc(100vh - 160px); 
@@ -125,7 +125,23 @@
                 margin: 0 !important;
             }
 
-            /* 将 0.8rem 的间距应用到具体的链接元素上，并为文字增加一点点左侧偏移，同时取消加粗 */
+            .td-sidebar-nav .ul-1::-webkit-scrollbar {
+                display: none !important; /* Chrome, Safari and Opera */
+            }
+
+            /* 右侧 TOC 保持功能但隐藏滚动条 */
+            .td-sidebar-toc {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+            }
+
+            .td-sidebar-toc::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            /* 将 0.8rem 的间距应用到具体的链接元素上，并为文字增加左右偏移，同时取消加粗 */
             .td-sidebar-link {
                 width: 100% !important;
                 display: flex !important;
@@ -136,6 +152,11 @@
                 padding-right: 0.8rem !important;
                 box-sizing: border-box;
                 font-weight: normal !important; /* 强制取消加粗 */
+            }
+
+            /* 为具体文字内容增加右侧边距，防止超长文本贴边 */
+            .td-sidebar-link span {
+                margin-right: 0.5rem !important; 
             }
 
             /* 特别为分类标题（带有收纳箭头的）增加左侧微调，使其看起来像 " ROS" */
@@ -152,40 +173,6 @@
             .td-sidebar-nav .ul-2 .td-sidebar-link {
                 /* 嵌套链接需要扣除父级的缩进，保持视觉一致 */
                 padding-left: 0.8rem !important;
-            }
-
-            .td-sidebar-nav .ul-1::-webkit-scrollbar {
-                width: 6px;
-            }
-
-            .td-sidebar-nav .ul-1::-webkit-scrollbar-track {
-                background: transparent;
-            }
-
-            .td-sidebar-nav .ul-1::-webkit-scrollbar-thumb {
-                background: rgba(150, 150, 150, 0.4);
-                border-radius: 3px;
-            }
-
-            .td-sidebar-nav .ul-1::-webkit-scrollbar-thumb:hover {
-                background: rgba(150, 150, 150, 0.6);
-            }
-
-            /* 右侧 TOC 保持原样 */
-            .td-sidebar-toc {
-                scrollbar-width: thin;
-                scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-
-            .td-sidebar-toc::-webkit-scrollbar {
-                width: 6px;
-            }
-
-            .td-sidebar-toc::-webkit-scrollbar-thumb {
-                background: rgba(150, 150, 150, 0.4);
-                border-radius: 3px;
             }
 
             /* 内部容器恢复原有布局，不再强制移除 padding */
