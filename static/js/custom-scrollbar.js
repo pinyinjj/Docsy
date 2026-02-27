@@ -94,7 +94,8 @@
             .td-sidebar__inner,
             .td-sidebar-nav,
             .td-sidebar-nav__section.ul-0 {
-                overflow: hidden !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
                 -ms-overflow-style: none;
                 scrollbar-width: none;
                 padding-left: 0 !important;

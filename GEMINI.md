@@ -75,3 +75,4 @@ This project is a Hugo-based documentation and blog site titled **Zed**, built u
 - **git**: Never use git command automaticlly if user not ask.
 - **Consistensy**: Always reuse exists widgets or styles in project.
 - **Minium Fix**: Only code what user asked, if agent have better potential idea, ask user for approve, provide plan details.
+

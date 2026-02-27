@@ -58,11 +58,74 @@ body::before {
     -webkit-backdrop-filter: $consistent-blur;
 
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+    padding-top: 0 !important;
     padding-bottom: 1rem;
+
+    // Ensure sticky behavior on desktop
+    @media (min-width: 768px) {
+        position: sticky !important;
+        top: 4rem !important; // Offset for navbar
+        max-height: calc(100vh - 4rem) !important;
+        overflow-y: auto !important;
+    }
 }
 
 .td-sidebar__inner {
-    top: 0 !important;
+    position: relative;
+}
+
+/* Sidebar search bar: fix to top and eliminate gap */
+.td-sidebar__search {
+    position: sticky !important;
+    top: 0;
+    z-index: 10;
+    background: inherit;
+    backdrop-filter: $consistent-blur;
+    -webkit-backdrop-filter: $consistent-blur;
+    padding-top: 0.5rem;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Remove default padding/margin from all potential sidebar nav sections to close gap, but keep a small top padding for the root to avoid overlap with sticky search */
+.td-sidebar-nav, 
+.td-sidebar-nav .td-sidebar-nav__section,
+.td-sidebar-nav .ul-0 {
+    padding-top: 0.2rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Article Directory root title: standard positioning */
+.td-sidebar-nav .td-sidebar-link.tree-root {
+    position: relative !important;
+    z-index: 9;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-top: 2px solid transparent !important; /* Buffer for hover effect clipping */
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+/* Global hover for tree-root */
+.td-sidebar-nav .td-sidebar-link.tree-root:hover {
+    background: $global-hover-bg !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    z-index: 11 !important; /* Lift above sticky search bar bottom edge */
+}
+
+/* Blog page specific hover for tree-root */
+.td-page.td-blog .td-sidebar-nav .td-sidebar-link.tree-root:hover {
+    background: #f6c6ce !important;
+    color: #8b001a !important;
+    z-index: 11 !important;
 }
 
 .td-sidebar__inner a {
