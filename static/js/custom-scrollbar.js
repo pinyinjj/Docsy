@@ -89,27 +89,108 @@
                 background: rgba(200, 200, 200, 0.8);
             }
 
-            /* 侧边栏滚动条 */
+            /* 彻底删除左侧侧边栏各级容器的原有滚动条显示，并取消容器内边距以允许元素填满宽度 */
             .td-sidebar,
+            .td-sidebar__inner,
+            .td-sidebar-nav,
+            .td-sidebar-nav__section.ul-0 {
+                overflow: hidden !important;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+            
+            .td-sidebar::-webkit-scrollbar,
+            .td-sidebar__inner::-webkit-scrollbar,
+            .td-sidebar-nav::-webkit-scrollbar,
+            .td-sidebar-nav__section.ul-0::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            /* 仅保留我们自定义的、位于标题下方的分类列表滚动条 */
+            .td-sidebar-nav .ul-1 {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                max-height: calc(100vh - 160px); 
+                width: 100% !important;
+                padding-top: 5px !important;    /* 增加顶部边距，防止首项悬停效果被截断 */
+                padding-bottom: 5px !important; /* 增加底部边距，保持对称 */
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* 将 0.8rem 的间距应用到具体的链接元素上，并为文字增加一点点左侧偏移，同时取消加粗 */
+            .td-sidebar-link {
+                width: 100% !important;
+                display: flex !important;
+                align-items: center;
+                padding-top: 0.3rem !important;    /* 增加垂直内边距，确保悬停背景完整 */
+                padding-bottom: 0.3rem !important;
+                padding-left: 0.8rem !important;
+                padding-right: 0.8rem !important;
+                box-sizing: border-box;
+                font-weight: normal !important; /* 强制取消加粗 */
+            }
+
+            /* 特别为分类标题（带有收纳箭头的）增加左侧微调，使其看起来像 " ROS" */
+            .td-sidebar-link.taxonomy-title-clickable span {
+                margin-left: 0.3rem; 
+            }
+
+            /* 针对嵌套列表 ul-2 及其项，增加左侧缩进以体现层级 */
+            .td-sidebar-nav .ul-2 {
+                padding-left: 1rem !important;
+                width: 100% !important;
+            }
+
+            .td-sidebar-nav .ul-2 .td-sidebar-link {
+                /* 嵌套链接需要扣除父级的缩进，保持视觉一致 */
+                padding-left: 0.8rem !important;
+            }
+
+            .td-sidebar-nav .ul-1::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .td-sidebar-nav .ul-1::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .td-sidebar-nav .ul-1::-webkit-scrollbar-thumb {
+                background: rgba(150, 150, 150, 0.4);
+                border-radius: 3px;
+            }
+
+            .td-sidebar-nav .ul-1::-webkit-scrollbar-thumb:hover {
+                background: rgba(150, 150, 150, 0.6);
+            }
+
+            /* 右侧 TOC 保持原样 */
             .td-sidebar-toc {
                 scrollbar-width: thin;
                 scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+                overflow-y: auto;
+                overflow-x: hidden;
             }
 
-            .td-sidebar::-webkit-scrollbar,
             .td-sidebar-toc::-webkit-scrollbar {
                 width: 6px;
             }
 
-            .td-sidebar::-webkit-scrollbar-thumb,
             .td-sidebar-toc::-webkit-scrollbar-thumb {
                 background: rgba(150, 150, 150, 0.4);
                 border-radius: 3px;
             }
 
-            .td-sidebar::-webkit-scrollbar-thumb:hover,
-            .td-sidebar-toc::-webkit-scrollbar-thumb:hover {
-                background: rgba(150, 150, 150, 0.6);
+            /* 内部容器恢复原有布局，不再强制移除 padding */
+            .td-sidebar__inner {
+                width: 100%;
             }
 
             /* 响应式：移动设备上使用更细的滚动条 */

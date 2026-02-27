@@ -61,6 +61,10 @@ body::before {
     padding-bottom: 1rem;
 }
 
+.td-sidebar__inner {
+    top: 0 !important;
+}
+
 .td-sidebar__inner a {
     color: white !important;
 }
@@ -1301,6 +1305,55 @@ h5.taxonomy-title,
 /* 确保收起时完全不占用空间 */
 .taxonomy-terms-cloud.taxonomy-collapsed {
     margin-bottom: 0;
+}
+
+/* Sidebar Navigation Folder (Section) Collapse Adjustments */
+.td-sidebar-nav__section.taxonomy-collapsed {
+    margin-bottom: 0.2rem;
+}
+
+.td-sidebar-link.taxonomy-title-clickable {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.35rem 0.5rem !important;
+    border-radius: .375rem;
+    transition: background-color .2s ease;
+    margin-bottom: 0.1rem !important;
+    position: relative;
+    /* Docsy default might have some left padding/border we want to keep or adjust */
+}
+
+.td-sidebar-link.taxonomy-title-clickable:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    text-decoration: none !important;
+}
+
+.td-page.td-blog .td-sidebar-link.taxonomy-title-clickable:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Ensure arrow button doesn't trigger parent link color changes unnecessarily */
+.taxonomy-toggle-arrow {
+    background: none;
+    border: none;
+    padding: 2px;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    opacity: 0.6;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+    z-index: 2;
+}
+
+/* Override Docsy default padding for nested sidebar lists */
+.td-sidebar-nav__section.taxonomy-collapsed > ul {
+    display: none !important;
 }
 
 .taxonomy-terms-cloud.taxonomy-collapsed .taxonomy-terms {
