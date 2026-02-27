@@ -693,6 +693,8 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    word-break: normal; /* 恢复正常换行，避免单词被拆分 */
+    overflow-wrap: break-word; /* 仅在必要时拆分超长单词 */
 }
 
 .blog-collection-count {
@@ -1009,6 +1011,8 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
     -webkit-box-orient: vertical;
     overflow: hidden;
     min-height: unset; /* 移除固定高度，让标签随内容上移 */
+    word-break: normal; /* 恢复正常换行，避免单词被拆分 */
+    overflow-wrap: break-word; /* 仅在必要时拆分超长单词 */
 }
 
 .blog-post-header {
@@ -1061,7 +1065,8 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; /* 在多行截断时显示省略号 */
-    word-break: break-all; /* 确保长单词或无空格文本也能正确换行和显示省略号 */
+    word-break: normal; /* 恢复正常换行，避免单词被拆分 */
+    overflow-wrap: break-word; /* 仅在必要时拆分超长单词 */
 }
 
 /* Blog grid layout */

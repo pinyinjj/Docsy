@@ -86,7 +86,7 @@ body {
             <div class="blog-post-tracker tr-23"></div>
             <div class="blog-post-tracker tr-24"></div>
             <div class="blog-post-tracker tr-25"></div>
-            <div class="blog-post-item" id="blog-card">
+            <div class="blog-post-item blog-card">
               <div class="blog-post-header">
                 <h3>{{ .Title }}</h3>
                 <div class="blog-post-meta text-muted mb-2">
@@ -123,4 +123,5 @@ body {
 </div>
 <script defer src="{{ .Site.BaseURL }}js/custom-scrollbar.js"></script>
 <script defer src="{{ .Site.BaseURL }}js/taxonomy-collapse.js"></script>
+<script defer src="{{ .Site.BaseURL }}js/blog-card-adjust.js"></script>
 {{ end }}
