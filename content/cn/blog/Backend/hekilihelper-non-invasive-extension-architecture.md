@@ -89,7 +89,6 @@ categories: ["游戏插件"]
 *   **在 C/C++, C# 等编译型语言中的实现**：
     在这些语言中，实现函数钩子更为复杂，通常需要直接操作内存中的机器码（如利用 `Detours`, `MinHook` 库），或在中间语言层面进行注入（如使用 `Harmony` 库）。这与 Lua, Python 中利用语言原生动态性的方式存在本质区别。
 
-
 ### 2.3. HekiliHelper 中的钩子应用
 
 `HekiliHelper` 通过在 `HekiliHelper.lua` 中定义的 `HookUtils.Wrap` 工具函数实现“猴子补丁”。该函数是实现逻辑注入的关键：
@@ -263,7 +262,8 @@ end
 
 ## 4. 总结
 
-```mermaid
+{{< mermaid size="md">}}
+
 sequenceDiagram
     participant Hekili
     participant HekiliHelper
@@ -312,7 +312,8 @@ sequenceDiagram
     deactivate HealingShamanSkills
 
     note over Hekili, HekiliHelper: Hekili UI 渲染模块读取队列<br/>并显示更新后的推荐图标。
-```
+
+{{< /mermaid >}}
 
 `HekiliHelper` 通过一系列技术组合，实现了对现有插件的非侵入式功能增强：
 1.  **依赖声明**：通过 `.toc` 文件建立基础的加载关系。

@@ -15,7 +15,6 @@ draft: false
 **基础版本**：QGroundControl v5.0.6 Stable
 **开发目标**：为QGC添加语音交互能力，实现通过自然语言控制无人机
 
-
 ### 1.2 二次开发说明
 
 本实现在不修改QGC核心功能的前提下，通过以下方式扩展语音交互能力：
@@ -41,7 +40,8 @@ draft: false
 
 ### 2.1 整体架构图
 
-```mermaid
+{{< mermaid size="sm" >}}
+
 graph TB
     subgraph QGC["QGroundControl 客户端"]
         User["用户操作<br/>(按住/松开按钮)"]
@@ -98,13 +98,14 @@ graph TB
     style Agent fill:#e1bee7,stroke:#6a1b9a
     style Fleet fill:#c8e6c9,stroke:#2e7d32
     style LLM fill:#bbdefb,stroke:#1565c0
-```
+{{< /mermaid >}}
 
 ### 2.2 数据流向：时序图
 
 #### 完整交互流程
 
-```mermaid
+{{< mermaid >}}
+
 sequenceDiagram
     autonumber
     actor User as 用户
@@ -237,14 +238,12 @@ sequenceDiagram
         deactivate UI
         User->>User: 查看执行结果
     end
-```
 
+{{< /mermaid >}}
 
 ## 3. 核心组件
 
 ### 3.1 AudioRecorderController（C++音频控制器）
-
-
 
 #### 类设计
 
@@ -889,7 +888,8 @@ AudioRecorderController::AudioRecorderController(QObject *parent)
 
 QGC 需要将录制的 WAV 音频文件发送到后端服务器进行语音识别：
 
-```mermaid
+{{< mermaid size="sm" >}}
+
 sequenceDiagram
     participant Client as 客户端(QGC)
     participant Server as 服务端(后端API)
@@ -903,7 +903,8 @@ sequenceDiagram
     
     Server-->>-Client: JSON响应
     Note left of Server: { "result": "执行结果" }
-```
+    
+{{< /mermaid >}}
 
 **选择 multipart/form-data 的原因**：
 - WAV 是二进制格式，必须保持原始字节不变
@@ -998,13 +999,7 @@ view.set(parts.closing, offset)
 xhr.send(buffer)
 ```
 
-
-
-
-
-
 ## 4. 端到端语音链路
-
 
 ### 4.1 后端整体角色与接口约束
 

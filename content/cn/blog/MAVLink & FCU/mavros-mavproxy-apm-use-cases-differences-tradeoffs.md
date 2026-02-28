@@ -9,7 +9,7 @@ draft: false
 
 本文围绕 ArduPilot/APM 飞控平台，系统梳理 MAVROS 与 MAVProxy 的定位、工作原理、典型使用场景、差异点与组合策略，并评估在不同任务形态下它们的必要性以及可替代方案。
 
-```mermaid
+{{< mermaid size="md">}}
 flowchart TB
   A["APM/ArduPilot 飞控<br/>(MAVLink)"] --> RP["MAVProxy（路由/桥接）"]
   P["PX4 飞控<br/>(MAVLink)"] --> RR["MAVLink Router（路由）"]
@@ -37,8 +37,7 @@ flowchart TB
   end
   
   %% 可选：飞控直连地面站（仅人控/参数/任务管理）
-  
-```
+{{< /mermaid >}}
 
  - 只需“把数据给多人看/多服务用”：用 MAVProxy（或 MAVLink Router）。
  - 需要“在 ROS 内做算法并控制飞机”：用 MAVROS；若还要多路分发，再叠加 MAVProxy。
@@ -176,7 +175,6 @@ flowchart TB
 - 若主要诉求是“稳定扇出”与“运维可控”，首选 MAVProxy 或 MAVLink Router（择其一）。
 - 若主要诉求是“ROS 内算法闭环”，首选 MAVROS；是否叠加路由视是否有多消费者与安全隔离需求而定。
 
-
 ## 5. 项目实践的思考
 
 - **链路梳理**：明确输入端（串口/UDP 单播/广播）、下游清单（QGC、服务、算法端）。
@@ -190,7 +188,6 @@ flowchart TB
 - **可观测性与排障**：
   - 路由侧：定期检查下游端口存活状态、丢包与心跳计数；
   - ROS 侧：关注时间同步、话题队列、TF 树一致性与控制回路频率。
-
 
 ---
 

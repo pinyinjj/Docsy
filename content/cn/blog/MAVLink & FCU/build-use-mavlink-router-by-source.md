@@ -56,7 +56,8 @@ MAVLink Router 支持在不同传输介质之间桥接：
 
 MAVLink Router 在实际应用中有多种部署方式，可以根据具体需求选择机载部署或地面站部署。以下是一个综合的典型部署架构：
 
-```mermaid
+{{< mermaid size="md">}}
+
 graph TB
     FC[飞控<br/>PX4/ArduPilot] -->|UART<br/>/dev/ttyACM0| MR[MAVLink Router]
     
@@ -78,7 +79,8 @@ graph TB
     style QGC fill:#f3e5f5
     style MAVROS fill:#f3e5f5
     style MP fill:#f3e5f5
-```
+
+{{< /mermaid >}}
 
 **飞控连接（UART）**
 
@@ -89,8 +91,6 @@ graph TB
 QGroundControl 通过 UDP:14550 连接到 MAVLink Router，可以在同一网络内或通过 WiFi/4G 远程连接。QGroundControl 主要用于实时监控飞行状态，接收飞控数据。如果需要发送航点任务，建议使用 pymavlink 或 MAVSDK-Python（通过其他端口）。
 
 > **注意**：QGroundControl 的 MAVLink 转发功能只能接收数据，无法发送数据，会提示超时错误。如果需要双向通信（如发送航点任务、参数设置等），必须使用 MAVLink Router、MAVProxy 或其他支持双向转发的工具。
-
-
 
 **任务规划工具连接（UDP:14540）**
 
@@ -147,7 +147,6 @@ ros2 launch mavros px4.launch fcu_url:=tcp://127.0.0.1:5760
 **其他应用连接（TCP:5760）**
 
 TCP 服务器默认启用，监听端口 5760，支持多个 TCP 客户端同时连接。TCP 连接比 UDP 更可靠，但延迟略高，适合数据记录、远程监控等对可靠性要求高的应用。可以动态连接和断开，不影响其他端点。
-
 
 ## 3. 安装方式选择
 

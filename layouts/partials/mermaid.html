@@ -1,0 +1,38 @@
+{{ if .HasShortcode "mermaid" }}
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  .mermaid svg {
+    max-width: 100% !important;
+  }
+  /* Ensure the raw code is hidden before mermaid renders it */
+  .mermaid:not([data-processed="true"]) {
+    visibility: hidden;
+  }
+</style>
+<script>
+  (function() {
+    function initMermaid() {
+      if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({
+          startOnLoad: true,
+          theme: 'default',
+          securityLevel: 'loose',
+          fontFamily: '"Jost", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+          flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+          sequence: { useMaxWidth: true, htmlLabels: true }
+        });
+        console.log("Mermaid initialized successfully");
+      } else {
+        console.error("Mermaid library not loaded");
+        setTimeout(initMermaid, 500);
+      }
+    }
+    
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      initMermaid();
+    } else {
+      document.addEventListener("DOMContentLoaded", initMermaid);
+    }
+  })();
+</script>
+{{ end }}

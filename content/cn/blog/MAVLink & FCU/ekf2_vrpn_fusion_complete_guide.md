@@ -8,7 +8,6 @@ weight: 10
 draft: false
 ---
 
-
 本文档**不**包含 `ROS 2`, `MAVROS`, `Gazebo` 等工具的基础使用方法，也没有如何安装、编译或运行这些软件的具体步骤；
 而是**专注于：VRPN 位姿数据是如何进入系统、在各个设备中如何被处理与融合、以及如何通过日志和脚本分析这些数据**。
 
@@ -17,14 +16,14 @@ draft: false
 - 能够启动 `PX4` 飞控, `QGroundControl`，并、完成连接
 - 能够运行简单的 Python 脚本和 `ROS` / `ROS 2` 节点命令
 
-
 ## 1. 飞控的数据融合流程：从 VRPN 到位置融合数据
 
 ### 1.1 完整数据流
 
 VRPN 动捕系统的位置和姿态数据经过多个环节处理，最终融合到飞控的位置估计中。整个系统涉及三个主要设备：**动捕系统**，**伴随计算机** 和 **飞控**。
 
-```mermaid
+{{< mermaid size="md">}}
+
 graph TD
     subgraph 动捕系统["动捕系统设备"]
         A[VRPN动捕系统<br/>位置和姿态测量]
@@ -56,7 +55,8 @@ graph TD
     style C fill:#fff4e1,stroke:#ff9900,stroke-width:2px
     style B fill:#fff4e1,stroke:#ff9900,stroke-width:2px
     style G fill:#fce4ec,stroke:#cc0066,stroke-width:2px
-```
+
+{{< /mermaid >}}
 
 **设备功能说明**：
 
@@ -97,7 +97,6 @@ graph TD
 import rospy
 from geometry_msgs.msg import PoseStamped
 import math
-
 
 class VisionRelay(object):
     def __init__(self):
@@ -172,7 +171,6 @@ class VisionRelay(object):
         out.pose = msg.pose
         self.pub.publish(out)
 
-
 if __name__ == "__main__":
     rospy.init_node("vision_relay")
     node = VisionRelay()
@@ -216,7 +214,7 @@ if __name__ == "__main__":
 
 EKF2（Extended Kalman Filter 2）是PX4的核心融合算法，将VRPN数据与IMU数据融合：
 
-```mermaid
+{{< mermaid >}}
 graph LR
     A[VRPN位置数据] -->|External Vision| C[EKF2融合器]
     B[IMU数据] -->|高频预测| C
@@ -225,7 +223,7 @@ graph LR
     
     style C fill:#e1f5ff,stroke:#0066cc,stroke-width:3px
     style E fill:#fce4ec,stroke:#cc0066,stroke-width:2px
-```
+{{< /mermaid >}}
 
 **融合步骤**：
 
@@ -344,7 +342,8 @@ ros2 topic echo /fmu/out/estimator_status
 
 使用Gazebo仿真环境和ROS2 bridge，可以实时可视化飞机的位置和姿态，对比实机位置数据与仿真显示：
 
-```mermaid
+{{< mermaid size="sm">}}
+
 graph TD
     A[实机飞控] -->|MAVLink| B[MAVROS]
     B -->|/mavros/local_position/pose| C[ROS2 Bridge]
@@ -357,9 +356,8 @@ graph TD
     style E fill:#fce4ec,stroke:#cc0066,stroke-width:2px
     style C fill:#fff4e1,stroke:#ff9900,stroke-width:2px
     style B fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
-```
 
-
+{{< /mermaid >}}
 
 ### 3.3 Gazebo可视化插件
 
@@ -385,14 +383,16 @@ graph TD
 2. **VRPN原始位置**：来自`/vrpn_mocap/drone1/pose`（动捕系统原始数据）
 3. **期望位置**：来自位置控制器setpoint
 
-```mermaid
+{{< mermaid size="sm">}}
+
 graph LR
     A[实机位置<br/>mavros/local_position/pose] -->|对比| D[Gazebo显示]
     B[VRPN原始位置<br/>vrpn_mocap/drone1/pose] -->|对比| D
     C[期望位置<br/>setpoint] -->|对比| D
     
     style D fill:#fce4ec,stroke:#cc0066,stroke-width:3px
-```
+
+{{< /mermaid >}}
 
 **观察要点**：
 
@@ -415,7 +415,8 @@ graph LR
 
 #### 4.1.2 下载日志文件
 
-```mermaid
+{{< mermaid size="xs">}}
+
 graph TD
     A[QGC连接飞控] -->|连接成功| B[Vehicle Setup]
     B -->|Log Files| C[查看日志列表]
@@ -423,7 +424,8 @@ graph TD
     D -->|保存到本地| E[日志文件]
     
     style E fill:#e8f5e9,stroke:#009900,stroke-width:2px
-```
+
+{{< /mermaid >}}
 
 **操作步骤**：
 
@@ -460,7 +462,6 @@ pip install numpy matplotlib pandas
 ```python
 from pyulog import ULog
 import matplotlib.pyplot as plt
-
 
 # 这里直接指定需要分析的 ulog 文件
 ulog_file = 'log_284_2025-11-25-01-15-04.ulg'
@@ -531,11 +532,10 @@ plt.show()
 
 ```
 
-
-
 ### 4.3 执行分析
 
-```mermaid
+{{< mermaid size="sm">}}
+
 graph TD
     A[飞行测试 / 采集数据] -->|QGC下载| B[.ulg 日志文件]
     B -->|Python基础分析脚本<br/>main.py| C[提取关键数据]
@@ -557,7 +557,8 @@ graph TD
     style G fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
     style H fill:#fce4ec,stroke:#cc0066,stroke-width:2px
     style I fill:#fce4ec,stroke:#cc0066,stroke-width:2px
-```
+
+{{< /mermaid >}}
 
 在图示流程中，当通过日志分析、Gazebo 可视化完成参数调整或问题修复后，**应当重新回到流程起点（从新一轮飞行测试与日志采集开始）**，形成闭环迭代的调试过程。
 
@@ -617,8 +618,6 @@ graph TD
 - [log_287_2025-11-25-05-30-36.ulg](/Docsy/files/log_287_2025-11-25-05-30-36.ulg)
 
 在这次飞行中，从姿态控制到切换到 `Position` 模式的整个过程中，XYZ 三轴的 `estimator_local_position` 与 `vehicle_local_position` 曲线始终平滑且高度重合，X/Y 轴不再出现锯齿状位置跳变，`Position` 模式下飞行轨迹稳定可控，高度曲线也未出现明显漂移或突变。
-
-
 
 通过三次测试的逐步改进，验证了问题的根本原因和解决方案：
 

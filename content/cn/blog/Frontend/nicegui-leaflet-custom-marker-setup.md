@@ -21,7 +21,7 @@ weight: 10
 
 ### 整体架构图
 
-```mermaid
+{{< mermaid size="lg" >}}
 graph TB
     subgraph "Python 应用层"
         A[MarkerManager] --> B[状态管理]
@@ -50,11 +50,11 @@ graph TB
     H --> L
     G --> A
     K --> G
-```
+{{< /mermaid >}}
 
 ### 文件关联关系
 
-```mermaid
+{{< mermaid size="md" >}}
 graph LR
     subgraph "项目根目录"
         A[config.yaml]
@@ -83,11 +83,11 @@ graph LR
     E --> G
     F --> H
     F --> I
-```
+{{< /mermaid >}}
 
 ### 数据流图
 
-```mermaid
+{{< mermaid size="md" >}}
 sequenceDiagram
     participant P as Python应用
     participant N as NiceGUI
@@ -112,7 +112,7 @@ sequenceDiagram
     L-->>J: 更新完成
     J-->>N: 操作完成
     N-->>P: 状态同步
-```
+{{< /mermaid >}}
 
 ## 核心实现
 
@@ -120,7 +120,7 @@ sequenceDiagram
 
 #### 状态管理架构
 
-```mermaid
+{{< mermaid size="sm" >}}
 classDiagram
     class MarkersState {
         +boolean initialized
@@ -139,14 +139,13 @@ classDiagram
     }
     
     MarkersState --> MarkerFunctions
-```
-
+{{< /mermaid >}}
 
 ### Python包装器实现 (marker.py)
 
 #### 类设计架构
 
-```mermaid
+{{< mermaid size="sm" >}}
 classDiagram
     class MarkerManager {
         +ui.leaflet map_element
@@ -175,13 +174,13 @@ classDiagram
     }
     
     MarkerManager --> MarkerFactory
-```
+{{< /mermaid >}}
 
 ### 样式系统实现 (styles.py)
 
 #### 样式注入流程
 
-```mermaid
+{{< mermaid size="xs" >}}
 flowchart TD
     A[应用启动] --> B[调用apply_global_styles]
     B --> C[ui.add_body_html]
@@ -190,10 +189,9 @@ flowchart TD
     E --> F[设置容器样式]
     F --> G[配置响应式设计]
     G --> H[样式生效]
-```
+{{< /mermaid >}}
 
 ## 使用示例
-
 
 ### 批量操作示例
 
@@ -222,7 +220,7 @@ for marker in markers.values():
 
 #### 扩展流程
 
-```mermaid
+{{< mermaid size="xs" >}}
 flowchart TD
     A[设计新图标] --> B[创建SVG文件]
     B --> C[添加CSS样式]
@@ -230,7 +228,7 @@ flowchart TD
     D --> E[扩展Python工厂方法]
     E --> F[测试验证]
     F --> G[文档更新]
-```
+{{< /mermaid >}}
 
 #### 样式扩展示例
 
@@ -259,7 +257,7 @@ flowchart TD
 
 #### 动画系统架构
 
-```mermaid
+{{< mermaid >}}
 graph TB
     subgraph "动画类型"
         A[脉冲动画]
@@ -289,13 +287,13 @@ graph TB
     H --> G
     I --> G
     J --> G
-```
+{{< /mermaid >}}
 
 ### 事件系统扩展
 
 #### 事件流架构
 
-```mermaid
+{{< mermaid >}}
 sequenceDiagram
     participant U as 用户
     participant L as Leaflet
@@ -309,13 +307,13 @@ sequenceDiagram
     J->>N: emitEvent('marker-hovered')
     N->>P: 事件回调
     P->>P: 处理业务逻辑
-```
+{{< /mermaid >}}
 
 ## 配置管理
 
 ### 配置层次结构
 
-```mermaid
+{{< mermaid >}}
 graph TB
     subgraph "全局配置 config.yaml"
         A[地图配置]
@@ -341,7 +339,7 @@ graph TB
     E --> H
     C --> I
     F --> I
-```
+{{< /mermaid >}}
 
 ### 配置示例
 

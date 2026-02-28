@@ -553,7 +553,6 @@ def resolve_position(env, name: str) -> list[float]:
     return [pose.x, pose.y, pose.z]
 ```
 
-
 ### 4.3 多模态与语音集成（视觉/ASR/TTS）
 
 #### 视觉：拍图 → VLM
@@ -580,7 +579,6 @@ print(resp.choices[0].message.content)  # 目标列表
 - **`DepthPlanar`**：图中每个像素的值代表该点到相机**投影平面**的垂直距离。
 
 - **`DepthPerspective`**：图中每个像素的值代表该点到相机**光心**（即相机本身）的直线距离。
-
 
 结合这两种深度图，我们可以精确计算出任何一个像素点相对于相机的三维坐标。具体流程是：
 
@@ -732,7 +730,6 @@ else:
   "relations": {"near": ["tower#1"], "left_of": ["turbine#1"]}
 }
 ```
-
 
 ## 6. 基于功能框架自动构建知识库
 ### 6.1 思路与范式
@@ -1051,7 +1048,8 @@ print("已完成对风力发电机1的环绕检查。")
 
 6.  **（可选）语音合成 (TTS - Text to Speech)**：将执行结果或需要澄清的问题，合成为语音，向用户播报，形成交互闭环。
 
-```mermaid
+{{< mermaid size="sm">}}
+
 graph TD
     A[用户语音输入] -->|麦克风/UI| B(语音识别 ASR)
     B -->|文本指令| C{代码智能体 LLM Agent}
@@ -1065,7 +1063,8 @@ graph TD
     E -- 执行状态 --> C
     C -->|生成回复文本| H(语音合成 TTS)
     H -->|语音输出| I[用户]
-```
+
+{{< /mermaid >}}
 
 ### 8.4 案例
 

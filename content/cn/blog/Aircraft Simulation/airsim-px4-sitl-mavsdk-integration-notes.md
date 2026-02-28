@@ -7,10 +7,10 @@ categories: ["技术文档", "踩坑记录"]
 weight: 10
 ---
 
-
 ## 1. 网络拓扑
 
-```mermaid
+{{< mermaid size="sm">}}
+
 graph TB
     subgraph "WSL2"
         subgraph "地面站"
@@ -35,7 +35,8 @@ graph TB
     style PX4SITL fill:#e8f5e8
     style AirSim fill:#e1f5fe
     style AirSimCamera fill:#ffebee
-```
+
+{{< /mermaid >}}
 
 ### 1.1 端口配置详解
 
@@ -124,8 +125,6 @@ class PX4SITLManager:
             if state.is_connected:
                 break
 ```
-
-
 
 ---
 
@@ -318,7 +317,6 @@ lsof -i :14540                 # Linux/macOS
 pkill -f px4_sitl
 make px4_sitl gazebo
 ```
-
 
 ---
 

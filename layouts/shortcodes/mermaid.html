@@ -1,0 +1,14 @@
+{{- $size := .Get "size" | default "lg" -}}
+{{- $width := "100%" -}}
+{{- if eq $size "xs" }}{{ $width = "20%" -}}
+{{- else if eq $size "sm" }}{{ $width = "35%" -}}
+{{- else if eq $size "md" }}{{ $width = "65%" -}}
+{{- else if eq $size "lg" }}{{ $width = "100%" -}}
+{{- else if eq $size "xl" }}{{ $width = "115%" -}}
+{{- else if eq $size "full" }}{{ $width = "130%" -}}
+{{- end -}}
+<div class="mermaid-wrap" style="width: {{ $width }}; max-width: none; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin: 1.5rem 0; margin-left: 0; margin-right: auto; overflow: visible; position: relative; z-index: 10;">
+  <pre class="mermaid" style="background: white; border: none; padding: 0; margin: 0; font-family: inherit;">
+{{- .Inner | safeHTML -}}
+  </pre>
+</div>

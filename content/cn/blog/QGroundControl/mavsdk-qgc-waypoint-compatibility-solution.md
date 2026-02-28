@@ -23,7 +23,6 @@ gitinfo:
 - **QGroundControl**: 5.0.6 Stable ([GitHub仓库](https://github.com/mavlink/qgroundcontrol))
 - **MAVSDK-Python**: 3.10.2 ([GitHub仓库](https://github.com/mavlink/MAVSDK-Python))
 
-
 QGroundControl (QGC) 5.0.6 稳定版在航点管理方面存在一些已知问题，这些问题主要影响无人机任务的规划和执行：
 
 #### 主要问题表现
@@ -301,7 +300,8 @@ class MissionItemInt:
 
 #### 架构组件
 
-```mermaid
+{{< mermaid size="sm">}}
+
 graph TD
     A[User Data Input] --> B[Field Validation & Mapping]
     B --> C[MissionItem Construction]
@@ -309,7 +309,8 @@ graph TD
     D --> E[MissionRaw Conversion]
     E --> F[Flight Controller Upload]
     F --> G[QGC Display]
-```
+
+{{< /mermaid >}}
 
 #### 第一层：高层 MissionItem 数据组织
 
@@ -536,8 +537,6 @@ class MissionRawConverter:
        
        return item
    ```
-
-
 
 ## 4. 核心实现
 
@@ -964,7 +963,6 @@ class MissionUploader:
             logger.error(f"Failed to clear existing mission: {e}")
             raise ValueError(f"Mission clear failed: {e}")
 ```
-
 
 ## 参考文档
 
