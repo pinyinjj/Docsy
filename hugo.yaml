@@ -186,11 +186,11 @@ params:
     # End user relevant links. These will show up on left side of footer and in the community page if you have one.
     user:
       - name: Mail
-        url: /about/
+        url: /Docsy/about/
         icon: fa fa-envelope
         desc: To about
       - name: Wechat
-        url: /about/
+        url: /Docsy/about/
         icon: fab fa-weixin
         desc: To about
       # - name: Stack Overflow
@@ -198,7 +198,7 @@ params:
       #   icon: fab fa-stack-overflow
       #   desc: Practical questions and curated answers
       - name: QQ
-        url: /about/
+        url: /Docsy/about/
         icon: fab fa-qq
         desc: To about
       - name: Wallhaven

@@ -646,6 +646,8 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
     box-shadow: 
         0 6px 20px rgba(0, 0, 0, 0.08),
         0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    cursor: pointer;
+    user-select: none;
 }
 
 .contact-card::before {
@@ -669,6 +671,11 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
         0 20px 40px rgba(0, 0, 0, 0.15),
         0 0 0 1px rgba(255, 255, 255, 0.2) inset;
     border-color: rgba(255, 255, 255, 0.3);
+}
+
+.contact-card:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+    transition: all 0.1s;
 }
 
 /* Contact icon styling */

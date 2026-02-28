@@ -22,18 +22,22 @@ h1.display-1 {
   line-height: 1.15 !important;
   font-size: 6.2rem !important;
   text-align: center !important;
+  margin-top: 18vh !important; /* 主标题位置上移一点 */
+  color: #f8f9fa !important;
 }
 </style>
 
 {{< blocks/cover title="代碼思考" image_anchor="top" height="full" >}}
-<a class="btn btn-lg btn-transparent me-3 mb-4" href="/docs/">
-  了解更多 <i class="fas fa-arrow-alt-circle-right ms-2"></i>
-</a>
-<a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/pinyinjj">
-  GitHub <i class="fab fa-github ms-2 "></i>
-</a>
+<div class="mt-5 mb-5">
+  <a class="btn btn-lg btn-transparent me-3 mb-4" href="blog/">
+    了解更多 <i class="fas fa-arrow-alt-circle-right ms-2"></i>
+  </a>
+  <a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/pinyinjj">
+    GitHub <i class="fab fa-github ms-2 "></i>
+  </a>
+</div>
 
-<p class="lead">以開發者的思維來思考問題。</p>
+<p class="lead mt-5">以開發者的思維來思考問題。</p>
 
 {{< /blocks/cover >}}
 

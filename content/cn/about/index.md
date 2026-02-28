@@ -34,8 +34,59 @@ menu: {main: {weight: 10}}
     </div>
   </div>
 </div>
-{{< blocks/link-down color="light" >}}
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll('.contact-card');
+  
+  cards.forEach(card => {
+    card.addEventListener('click', function() {
+      const value = this.querySelector('.contact-value').innerText;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(value).then(() => {
+        // Create feedback tooltip
+        const feedback = document.createElement('div');
+        feedback.innerText = '已复制';
+        feedback.style.position = 'absolute';
+        feedback.style.top = '10%';
+        feedback.style.left = '50%';
+        feedback.style.transform = 'translateX(-50%)';
+        feedback.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        feedback.style.color = 'white';
+        feedback.style.padding = '5px 10px';
+        feedback.style.borderRadius = '20px';
+        feedback.style.fontSize = '0.8rem';
+        feedback.style.zIndex = '100';
+        feedback.style.pointerEvents = 'none';
+        feedback.style.animation = 'fadeOut 1.5s forwards';
+        
+        this.style.position = 'relative';
+        this.appendChild(feedback);
+        
+        // Remove feedback after animation
+        setTimeout(() => {
+          feedback.remove();
+        }, 1500);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    });
+  });
+});
+
+// Add fadeOut animation style
+const style = document.createElement('style');
+style.textContent = `
+@keyframes fadeOut {
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  20% { opacity: 1; transform: translate(-50%, -20px); }
+  80% { opacity: 1; transform: translate(-50%, -20px); }
+  100% { opacity: 0; transform: translate(-50%, -40px); }
+}
+`;
+document.head.appendChild(style);
+</script>
 
 {{< /blocks/cover >}}
 
