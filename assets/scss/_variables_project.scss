@@ -221,6 +221,7 @@ body::before {
     position: relative;
     border-radius: 4px;
     padding: 0.2rem 0.5rem;
+    font-size: 1.5rem;
 }
 
 .td-page.td-blog .td-toc #TableOfContents a.active,
@@ -237,7 +238,7 @@ body::before {
 
 /* Nested items slightly smaller but same highlight behavior */
 .td-page.td-blog .td-toc #TableOfContents ul ul a {
-    font-size: 0.9em;
+    font-size: 1.1rem;
     padding: 0.15rem 0.45rem;
     border-radius: 4px;
 }

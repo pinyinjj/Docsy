@@ -300,7 +300,7 @@ class MissionItemInt:
 
 #### 架构组件
 
-{{< mermaid size="sm">}}
+{{< mermaid size="xs">}}
 
 graph TD
     A[User Data Input] --> B[Field Validation & Mapping]
