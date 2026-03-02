@@ -7,41 +7,33 @@ menu: {main: {weight: 10}}
 {{< blocks/cover image_anchor="top" height="full" >}}
 
 <div class="contact-info-container">
-  <div class="contact-card">
-    <div class="contact-icon">
-      <i class="fab fa-qq"></i>
+  <div class="main">
+    <div class="up">
+      <div class="card1" data-value="miao23333QAQ" title="WeChat">
+        <i class="fab fa-weixin"></i>
+      </div>
+      <div class="card2" data-value="914640123" title="QQ">
+        <i class="fab fa-qq"></i>
+      </div>
     </div>
-    <div class="contact-details">
-      <p class="contact-value">914640123</p>
-    </div>
-  </div>
-  
-  <div class="contact-card">
-    <div class="contact-icon">
-      <i class="fab fa-weixin"></i>
-    </div>
-    <div class="contact-details">
-      <p class="contact-value">miao23333QAQ</p>
-    </div>
-  </div>
-  
-  <div class="contact-card">
-    <div class="contact-icon">
-      <i class="fas fa-envelope"></i>
-    </div>
-    <div class="contact-details">
-      <p class="contact-value">workworkzed@gmail.com</p>
+    <div class="down">
+      <div class="card3" data-value="https://github.com/pinyinjj" title="GitHub">
+        <i class="fab fa-github"></i>
+      </div>
+      <div class="card4" data-value="workworkzed@gmail.com" title="Email">
+        <i class="fas fa-envelope"></i>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const cards = document.querySelectorAll('.contact-card');
+  const cards = document.querySelectorAll('.card1, .card2, .card3, .card4');
   
   cards.forEach(card => {
     card.addEventListener('click', function() {
-      const value = this.querySelector('.contact-value').innerText;
+      const value = this.getAttribute('data-value');
       
       // Copy to clipboard
       navigator.clipboard.writeText(value).then(() => {
@@ -49,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const feedback = document.createElement('div');
         feedback.innerText = '已复制';
         feedback.style.position = 'absolute';
-        feedback.style.top = '10%';
+        feedback.style.top = '-40px';
         feedback.style.left = '50%';
         feedback.style.transform = 'translateX(-50%)';
         feedback.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
@@ -59,9 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
         feedback.style.fontSize = '0.8rem';
         feedback.style.zIndex = '100';
         feedback.style.pointerEvents = 'none';
+        feedback.style.whiteSpace = 'nowrap';
         feedback.style.animation = 'fadeOut 1.5s forwards';
         
-        this.style.position = 'relative';
         this.appendChild(feedback);
         
         // Remove feedback after animation
@@ -76,18 +68,19 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Add fadeOut animation style
-const style = document.createElement('style');
-style.textContent = `
-@keyframes fadeOut {
-  0% { opacity: 0; transform: translate(-50%, 0); }
-  20% { opacity: 1; transform: translate(-50%, -20px); }
-  80% { opacity: 1; transform: translate(-50%, -20px); }
-  100% { opacity: 0; transform: translate(-50%, -40px); }
+if (!document.getElementById('contact-style')) {
+  const style = document.createElement('style');
+  style.id = 'contact-style';
+  style.textContent = `
+  @keyframes fadeOut {
+    0% { opacity: 0; transform: translate(-50%, 0); }
+    20% { opacity: 1; transform: translate(-50%, -10px); }
+    80% { opacity: 1; transform: translate(-50%, -10px); }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+  }
+  `;
+  document.head.appendChild(style);
 }
-`;
-document.head.appendChild(style);
 </script>
 
 {{< /blocks/cover >}}
-
-

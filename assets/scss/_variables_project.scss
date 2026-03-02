@@ -613,96 +613,94 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
 }
 
 /* ==========================================================================
-   9. CONTACT PAGE STYLES
+   9. CONTACT PAGE STYLES (Strict 2x2 Layout)
    ========================================================================== */
 
-/* Contact info container */
 .contact-info-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 0 1rem;
     min-height: 60vh;
-    align-items: flex-start;
-    padding-top: 15vh;
 }
 
-/* Contact card styling */
-.contact-card {
-    background: $consistent-bg;
-    backdrop-filter: $consistent-blur;
-    border: $consistent-border;
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
-    min-width: 240px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-    cursor: pointer;
-    user-select: none;
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  user-select: none;
 }
 
-.contact-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-    transition: left 0.6s;
+.up, .down {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
 }
 
-.contact-card:hover::before {
-    left: 100%;
+.card1, .card2, .card3, .card4 {
+  width: 135px;
+  height: 135px;
+  outline: none;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: $consistent-blur;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  transition: .2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  overflow: visible; /* 允许偏移 */
 }
 
-.contact-card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.15),
-        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-    border-color: rgba(255, 255, 255, 0.3);
+/* Specific Border Radius */
+.card1 { border-radius: 135px 5px 5px 5px; }
+.card2 { border-radius: 5px 135px 5px 5px; }
+.card3 { border-radius: 5px 5px 5px 135px; }
+.card4 { border-radius: 5px 5px 135px 5px; }
+
+/* Icon Positioning - Matching your margins exactly */
+.card1 i {
+  margin-top: 1.7em;
+  margin-left: 1em;
+  color: #07c160;
+  font-size: 2.5rem;
 }
 
-.contact-card:active {
+.card2 i {
+  margin-top: 1.7em;
+  margin-left: -1em;
+  color: #03A9F4;
+  font-size: 2.5rem;
+}
+
+.card3 i {
+  margin-top: 0.7em;
+  margin-left: 1em;
+  color: black;
+  font-size: 2.5rem;
+}
+
+.card4 i {
+  margin-top: 0.7em;
+  margin-left: -1em;
+  color: #8c9eff;
+  font-size: 2.5rem;
+}
+
+/* Hover States */
+.card1:hover { scale: 1.1; background-color: rgba(7, 193, 96, 0.8); }
+.card1:hover i { color: white !important; }
+
+.card2:hover { scale: 1.1; background-color: rgba(3, 169, 244, 0.8); }
+.card2:hover i { color: white !important; }
+
+.card3:hover { scale: 1.1; background-color: rgba(0, 0, 0, 0.8); }
+.card3:hover i { color: white !important; }
+
+.card4:hover { scale: 1.1; background-color: rgba(140, 158, 255, 0.8); }
+.card4:hover i { color: white !important; }
+
+/* Keep your active scale effect */
+.card1:active, .card2:active, .card3:active, .card4:active {
     transform: scale(0.95) rotateZ(1.7deg);
-    transition: all 0.1s;
-}
-
-/* Contact icon styling */
-.contact-icon {
-    margin-bottom: 1.2rem;
-    position: relative;
-}
-
-.contact-icon i {
-    font-size: 3rem;
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.contact-card:hover .contact-icon i {
-    color: white;
-    transform: scale(1.15);
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-}
-
-/* Contact details styling */
-.contact-details {
-    position: relative;
-    z-index: 1;
 }
 
 .contact-value {
