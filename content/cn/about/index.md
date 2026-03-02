@@ -21,7 +21,7 @@ menu: {main: {weight: 10}}
         <i class="fab fa-github"></i>
       </div>
       <div class="card4" data-value="workworkzed@gmail.com" title="Email">
-        <i class="fas fa-envelope"></i>
+        <i class="fab fa-google"></i>
       </div>
     </div>
   </div>
