@@ -660,42 +660,42 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
 .card1 i {
   margin-top: 1.7em;
   margin-left: 1em;
-  color: #07c160;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 2.5rem;
 }
 
 .card2 i {
   margin-top: 1.7em;
   margin-left: -1em;
-  color: #03A9F4;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 2.5rem;
 }
 
 .card3 i {
   margin-top: 0.7em;
   margin-left: 1em;
-  color: black;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 2.5rem;
 }
 
 .card4 i {
   margin-top: 0.7em;
   margin-left: -1em;
-  color: #8c9eff;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 2.5rem;
 }
 
 /* Hover States */
-.card1:hover { scale: 1.1; background-color: rgba(7, 193, 96, 0.8); }
+.card1:hover { scale: 1.1; background-color: rgba(7, 193, 96, 0.85); }
 .card1:hover i { color: white !important; }
 
-.card2:hover { scale: 1.1; background-color: rgba(3, 169, 244, 0.8); }
+.card2:hover { scale: 1.1; background-color: rgba(3, 169, 244, 0.85); }
 .card2:hover i { color: white !important; }
 
-.card3:hover { scale: 1.1; background-color: rgba(0, 0, 0, 0.8); }
+.card3:hover { scale: 1.1; background-color: rgba(33, 33, 33, 0.85); }
 .card3:hover i { color: white !important; }
 
-.card4:hover { scale: 1.1; background-color: rgba(140, 158, 255, 0.8); }
+.card4:hover { scale: 1.1; background-color: rgba(234, 67, 53, 0.85); }
 .card4:hover i { color: white !important; }
 
 /* Keep your active scale effect */
