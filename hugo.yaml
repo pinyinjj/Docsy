@@ -138,13 +138,15 @@ params:
   github_branch: main
 
   # Google Custom Search Engine ID. Remove or comment out to disable search.
-  gcs_engine_id: d72aa9b2712488cc3
+  # gcs_engine_id: d72aa9b2712488cc3  # Invalid - returns 404, replaced with Pagefind
 
-  # Enable Lunr.js offline search
-  offlineSearch: false
+  # Enable Pagefind offline search (recommended, no config needed)
+  offlineSearch: true
+  offlineSearchSummary: true
+  offlineSearchIndexLength: 5000
 
-  # Enable syntax highlighting and copy buttons on code blocks with Prism
-  prism_syntax_highlighting: false
+  # Enable syntax highlighting with Prism
+  prism_syntax_highlighting: true
   blogBackground: '/Docsy/images/backgrounds/wallhaven-odr71m.jpg'
 
   copyright:
