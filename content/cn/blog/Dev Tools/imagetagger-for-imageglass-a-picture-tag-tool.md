@@ -4,8 +4,7 @@ date: 2026-03-09
 summary: "ImageTagger 是一款基于 Windows Forms 的图像打标工具，旨在与 ImageGlass 深度集成，实现自定义标签管理和批量图像操作。"
 tags: ["Windows", "实用工具", "C#"]
 categories: ["技术文档"]
-weight: 20
-draft: false
+weight: 10
 ---
 
 # ImageTagger
