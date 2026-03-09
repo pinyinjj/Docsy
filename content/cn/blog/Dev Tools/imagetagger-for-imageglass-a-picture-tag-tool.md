@@ -1,74 +1,93 @@
+---
+title: "ImageTagger for ImageGlass: 一款高效的图片标记工具"
+date: 2026-03-09
+summary: "ImageTagger 是一款基于 Windows Forms 的图像打标工具，旨在与 ImageGlass 深度集成，实现自定义标签管理和批量图像操作。"
+tags: ["Windows", "实用工具", "C#"]
+categories: ["技术文档"]
+weight: 20
+draft: false
+---
+
 # ImageTagger
 
 [![GitHub Release](https://img.shields.io/github/v/release/pinyinjj/ImageGlass_ImageTags?style=flat-square)](https://github.com/pinyinjj/ImageGlass_ImageTags/releases)
 [![Build Status](https://github.com/pinyinjj/ImageGlass_ImageTags/actions/workflows/build.yml/badge.svg)](https://github.com/pinyinjj/ImageGlass_ImageTags/actions)
-[![License](https://img.shields.io/github/license/pinyinjj/ImageGlass_ImageTags?style=flat-square)](../LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
 [![.NET](https://img.shields.io/badge/.NET-8.0-512bd4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/download/dotnet/8.0)
-[![GitHub Stars](https://img.shields.io/github/stars/pinyinjj/ImageGlass_ImageTags?style=flat-square)](https://github.com/pinyinjj/ImageGlass_ImageTags/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/pinyinjj/ImageGlass_ImageTags?style=flat-square)](https://github.com/pinyinjj/ImageGlass_ImageTags/network/members)
 
-<img src="ops.png" width="400"> <img src="tags.png" width="400">
+![Operation interface](/Docsy/images/imagetagger_ops.png)
+![Tagging interface](/Docsy/images/imagetagger_tags.png)
 
-## 项目简介
-ImageTagger 是一款基于 Windows Forms 的图像打标工具，旨在与 ImageGlass 图片查看器配合使用。它允许用户在浏览图片时快速将其分类到自定义的标签组中，并支持对已打标图片进行批量操作（如复制或移动）。该工具通过 ImageGlass Tools SDK 与 ImageGlass 深度集成，实现了实时图片路径同步和导航控制。
+## 1. 项目简介
 
-## 安装指南
+**ImageTagger** 是一款基于 Windows Forms 的开源图像打标工具，专门为配合 [ImageGlass](https://imageglass.org/) 图片查看器使用而设计。
 
-### 前提条件
-1. Windows 操作系统（支持 .NET）。
-2. 已安装 [ImageGlass](https://imageglass.org/) 图片查看器。
+它允许用户在浏览图片的同时，通过简单的点击将图片分类到预定义的标签组中。借助于 ImageGlass Tools SDK，ImageTagger 实现了与查看器的实时路径同步和导航控制，极大地提升了海量图片的整理效率。
 
-### 安装步骤
-1. 下载 ImageTagger 的最新发布版本压缩包。
-2. 将压缩包解压到任意目录。
-3. 在 ImageGlass 中将 ImageTagger 配置为外部工具，以便快速访问。
+## 2. 核心特性
 
-## 使用说明
+- **深度集成**：与 ImageGlass 实时同步，支持自动跳转下一张。
+- **灵活打标**：一键添加、删除自定义标签，支持批量操作。
+- **数据透明**：使用简单的 JSON 格式存储打标数据。
+- **置顶显示**：默认窗口置顶，方便在全屏模式下无缝使用。
+- **撤销支持**：支持对误操作进行撤销。
 
-### 启动应用程序
-<img src="launch.png" width="300">
+## 3. 安装指南
 
-在 ImageGlass 中，打开 **Settings**（设置）菜单，导航至 **Tools**（工具） > **ImageTagger** 来启动插件。它会自动与当前查看的图片同步。
+### 3.1 前提条件
+1. Windows 操作系统。
+2. 已安装 [.NET 8.0 Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)。
+3. 已安装 [ImageGlass](https://imageglass.org/)。
 
-### 标签管理
-* **添加标签**：在“Tags”选项卡中，点击右上角的“+”按钮，输入标签名称并确认。
-* **删除标签**：从列表中选择一个标签并点击“-”按钮，或右键点击并选择“Delete”。
-* **管理标签**：右键点击标签列表可以使用“Clear”（清除该标签下的所有图片路径）或“Duplicate”（复制该标签及其内容）。
+### 3.2 安装步骤
+1. 前往 `Releases` 下载最新压缩包。
+2. 将压缩包解压到本地固定目录。
+3. **集成到 ImageGlass**：
+   - 打开 ImageGlass `Settings`（设置）菜单。
+   - 导航至 `Tools`（工具）选项卡。
+   - 点击 `Add...`（添加）按钮并选择解压后的 `ImageTagger.exe`。
+   - 在名称栏输入 `ImageTagger` 即可。
 
-### 图像打标
-1. 确保 ImageGlass 正在运行并显示一张图片。
-2. 在 ImageTagger 的“Tagging”选项卡中，如果同步成功，你将看到当前图片的路径。
-3. 每个创建的标签都会显示为一个按钮。
-4. 点击标签按钮即可将当前图片添加到该标签。
-5. 打标后，ImageGlass 会自动跳转到下一张图片（此操作支持撤销）。
+## 4. 使用说明
 
-### 批量操作
-在“Tags”选项卡中选择一个标签，即可使用底部的功能按钮：
-* **Copy to...**：将所选标签下的所有图片复制到指定文件夹。
-* **Move to...**：将所选标签下的所有图片移动到指定文件夹（移动成功后会清除该标签列表）。
-* **Undo**：撤销上一次打标或导航操作。
+### 4.1 启动与连接
+![Launch Screenshot](/Docsy/images/imagetagger_launch.png)
 
-## 配置说明
+在 ImageGlass 中，通过 `Settings` -> `Tools` -> `ImageTagger` 启动。插件启动后会自动监听当前显示的图片路径。
 
-### 数据存储
-所有标签和图片路径都存储在应用程序运行目录下的 `tags.json` 文件中。
-* 这是一个标准的 JSON 文件，可以手动备份或编辑（请确保格式正确）。
+### 4.2 标签管理
+* **创建标签**：在 `Tags` 选项卡中点击 `+` 按钮，输入标签名即可。
+* **删除标签**：右键点击标签名称，选择 `Delete` 菜单项。
+* **快捷打标**：切换到 `Tagging` 选项卡，每个标签都会对应一个按钮，点击即可将当前图片归类。
 
-### 窗口行为
-* 为了方便在全屏浏览图片时使用，应用程序默认保持“总在最前”（Always on Top）。
-* 窗口高度会根据标签数量和日志条目自动调整。
+### 4.3 批量操作
+当打标完成后，您可以在 `Tags` 选项卡中对特定标签下的所有文件执行批量操作：
+* `Copy to...`：批量复制到目标文件夹。
+* `Move to...`：批量移动到目标文件夹。
 
-## API 参考
-本应用程序主要使用 `ImageGlass.Tools` 库与 ImageGlass 进行通信。
+## 5. 配置说明
 
-## 贡献
-欢迎提交 Issue 和 Pull Request 来改进本项目。
+### 5.1 数据存储
+所有标签和图片路径都存储在插件运行目录下的 `tags.json` 文件中。这是一个标准的 JSON 文件，可以手动备份或编辑（请确保格式正确）。
 
-1. Fork 本仓库。
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)。
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)。
-4. 推送到分支 (`git push origin feature/AmazingFeature`)。
-5. 开启一个 Pull Request。
+### 5.2 窗口行为
+为了方便在全屏浏览图片时使用，插件默认保持 `Always on Top`（总在最前）。窗口高度会根据标签数量和日志条目自动调整。
 
-## 许可证
-本项目采用 Apache License 2.0 许可证。详情请参阅 [LICENSE](../LICENSE) 文件。
+## 6. 参与贡献
+
+如果您在使用过程中遇到问题或有更好的建议，欢迎通过以下方式参与：
+1. 在 `GitHub Issues` 提交反馈。
+2. 提交 `Pull Request` 贡献代码。
+
+## 7. 许可证
+
+本项目采用 [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0) 许可证。
+
+---
+
+
+## 参考文档
+
+- [ImageGlass Tools | ImageGlass Docs](https://imageglass.org/docs/imageglass-tools)
+- [GitHub - d2phap/ImageGlass: 🏞 A lightweight, versatile image viewer](https://github.com/d2phap/ImageGlass)
+- [GitHub - d2phap/ExifGlass: 📷 EXIF metadata viewing tool](https://github.com/d2phap/ExifGlass)
