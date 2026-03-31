@@ -54,15 +54,19 @@
 
   * 配置项/变量：`title`, `weight`
 
-  * 技术术语：`MAVLink` (常用通用术语除外)
+  * 特定协议/格式/ID：`GGUF`, `MAVLink`, `FastDDS` (非通用术语)
 
   * 交互UI元素：点击 `Open In Browser` 按钮，选择 `Project` 分页。**(严禁使用双引号 `"` 包裹 UI 元素)**。
 
 * **❌ 严禁使用反引号的场景**：
 
-  * **严禁**替代任何标准标点符号（逗号、句号等）。
+  * **严禁**用于常用通用术语、缩写：LLM, GPU, CPU, VRAM, HTTP, Web, macOS, Linux, Windows, Android, Git。
 
-  * **严禁**用于常用通用术语（如：HTTP, Web, macOS, Linux, Windows, Android, Git）。
+  * **严禁**用于数量、单位、模型版本：24GB, 32B, 4-bit, Qwen 3.5, GPT-4。
+
+  * **严禁**在括号 `()` 或 `（）` 内部对文本进行反引号突出。
+
+  * **严禁**替代任何标准标点符号（逗号、句号等）。
 
 ### 2.2 标点符号与列举冲突 [严禁]
 
