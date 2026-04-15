@@ -12,6 +12,9 @@ draft: false
 
 一个基于 `PyQt5` 和 `Fluent Design` 设计的高性能、原生跨平台 `UDP` 调试与协议测试工具。
 
+* **GitHub**: [pinyinjj/QT-UDP-Tester](https://github.com/pinyinjj/QT-UDP-Tester)
+* **下载地址**: [Releases](https://github.com/pinyinjj/QT-UDP-Tester/releases)
+
 > `UDP` (User Datagram Protocol) 是一种无连接的传输层协议，提供面向事务的简单不可靠信息传送服务，常用于对实时性要求较高的通信场景。
 
 ![Main Interface](/Docsy/images/mainframe.png)
