@@ -15,8 +15,6 @@ draft: false
 * **GitHub**: [pinyinjj/QT-UDP-Tester](https://github.com/pinyinjj/QT-UDP-Tester)
 * **下载地址**: [Releases](https://github.com/pinyinjj/QT-UDP-Tester/releases)
 
-> `UDP` (User Datagram Protocol) 是一种无连接的传输层协议，提供面向事务的简单不可靠信息传送服务，常用于对实时性要求较高的通信场景。
-
 ![Main Interface](/Docsy/images/mainframe.png)
 
 ## 1. 核心功能
@@ -38,17 +36,17 @@ draft: false
 
 ### 1.3 现代化交互体验
 
-* **Fluent Design 视觉**：基于 `PyQt-Fluent-Widgets` 库实现，完美适配 Windows 11 视觉风格，且在非 Windows 系统下通过模拟实现统一的视觉体验。支持深色/浅色主题。
-* **实时报文监控**：结构化展示报文来源, 时间戳 (微秒级), 本地端口及原始内容。
+* **Fluent Design 视觉**：基于 `PyQt-Fluent-Widgets` 库实现，完美适配 Windows 11 视觉风格，且在非 Windows 系统下通过模拟实现统一的视觉体验。
+* **实时报文监控**：结构化展示报文来源, 时间戳, 本地端口及原始内容。
 * **动态视图调节**：
-    * **字体缩放**：表格与日志区支持实时 `Add/Remove` 缩放，优化长时观测疲劳。
+    * **字体缩放**：表格与日志区支持实时 `Add/Remove` 缩放。
     * **弹性布局**：内置视图比例调节器，可自由分配监控区与配置区的显示空间。
-* **智能过滤**：支持通过标签 `Tags` 对接收到的数据流进行多维度实时筛选。
+* **智能过滤**：支持通过标签 `Tags` 对接收到的数据流进行实时筛选。
 
 ## 2. 安装要求
 
 * **Python**: 3.8 或更高版本
-* **系统环境**: 原生支持 Windows, Linux, macOS (Apple Silicon & Intel)
+* **系统环境**: 原生支持 Windows, Linux.
 
 ### 2.1 依赖安装
 
