@@ -1,0 +1,3 @@
+<video autoplay loop muted playsinline {{ with .Get "class" }}class="{{ . }}"{{ end }} {{ with .Get "width" }}width="{{ . }}"{{ end }}>
+  <source src="{{ .Get "src" | relURL }}" type="video/webm">
+</video>

@@ -129,6 +129,21 @@
 
 * **💡 局部符号豁免规则**：在 Mermaid Shortcode 内部的语法中，**允许并保留**使用双引号（`"`）来标识节点标签。不需要转换为反引号。（例如：`User->>+UI: 按下"发送语音"按钮`）。
 
+### 3.3 WebM 视频渲染 [强制]
+
+为保持 Markdown 文件整洁并确保视频在各平台兼容（自动播放、静音、循环），必须使用 `webm` Shortcode。视频文件通常存放于 `/static/webm/` 目录下。
+
+* **语法规范**：
+
+  ```markdown
+  {{< webm src="webm/example.webm" width="600" >}}
+  ```
+
+* **参数说明**：
+  * `src`: 视频路径（相对于 `static` 目录，如 `webm/filename.webm`）。
+  * `width`: 视频显示宽度（可选）。
+  * `class`: 自定义 CSS 类名（可选）。
+
 ## 模块 4：特定章节与组件 (Specific Sections)
 
 ### 4.1 图片与资源路径
