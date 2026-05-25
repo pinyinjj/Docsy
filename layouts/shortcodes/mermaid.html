@@ -1,14 +1,50 @@
-{{- $size := .Get "size" | default "lg" -}}
-{{- $width := "100%" -}}
-{{- if eq $size "xs" }}{{ $width = "20%" -}}
-{{- else if eq $size "sm" }}{{ $width = "35%" -}}
-{{- else if eq $size "md" }}{{ $width = "65%" -}}
-{{- else if eq $size "lg" }}{{ $width = "100%" -}}
-{{- else if eq $size "xl" }}{{ $width = "115%" -}}
-{{- else if eq $size "full" }}{{ $width = "130%" -}}
+{{- $size := .Get "size" | default "m" -}}
+{{- $width := "580px" -}}
+{{- if eq $size "s" }}{{ $width = "320px" -}}
+{{- else if eq $size "m" }}{{ $width = "580px" -}}
+{{- else if eq $size "l" }}{{ $width = "980px" -}}
+{{- else if eq $size "xl" }}{{ $width = "1280px" -}}
 {{- end -}}
-<div class="mermaid-wrap" style="width: {{ $width }}; max-width: none; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin: 1.5rem 0; margin-left: 0; margin-right: auto; overflow: visible; position: relative; z-index: 10;">
-  <pre class="mermaid" style="background: white; border: none; padding: 0; margin: 0; font-family: inherit;">
+<style>
+  /* 极致缩小的工业级高密度字体设定 */
+  .mermaid-container svg,
+  .mermaid-container .node text,
+  .mermaid-container .node span,
+  .mermaid-container .edgeLabel,
+  .mermaid-container .edgeLabel span,
+  .mermaid-container .label text,
+  .mermaid-container .label span,
+  .mermaid-container text.labelText,
+  .mermaid-container .loopText,
+  .mermaid-container .loopText span,
+  .mermaid-container .noteText,
+  .mermaid-container .noteText span,
+  .mermaid-container div,
+  .mermaid-container p {
+    font-size: 9px !important;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.01em !important;
+  }
+  
+  /* 子图标题维持微弱辨识度 */
+  .mermaid-container .cluster-label text,
+  .mermaid-container .cluster-label span,
+  .mermaid-container .cluster-label div {
+    font-size: 10px !important;
+    font-weight: bold !important;
+  }
+
+  /* 强制压缩节点内边距 */
+  .mermaid-container .label {
+    padding: 2px 4px !important;
+  }
+</style>
+<div class="mermaid-container" style="width: {{ $width }}; max-width: 100%; margin: 1.5rem 0; margin-left: 0; margin-right: auto;">
+  <div class="mermaid-wrap" style="background: #fff; padding: 0.8rem; border-radius: 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow-x: auto; -webkit-overflow-scrolling: touch;">
+    <pre class="mermaid" style="background: white; border: none; padding: 0; margin: 0; font-family: inherit; display: block; margin: 0 auto;">
+%%{init: {"flowchart": {"nodeSpacing": 30, "rankSpacing": 30, "padding": 5}}}%%
 {{- .Inner | safeHTML -}}
-  </pre>
+    </pre>
+  </div>
 </div>

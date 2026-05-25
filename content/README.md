@@ -104,6 +104,20 @@
 
 * ❌ 错误：**"强调内容"**
 
+### 2.5 百分比与数学公式 [强制]
+
+在 LaTeX 数学环境下，所有百分比必须遵循标准转义格式：
+
+* **渲染规则**：使用 `$数值\%$` 格式。即在数学定界符内部对百分号进行转义 (`\%`)。
+
+* ✅ 正确：`$30\%$`
+
+* ✅ 正确：`$90\%$ ~ $93\%$`
+
+* ❌ 错误：`30%` (非公式字体)
+
+* ❌ 错误：`$30\%$%` (附带冗余符号)
+
 ## 模块 3：代码与图表生成 (Code & Diagrams)
 
 ### 3.1 围栏代码块 [强制]
@@ -131,11 +145,13 @@
 
 * **尺寸参数 (`size`) 指南**：
 
-  * `xs`: 20% 宽度 / `sm`: 35% 宽度（适用于 `classDiagram`, 窄体 `graph`）
+  * `s`: 320px 宽度（适用于 `classDiagram`, 窄体 `graph`）
 
-  * `md`: 65% 宽度 / `lg`: 100% 宽度（默认，适用于 `sequenceDiagram`）
+  * `m`: 580px 宽度（默认，适用于常规图表）
 
-  * `xl`: 115% 宽度 / `full`: 130% 宽度（适用于超复杂架构图）
+  * `l`: 980px 宽度（适用于 `sequenceDiagram`, 较宽图表）
+
+  * `xl`: 1280px 宽度（适用于复杂或超大型架构图）
 
 * **💡 局部符号豁免规则**：在 Mermaid Shortcode 内部的语法中，**允许并保留**使用双引号（`"`）来标识节点标签。不需要转换为反引号。（例如：`User->>+UI: 按下"发送语音"按钮`）。
 
@@ -213,7 +229,7 @@
 生成 Front Matter 时，仅允许从以下列表复制（注意大小写）：
 
 **Valid Tags (`tags`)**:
-`数据分析`, `Gazebo`, `飞控`, `通信`, `FastDDS`, `ROS`, `ROS 2`, `实用工具`, `AirSim`, `CMake`, `MAVLink`, `MAVLink Router`, `MAVProxy`, `MAVROS`, `MAVSDK`, `MAVSDK-Python`, `Linux`, `lua`, `二次开发`, `Ubuntu`, `Android`, `QGroundControl`, `NiceGUI`, `JavaScript`, `Leaflet`, `无人机`, `地面站`, `Python`, `前端`, `任务规划`, `容器化`, `编译`, `Docker`, `C++`, `C#`, `Qt`, `pymavlink`, `大模型`, `仿真`, `PX4`, `WSL2`, `Windows`, `RPC`, `SITL`, `后端`
+`数据分析`, `Gazebo`, `飞控`, `通信`, `FastDDS`, `ROS`, `ROS 2`, `实用工具`, `AirSim`, `CMake`, `MAVLink`, `MAVLink Router`, `MAVProxy`, `MAVROS`, `MAVSDK`, `MAVSDK-Python`, `Linux`, `lua`, `二次开发`, `Ubuntu`, `Android`, `QGroundControl`, `NiceGUI`, `JavaScript`, `Leaflet`, `无人机`, `地面站`, `Python`, `前端`, `任务规划`, `容器化`, `编译`, `Docker`, `C++`, `C#`, `Qt`, `pymavlink`, `大模型`, `仿真`, `PX4`, `WSL2`, `Windows`, `RPC`, `SITL`, `后端`， `Rust`
 
 **Valid Categories (`categories`)**:
 `技术文档`, `踩坑记录`, `学习笔记`, `游戏插件`
