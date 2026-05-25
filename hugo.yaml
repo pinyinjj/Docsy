@@ -77,6 +77,20 @@ markup:
         block: true
     renderer:
       unsafe: true
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+          - - '$$'
+            - '$$'
+          - - '\['
+            - '\]'
+          inline:
+          - - '$'
+            - '$'
+          - - '\('
+            - '\)'
   highlight:
     # See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
     style: tango
