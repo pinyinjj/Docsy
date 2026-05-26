@@ -34,6 +34,8 @@
 
 * **三级标题 (###)**：必须包含父级编号。格式：`### 1.1 标题名称`、`### 1.2 标题名称`。
 
+* **四级标题 (####)**：必须包含父级编号。格式：`#### 1.1.1 标题名称`。
+
 * **编号规则**：从 1 开始，严格按顺序递增。
 
 * **禁止反引号**：严禁在任何层级的标题（Header）中使用反引号（` ` ）来突出显示关键词。标题应保持纯文本格式（允许必要的专有名词大小写，但不得包裹符号）。
@@ -110,6 +112,8 @@
 
 * **渲染规则**：使用 `$数值\%$` 格式。即在数学定界符内部对百分号进行转义 (`\%`)。
 
+* **✅ 禁止包裹反引号**：**严禁**在数学公式（如 `$x=1$`）外部包裹反引号（如 `` `$x=1$` ``）。反引号会导致 KaTeX/MathJax 引擎失效，使其显示为原始文本。
+
 * ✅ 正确：`$30\%$`
 
 * ✅ 正确：`$90\%$ ~ $93\%$`
@@ -117,6 +121,8 @@
 * ❌ 错误：`30%` (非公式字体)
 
 * ❌ 错误：`$30\%$%` (附带冗余符号)
+
+* ❌ 错误：`` `$30\%$` `` (反引号导致渲染失败)
 
 ## 模块 3：代码与图表生成 (Code & Diagrams)
 
@@ -229,7 +235,7 @@
 生成 Front Matter 时，仅允许从以下列表复制（注意大小写）：
 
 **Valid Tags (`tags`)**:
-`数据分析`, `Gazebo`, `飞控`, `通信`, `FastDDS`, `ROS`, `ROS 2`, `实用工具`, `AirSim`, `CMake`, `MAVLink`, `MAVLink Router`, `MAVProxy`, `MAVROS`, `MAVSDK`, `MAVSDK-Python`, `Linux`, `lua`, `二次开发`, `Ubuntu`, `Android`, `QGroundControl`, `NiceGUI`, `JavaScript`, `Leaflet`, `无人机`, `地面站`, `Python`, `前端`, `任务规划`, `容器化`, `编译`, `Docker`, `C++`, `C#`, `Qt`, `pymavlink`, `大模型`, `仿真`, `PX4`, `WSL2`, `Windows`, `RPC`, `SITL`, `后端`， `Rust`
+`数据分析`, `Gazebo`, `飞控`, `通信`, `FastDDS`, `ROS`, `ROS 2`, `实用工具`, `AirSim`, `CMake`, `MAVLink`, `MAVLink Router`, `MAVProxy`, `MAVROS`, `MAVSDK`, `MAVSDK-Python`, `Linux`, `lua`, `二次开发`, `Ubuntu`, `Android`, `QGroundControl`, `NiceGUI`, `JavaScript`, `Leaflet`, `无人机`, `地面站`, `Python`, `前端`, `任务规划`, `容器化`, `编译`, `Docker`, `C++`, `C#`, `Qt`, `pymavlink`, `大模型`, `仿真`, `PX4`, `WSL2`, `Windows`, `RPC`, `SITL`, `后端`， `Rust`，`点云`
 
 **Valid Categories (`categories`)**:
 `技术文档`, `踩坑记录`, `学习笔记`, `游戏插件`
