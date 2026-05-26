@@ -2,7 +2,7 @@
 title: "基于 Qt Quick 3D 的高性能实时多机点云渲染实现"
 date: 2026-05-25
 summary: "本文深度解析基于 Qt Quick 3D 的高性能实时点云渲染架构，重点介绍 SoA 布局配合 Zstd 压缩的数据管线优化、流式传输中精度漂移与丢包错误的工程治理（如整型量化与锚点机制），以及坐标系转换、HSV 航迹渲染与视口自适应对齐等技术细节。"
-tags: ["QGroundControl", "ROS", "Qt", "C++", "无人机", "前端", "Rust"]
+tags: ["QGroundControl", "ROS", "Qt", "C++", "无人机", "前端", "Rust", "点云"]
 categories: ["技术文档", "学习笔记"]
 weight: 10
 draft: false
