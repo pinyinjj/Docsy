@@ -10,7 +10,9 @@ draft: false
 
 本文档基于 Qt 5.15 / Qt 6.x 的 Qt Quick SceneGraph 模块（非 Qt Quick 3D），通过自定义 `QSGMaterial` 与手写 GLSL Shader，在二维渲染管线中实现 GPU 端 MVP 矩阵投影变换，为无人机蜂群地面控制站提供三维点云与多机轨迹的实时可视化能力。
 
-> **Qt 版本选型背景**：Qt 5.15 已包含 Qt Quick 3D 模块，但该版本的三维渲染存在根本性的架构制约——Qt 5.15 官方文档明确指出，_「目前所有三维内容均需通过离屏纹理（FBO）渲染后再合成至 Qt Quick 场景」_。这意味着每帧 3D 内容都会产生一次额外的 GPU 显存回读与纹理合成开销。对于每秒接收数万动态点的点云实时渲染场景，这一 FBO 中转通道构成严重的吞吐瓶颈。此外，Qt 5.15 的 `QQuick3DGeometry` 仅提供了基础的静态网格加载能力，缺少 `setVertexData()`、`setPrimitiveType()`、`addAttribute()` 等 Qt 6.0 才引入的动态几何体更新 API，无法高效支持每帧数千顶点的点云缓冲区刷新。因此，本方案选择绕过 Qt Quick 3D，直接在 Qt Quick SceneGraph 的二维渲染管线上手写 GPU Shader，以极低的图形栈开销实现高性能点云投影。
+> **Qt 版本选型背景**：Qt 5.15 中的 Qt Quick 3D 默认采用离屏渲染（Offscreen Rendering）架构，三维场景首先渲染至离屏纹理（Render Target/FBO），随后作为纹理与 Qt Quick 二维场景进行合成。这种两阶段渲染流程引入了额外的 Render Pass、纹理采样以及显存带宽开销，在大规模动态点云等高吞吐实时渲染场景下会增加 GPU 渲染负担。Qt 6 虽然默认仍采用 Offscreen 模式，但新增了 Underlay、Overlay 和 Inline 等 RenderMode，可在部分场景下直接渲染至窗口，从而避免默认的离屏纹理合成过程。
+>
+> 此外，Qt 5.15 的 `QQuick3DGeometry` 虽已支持自定义几何体构建，但其动态几何更新机制主要面向静态或低频更新模型设计。每次更新顶点数据通常需要重新构建几何缓冲区并同步至 Scene Graph，随后重新上传 GPU 顶点缓冲，不适合大规模动态点云的高频流式更新。在每帧需要刷新数十万至数百万顶点的实时点云渲染场景下，该机制会带来较高的 CPU–GPU 数据传输及 Scene Graph 同步开销。因此，本方案绕过 Qt Quick 3D 的高层三维框架，直接基于 Qt Quick SceneGraph 的底层渲染节点实现自定义 GPU Shader，仅保留点云渲染所需的最小图形管线，从而降低图形栈开销，实现高吞吐、高帧率的实时点云投影渲染。
 
 {{< webm src="webm/rendering.webm" width="600" >}}
 
