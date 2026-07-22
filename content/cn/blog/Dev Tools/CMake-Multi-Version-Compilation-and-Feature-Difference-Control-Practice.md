@@ -1,6 +1,6 @@
 ---
 title: "Cmake 多版本编译与功能差异控制实践"
-date: 2025-09-30
+date: 2026-7-22
 summary: "面向基于 Qt/QML 的 QGroundControl 项目，分享通过单一编译脚本实现多版本功能切换的方法，并利用 Touch 技巧绕过编译缓存导致的版本残留问题。"
 tags: ["Qt", "QGroundControl", "编译", "C++", "Docker", "Android", "二次开发"]
 categories: ["技术文档"]
