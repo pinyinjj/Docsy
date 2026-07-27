@@ -1,5 +1,5 @@
 ---
-title: '基于 LangGraph 与规则 RAG 的多 Agent 智能文档生成与有环自愈系统架构'
+title: '基于 LangGraph 与规则 RAG 的多 Agent 智能文档生成与有环自愈系统实现'
 date: 2026-07-27
 summary: '详细介绍了基于 LangGraph 的智能文档生成系统的架构设计，包括状态字典，动态审查管线，规则 RAG，多源适配器与多 Agent 并发生成等核心机制。'
 tags: ['大模型', 'Python', 'RAG', 'Agent', 'LangGraph']
@@ -172,7 +172,7 @@ for i, mod_key in enumerate(available_modules):
 
 上述多入口与展平节点的编排结构如下图所示：
 
-{{< mermaid size="m" >}}
+{{< mermaid size="md" >}}
 graph TD;
     START([START]) -.->|"route_entry"| R{输入模式路由};
     R -->|text| PT[process_text];
