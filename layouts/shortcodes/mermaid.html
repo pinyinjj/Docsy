@@ -1,9 +1,14 @@
 {{- $size := .Get "size" | default "m" -}}
 {{- $width := "580px" -}}
-{{- if eq $size "s" }}{{ $width = "320px" -}}
+{{- if eq $size "xs" }}{{ $width = "200px" -}}
+{{- else if eq $size "sm" }}{{ $width = "240px" -}}
+{{- else if eq $size "s" }}{{ $width = "320px" -}}
+{{- else if eq $size "md" }}{{ $width = "580px" -}}
 {{- else if eq $size "m" }}{{ $width = "580px" -}}
+{{- else if eq $size "lg" }}{{ $width = "980px" -}}
 {{- else if eq $size "l" }}{{ $width = "980px" -}}
 {{- else if eq $size "xl" }}{{ $width = "1280px" -}}
+{{- else }}{{ $width = $size -}}
 {{- end -}}
 <style>
   /* 极致缩小的工业级高密度字体设定 */

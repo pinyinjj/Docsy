@@ -51,7 +51,7 @@
 生成 Front Matter 时，仅允许从以下列表复制（注意大小写）：
 
 **Valid Tags (`tags`)**:
-`数据分析`, `Gazebo`, `飞控`, `通信`, `FastDDS`, `ROS`, `ROS 2`, `实用工具`, `AirSim`, `CMake`, `MAVLink`, `MAVLink Router`, `MAVProxy`, `MAVROS`, `MAVSDK`, `MAVSDK-Python`, `Linux`, `lua`, `二次开发`, `Ubuntu`, `Android`, `QGroundControl`, `NiceGUI`, `JavaScript`, `Leaflet`, `无人机`, `地面站`, `Python`, `前端`, `任务规划`, `容器化`, `编译`, `Docker`, `C++`, `C#`, `Qt`, `pymavlink`, `大模型`, `仿真`, `PX4`, `WSL2`, `Windows`, `RPC`, `SITL`, `后端`， `Rust`，`点云`，`思考`, `读后感`
+`数据分析`, `Gazebo`, `飞控`, `通信`, `FastDDS`, `ROS`, `ROS 2`, `实用工具`, `AirSim`, `CMake`, `MAVLink`, `MAVLink Router`, `MAVProxy`, `MAVROS`, `MAVSDK`, `MAVSDK-Python`, `Linux`, `lua`, `二次开发`, `Ubuntu`, `Android`, `QGroundControl`, `NiceGUI`, `JavaScript`, `Leaflet`, `无人机`, `地面站`, `Python`, `前端`, `任务规划`, `容器化`, `编译`, `Docker`, `C++`, `C#`, `Qt`, `pymavlink`, `大模型`, `仿真`, `PX4`, `WSL2`, `Windows`, `RPC`, `SITL`, `后端`, `Rust`, `点云`, `思考`, `读后感`, `RAG`, `Agent`, `LangGraph`
 
 **Valid Categories (`categories`)**:
 `技术文档`, `踩坑记录`, `学习笔记`, `游戏插件`
@@ -144,7 +144,13 @@
 
 * ❌ 错误：`$30\%$%` (附带冗余符号)
 
-* ❌ 错误：`` `$30\%$` `` (反引号导致渲染失败)
+### 2.7 加粗与中文全角标点边界规范 [强制]
+
+* **全角标点与闭合加粗符号冲突 [强制]**：在 CommonMark 渲染标准下，若闭合加粗符号 `**` 紧跟在中文全角标点/全角括号（如 `）`、`！`、`？`）之后且后方直接连着中文文字（例如 `**熔断兜底（Fallback）**机制`），解析器会因右边界识别失效而导致加粗渲染失败（源码泄露）。
+* **规范书写方式**：
+  * 使用半角括号并于加粗边界保留空格：`**熔断兜底 (Fallback)** 机制`。
+  * 或将后方接续的文字一同纳入加粗范围：`**熔断兜底（Fallback）机制**`。
+  * **严禁**在中文全角括号与后续正文文字接缝处紧贴断开加粗。
 
 ## 模块 3：代码与图表生成 (Code & Diagrams)
 
@@ -155,6 +161,8 @@
 * 终端可执行命令必须标为 ` ```bash `。
 
 * 纯文本输出或日志标为 ` ```text `。
+
+* **代码逻辑与兜底分支自洽 [强制]**：所有展现的算法与逻辑代码块必须保证控制流严格正确。在编写“降级/兜底（Fallback）”逻辑时（如 `if not results:`），绝对禁止在兜底分支中重复包含导致此前筛选结果为空的限制条件，确保兜底代码能够真实且有效触发。
 
 ### 3.2 Mermaid 图表渲染 [强制]
 
