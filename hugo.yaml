@@ -243,3 +243,9 @@ module:
 frontmatter:
   date: [":git", ":fileModTime", "date", "publishDate", ":default"]
   lastmod: [":git", ":fileModTime", "lastmod", ":default"]
+
+security:
+  node:
+    permissions:
+      disable: true
+
