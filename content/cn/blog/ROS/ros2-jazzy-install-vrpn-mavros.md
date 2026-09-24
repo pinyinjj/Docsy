@@ -15,10 +15,10 @@ draft: True
 
 
     运行 
-    ros2 launch vrpn_mocap client.launch.yaml server:=10.1.1.198
+    ros2 launch vrpn_mocap client.launch.yaml server:=<server_ip>
 
     返回
-    [INFO] [launch]: All log files can be found below /home/yj/.ros/log/2025-11-20-17-41-00-462984-yj-12215
+    [INFO] [launch]: All log files can be found below /home/<username>/.ros/log/2025-11-20-17-41-00-462984-<username>-12215
     [INFO] [launch]: Default logging verbosity is set to INFO
     [INFO] [client_node-1]: process started with pid [12219]
     [client_node-1] check_vrpn_cookie(): VRPN Note: minor version number doesn't match: (prefer 'vrpn: ver. 07.35', got 'vrpn: ver. 07.34  0').  This is not normally a problem.
@@ -59,7 +59,7 @@ draft: True
 
     - arg:
         name: "server"
-        default: "10.1.1.198"
+        default: "<server_ip>"
     - arg:
         name: "port"
         default: "3883"

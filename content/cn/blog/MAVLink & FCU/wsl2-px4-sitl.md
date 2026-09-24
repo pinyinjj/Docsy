@@ -20,7 +20,7 @@ draft: false
 - **WSL2 发行版**：Ubuntu 20.04 或更高版本
 - **PX4 版本**：1.16.0 stable
 - **AirSim 版本**：1.8.1
-- **PX4 源码路径**：`C:\Users\Administrator\PX4\PX4-Autopilot`
+- **PX4 源码路径**：`%USERPROFILE%\PX4\PX4-Autopilot`（或 `C:\Users\<Username>\PX4\PX4-Autopilot`）
 
 
 ## 3. 自动端口开放配置
@@ -37,20 +37,20 @@ draft: false
 
 通过在 PX4 的启动脚本 `rcS` 中添加 `mavlink start` 命令，可以在每次编译和启动时自动开启多个 MAVLink 端口，实现多个设备同时连接。这在需要同步进行可视化或多智能体控制无人机的仿真场景下十分有用。如果某个设备只需要收到 `MAVLink` 数据，而无需发出控制命令到飞控，则仅需通过 `QGroundControl` 的 MAVLink 转发或其他方式转发即可。
 
-**文件路径**：`C:\Users\Administrator\PX4\PX4-Autopilot\ROMFS\px4fmu_common\init.d-posix\rcS`
+**文件路径**：`%USERPROFILE%\PX4\PX4-Autopilot\ROMFS\px4fmu_common\init.d-posix\rcS`
 
 在 `rcS` 文件中添加以下内容（建议在文件末尾，MAVLink 相关配置部分之后添加）：
 
 ```bash
 # 开启额外的 MAVLink UDP 端口
 # 端口 14550：用于 QGroundControl 地面站连接
-mavlink start -u 14550 -o 14550 -t 192.168.31.88 -r 1000000
+mavlink start -u 14550 -o 14550 -t <地面站服务器IP> -r 1000000
 
 # 端口 14560：用于 MAVROS 连接
-mavlink start -u 14560 -o 14560 -t 192.168.31.77 -r 1000000
+mavlink start -u 14560 -o 14560 -t <MAVROS服务器IP> -r 1000000
 
 # 端口 14540：用于 MAVSDK-Python 或其他应用连接
-mavlink start -u 14540 -o 14540 -t 192.168.31.66 -r 1000000
+mavlink start -u 14540 -o 14540 -t <MAVSDK服务器IP> -r 1000000
 ```
 
 **命令参数说明**：

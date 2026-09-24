@@ -16,7 +16,7 @@ draft: false
 - 错误信息：`Unhandled Exception: System.IO.FileNotFoundException`
 - 执行的命令为：
 ```text
-Running C:/Program Files/Epic Games/UE_4.27/Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.exe -projectfiles -project="C:/Users/Administrator/Documents/Airsim/Unreal/Environments/Blocks/Blocks.uproject" -game -rocket -progress -log="C:\Users\Administrator\Documents\Airsim\Unreal\Environments\Blocks/Saved/Logs/UnrealVersionSelector-2025.12.17-10.32.37.log"
+Running C:/Program Files/Epic Games/UE_4.27/Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.exe -projectfiles -project="C:/Users/<Username>/Documents/AirSim/Unreal/Environments/Blocks/Blocks.uproject" -game -rocket -progress -log="C:\Users\<Username>\Documents\AirSim\Unreal\Environments\Blocks\Saved\Logs\UnrealVersionSelector-2025.12.17-10.32.37.log"
 ```
 
 **环境信息**：
@@ -41,7 +41,7 @@ Running C:/Program Files/Epic Games/UE_4.27/Engine/Binaries/DotNET/UnrealBuildTo
 
 找到 AirSim 项目中的 `GenerateProjectFiles.bat` 脚本文件，路径通常为：
 ```text
-C:\Users\Administrator\Documents\AirSim\Unreal\Environments\Blocks\GenerateProjectFiles.bat
+C:\Users\<Username>\Documents\AirSim\Unreal\Environments\Blocks\GenerateProjectFiles.bat
 ```
 
 ### 3.2 修改脚本内容
