@@ -1,0 +1,94 @@
+<svg viewBox="0 0 860 370" width="860" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Default / neutral connection -->
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#64748b"/>
+    </marker>
+    <!-- Semantic-color arrows -->
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrow-pink" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#ec4899"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#a855f7"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+
+  <!-- Full canvas light background -->
+  <rect x="0" y="0" width="860" height="370" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="430" y="32" font-size="16" font-weight="bold" fill="#1e293b" text-anchor="middle">大模型输入范式演进对比：刚性精确约束 vs 粗粒度隐空间引导</text>
+
+  <!-- 1. Top Swimlane: 刚性精确约束模式（传统范式） -->
+  <rect x="20" y="55" width="820" height="135" rx="10" stroke="#94a3b8" stroke-dasharray="6,4" fill="#f8fafc"/>
+  <text x="32" y="74" font-size="11" font-weight="bold" fill="#64748b">刚性精确约束模式（传统开发范式）</text>
+
+  <!-- Top Connectors -->
+  <path d="M219,123 L229,123" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)" fill="none"/>
+  <path d="M421,123 L431,123" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)" fill="none"/>
+  <path d="M623,123 L633,123" stroke="#ec4899" stroke-width="1.5" marker-end="url(#arrow-pink)" fill="none"/>
+
+  <!-- Top Boxes -->
+  <!-- Box 1 -->
+  <rect x="38" y="96" width="176" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="126" y="118" font-size="12" font-weight="bold" fill="#1e40af" text-anchor="middle">人工细粒度输入</text>
+  <text x="126" y="136" font-size="10" fill="#1e40af" text-anchor="middle">伪代码 / 硬边缘 / 骨骼绑定</text>
+
+  <!-- Box 2 -->
+  <rect x="240" y="96" width="176" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="328" y="118" font-size="12" font-weight="bold" fill="#b45309" text-anchor="middle">认知盲区与微观缺陷</text>
+  <text x="328" y="136" font-size="10" fill="#b45309" text-anchor="middle">死锁风险 / 骨骼冲突 / 频闪</text>
+
+  <!-- Box 3 -->
+  <rect x="442" y="96" width="176" height="54" rx="6" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+  <text x="530" y="118" font-size="12" font-weight="bold" fill="#9d174d" text-anchor="middle">强制拟合与约束冲突</text>
+  <text x="530" y="136" font-size="10" fill="#9d174d" text-anchor="middle">注意力稀释 / 空间解算死锁</text>
+
+  <!-- Box 4 -->
+  <rect x="644" y="96" width="176" height="54" rx="6" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+  <text x="732" y="118" font-size="12" font-weight="bold" fill="#9d174d" text-anchor="middle">动作畸变与局部最优</text>
+  <text x="732" y="136" font-size="10" fill="#9d174d" text-anchor="middle">时序频闪 / 关节畸变 / 局部最优</text>
+
+  <!-- 2. Bottom Swimlane: 粗粒度隐空间引导模式（现代演进范式） -->
+  <rect x="20" y="215" width="820" height="135" rx="10" stroke="#94a3b8" stroke-dasharray="6,4" fill="#f8fafc"/>
+  <text x="32" y="234" font-size="11" font-weight="bold" fill="#64748b">粗粒度隐空间引导模式（现代演进范式）</text>
+
+  <!-- Bottom Connectors -->
+  <path d="M219,283 L229,283" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)" fill="none"/>
+  <path d="M421,283 L431,283" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arrow-purple)" fill="none"/>
+  <path d="M623,283 L633,283" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none"/>
+
+  <!-- Bottom Boxes -->
+  <!-- Box 1 -->
+  <rect x="38" y="256" width="176" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="126" y="278" font-size="12" font-weight="bold" fill="#1e40af" text-anchor="middle">抽象意图与粗模输入</text>
+  <text x="126" y="296" font-size="10" fill="#1e40af" text-anchor="middle">业务意图 / 微噪点图 / 胶囊粗模</text>
+
+  <!-- Box 2 -->
+  <rect x="240" y="256" width="176" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7" stroke-width="1"/>
+  <text x="328" y="278" font-size="12" font-weight="bold" fill="#6b21a8" text-anchor="middle">保留拓扑与物理包络</text>
+  <text x="328" y="296" font-size="10" fill="#6b21a8" text-anchor="middle">质心对齐 / 轨迹包络 / 碰撞包围</text>
+
+  <!-- Box 3 -->
+  <rect x="442" y="256" width="176" height="54" rx="6" fill="#f3e8ff" stroke="#a855f7" stroke-width="1"/>
+  <text x="530" y="278" font-size="12" font-weight="bold" fill="#6b21a8" text-anchor="middle">隐空间先验自主推理</text>
+  <text x="530" y="296" font-size="10" fill="#6b21a8" text-anchor="middle">时空自发平滑 / 架构防御自愈</text>
+
+  <!-- Box 4 -->
+  <rect x="644" y="256" width="176" height="54" rx="6" fill="#d1fae5" stroke="#22c55e" stroke-width="1"/>
+  <text x="732" y="278" font-size="12" font-weight="bold" fill="#166534" text-anchor="middle">稳定输出与工程涌现</text>
+  <text x="732" y="296" font-size="10" fill="#166534" text-anchor="middle">时序连续 / 无缝光影 / 弹性架构</text>
+</svg>

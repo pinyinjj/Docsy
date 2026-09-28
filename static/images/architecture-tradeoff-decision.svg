@@ -1,0 +1,58 @@
+<svg viewBox="0 0 730 295" width="730" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Default gray arrow -->
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#64748b"/>
+    </marker>
+    <!-- Semantic arrows -->
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <style>
+    text { font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif; }
+  </style>
+
+  <!-- Full canvas light background -->
+  <rect x="0" y="0" width="730" height="295" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="365" y="32" font-size="16" font-weight="bold" fill="#1e293b" text-anchor="middle">大模型需求反向优化与双轨架构权衡决策</text>
+
+  <!-- Connectors (Downwards) -->
+  <!-- Row 1 to Row 2 Left -->
+  <path d="M188,111 L188,123" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)" fill="none"/>
+  <!-- Row 1 to Row 2 Right -->
+  <path d="M542,111 L542,123" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow-orange)" fill="none"/>
+  <!-- Row 2 Left to Row 3 -->
+  <path d="M188,193 L188,205" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none"/>
+  <!-- Row 2 Right to Row 3 -->
+  <path d="M542,193 L542,205" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none"/>
+
+  <!-- Row 1: Problem Detection & Diagnosis -->
+  <rect x="25" y="52" width="680" height="54" rx="6" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+  <text x="365" y="74" font-size="12" font-weight="bold" fill="#9d174d" text-anchor="middle">架构隐患诊断</text>
+  <text x="365" y="92" font-size="10" fill="#9d174d" text-anchor="middle">检测到前端轮询刷新点赞计数在峰值场景下将造成网络吞吐过载。</text>
+
+  <!-- Row 2 Left: Option 1 -->
+  <rect x="25" y="134" width="325" height="54" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="188" y="156" font-size="12" font-weight="bold" fill="#1e40af" text-anchor="middle">可选方案一</text>
+  <text x="188" y="174" font-size="10" fill="#1e40af" text-anchor="middle">采用 WebSocket 增量分片广播，降低传输冗余；</text>
+
+  <!-- Row 2 Right: Option 2 -->
+  <rect x="380" y="134" width="325" height="54" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="542" y="156" font-size="12" font-weight="bold" fill="#b45309" text-anchor="middle">可选方案二</text>
+  <text x="542" y="174" font-size="10" fill="#b45309" text-anchor="middle">采用客户端乐观 UI 渲染与服务端最终一致性合并策略。</text>
+
+  <!-- Row 3: Deliverables & Test Verification -->
+  <rect x="25" y="216" width="680" height="54" rx="6" fill="#d1fae5" stroke="#22c55e" stroke-width="1"/>
+  <text x="365" y="238" font-size="12" font-weight="bold" fill="#166534" text-anchor="middle">自动化工程交付</text>
+  <text x="365" y="256" font-size="10" fill="#166534" text-anchor="middle">已自动提供两套方案的基准负载测试与压测监控脚本。</text>
+</svg>
